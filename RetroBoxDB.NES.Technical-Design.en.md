@@ -91,3 +91,7 @@ The reference collection verification compares all pre-existing application tabl
 Current resources include `engine.py`, `schema.sql`, `group_schema.sql`, `migrate_v3.py`, `build_v3.py`, the `build_v2.py` compatibility alias, `seed.json`, `build_catalog.py`, No-Intro sources, five test modules, and the active documentation. In the Catalog, extract `engine.full.py` as `engine.py` for tests or populated-database work. Extract its query wrapper separately as `catalog_engine.py` when reproducing a metadata-only catalog. The Chinese guide provides complete extraction and execution commands.
 
 `group-migration-report`, `group-verification-report`, `test-report`, and `catalog-report` describe the current release. `documentation-index` identifies active documentation and historical resources. Archived v1/v2 designs and reports remain provenance evidence and must not be read as claims about the current storage size, engine compatibility or test count.
+
+## Related platform research
+
+The [English platform assessment](RetroBoxDB.Platform-Assessment.en.md) and [Chinese version](RetroBoxDB.Platform-Assessment.zh-CN.md) evaluate the complete local DAT inventory, including No-Intro, Redump and emulator/media collections. They provide aggregate evidence and future adapter requirements; they do not change the implemented NES schema, engine capabilities or current release assets described here.

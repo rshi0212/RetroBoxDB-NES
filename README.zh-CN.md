@@ -11,8 +11,13 @@ RetroBoxDB 将 ROM 正文、DAT 原始内容、校验信息、硬件来源、可
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 当前公开目录库，作为 GitHub Release 附件下载 |
 | [英文技术说明](RetroBoxDB.NES.Technical-Design.en.md) | 存储格式、约束、迁移和验证细节 |
 | [英文首页](README.md) | 项目首页与使用说明 |
+| [平台评估中文报告](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | No-Intro、Redump、MAME、FBNeo、HBMAME、Demul、Visual Pinball，覆盖本地 172 个 DAT 压缩包 |
 
-Catalog 超过普通 Git 文件的 100 MiB 限制，因此通过 Release 发布。下载后仍是一个普通 SQLite 文件；GitHub 自动生成的源码 ZIP 只含仓库文档，不包含数据库附件。
+Catalog 超过普通 Git 文件的 100 MiB 限制，因此通过 Release 发布。下载后仍是一个普通 SQLite 文件；GitHub 自动生成的源码 ZIP 包含仓库文档、调查工具和汇总数据，不包含数据库附件。
+
+## 平台研究
+
+[中文评估](RetroBoxDB.Platform-Assessment.zh-CN.md)与[英文评估](RetroBoxDB.Platform-Assessment.en.md)覆盖 329 个 DAT 成员，区分 NES 实测、DAT 推算与平台实施建议。`assessment/` 提供可复现汇总证据和只读调查程序，不包含原始 DAT、ROM 或媒体文件。目前实际实现的平台仍为 NES；这次研究更新不更换 Catalog 发布附件。
 
 ## 分组压缩已经实施
 

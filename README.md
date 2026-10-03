@@ -11,8 +11,13 @@ A single-file SQLite archive design for NES preservation: exact ROM identities, 
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Current metadata-only SQLite, distributed through GitHub Releases |
 | [Technical design](RetroBoxDB.NES.Technical-Design.en.md) | Storage format, invariants, migration, and validation |
 | [中文说明](README.zh-CN.md) | Chinese guide, extraction, and maintenance commands |
+| [Platform assessment — English](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | No-Intro, Redump, MAME, FBNeo, HBMAME, Demul and Visual Pinball; 172 local DAT archives |
 
-The Catalog exceeds GitHub's 100 MiB regular Git file limit. Download the SQLite attachment from Releases; the repository's source-code ZIP contains the documentation, not the database attachment. The attachment remains one ordinary SQLite file.
+The Catalog exceeds GitHub's 100 MiB regular Git file limit. Download the SQLite attachment from Releases; the repository's source-code ZIP contains documentation and assessment tools/data, not the database attachment. The attachment remains one ordinary SQLite file.
+
+## Platform research
+
+The [English assessment](RetroBoxDB.Platform-Assessment.en.md) and [Chinese assessment](RetroBoxDB.Platform-Assessment.zh-CN.md) cover 329 DAT members and distinguish measured NES results from metadata-derived estimates and proposed platform work. Reproducible aggregate evidence and a read-only survey tool are in `assessment/`; no original DAT, ROM or media files are included. NES remains the implemented platform. The research update does not replace the Catalog release.
 
 ## Storage v3: grouped compression
 

@@ -1,0 +1,357 @@
+{
+  "measurement": "Directory-entry file sizes only; no content matching or compression trial; No-Intro Aftermarket/Private folders grouped with base platform",
+  "collections": [
+    {
+      "collection": "No-Intro",
+      "files": 48115,
+      "bytes": 31510694316,
+      "groups": [
+        {
+          "name": "Bandai - WonderSwan",
+          "files": 258,
+          "bytes": 127406670,
+          "extensions": {
+            ".zip": 258
+          }
+        },
+        {
+          "name": "Bandai - WonderSwan Color",
+          "files": 265,
+          "bytes": 205062049,
+          "extensions": {
+            ".zip": 265
+          }
+        },
+        {
+          "name": "Funtech - Super Acan",
+          "files": 12,
+          "bytes": 12284238,
+          "extensions": {
+            ".zip": 12
+          }
+        },
+        {
+          "name": "Microsoft - MSX",
+          "files": 959,
+          "bytes": 22518246,
+          "extensions": {
+            ".zip": 959
+          }
+        },
+        {
+          "name": "Microsoft - MSX2",
+          "files": 204,
+          "bytes": 24975777,
+          "extensions": {
+            ".zip": 204
+          }
+        },
+        {
+          "name": "NEC - PC Engine - TurboGrafx-16",
+          "files": 651,
+          "bytes": 140150629,
+          "extensions": {
+            ".zip": 651
+          }
+        },
+        {
+          "name": "NEC - PC Engine SuperGrafx",
+          "files": 10,
+          "bytes": 4393550,
+          "extensions": {
+            ".zip": 10
+          }
+        },
+        {
+          "name": "Nintendo - Family Computer Disk System (FDS)",
+          "files": 416,
+          "bytes": 18705211,
+          "extensions": {
+            ".zip": 416
+          }
+        },
+        {
+          "name": "Nintendo - Game & Watch",
+          "files": 54,
+          "bytes": 155763,
+          "extensions": {
+            ".zip": 54
+          }
+        },
+        {
+          "name": "Nintendo - Game Boy",
+          "files": 2673,
+          "bytes": 310128519,
+          "extensions": {
+            ".zip": 2671,
+            ".txt": 2
+          }
+        },
+        {
+          "name": "Nintendo - Game Boy Advance",
+          "files": 3946,
+          "bytes": 15485901866,
+          "extensions": {
+            ".zip": 3946
+          }
+        },
+        {
+          "name": "Nintendo - Game Boy Color",
+          "files": 3006,
+          "bytes": 1134364420,
+          "extensions": {
+            ".zip": 3006
+          }
+        },
+        {
+          "name": "Nintendo - Nintendo Entertainment System (Headered)",
+          "files": 10951,
+          "bytes": 2227481484,
+          "extensions": {
+            ".zip": 10951
+          }
+        },
+        {
+          "name": "Nintendo - Nintendo Entertainment System (Headerless)",
+          "files": 10841,
+          "bytes": 2200273490,
+          "extensions": {
+            ".zip": 10841
+          }
+        },
+        {
+          "name": "Nintendo - Pokemon Mini",
+          "files": 50,
+          "bytes": 6537921,
+          "extensions": {
+            ".zip": 50
+          }
+        },
+        {
+          "name": "Nintendo - Super Nintendo Entertainment System",
+          "files": 4898,
+          "bytes": 4288077842,
+          "extensions": {
+            ".zip": 4898
+          }
+        },
+        {
+          "name": "Nintendo - Virtual Boy",
+          "files": 127,
+          "bytes": 63770157,
+          "extensions": {
+            ".zip": 127
+          }
+        },
+        {
+          "name": "SNK - NeoGeo Pocket",
+          "files": 13,
+          "bytes": 4664225,
+          "extensions": {
+            ".zip": 13
+          }
+        },
+        {
+          "name": "SNK - NeoGeo Pocket Color",
+          "files": 130,
+          "bytes": 64982689,
+          "extensions": {
+            ".zip": 130
+          }
+        },
+        {
+          "name": "Sega - 32X",
+          "files": 375,
+          "bytes": 554443796,
+          "extensions": {
+            ".zip": 375
+          }
+        },
+        {
+          "name": "Sega - Game Gear",
+          "files": 1321,
+          "bytes": 237988139,
+          "extensions": {
+            ".zip": 1319,
+            ".txt": 2
+          }
+        },
+        {
+          "name": "Sega - Master System - Mark III",
+          "files": 1674,
+          "bytes": 158233961,
+          "extensions": {
+            ".zip": 1674
+          }
+        },
+        {
+          "name": "Sega - Mega Drive - Genesis",
+          "files": 5281,
+          "bytes": 4218193674,
+          "extensions": {
+            ".zip": 5281
+          }
+        }
+      ]
+    },
+    {
+      "collection": "FBNeo 1.0.0.3 260723 GIT7a28a7d debug ROMs (split)",
+      "files": 25446,
+      "bytes": 36095572689,
+      "groups": [
+        {
+          "name": "(root)",
+          "files": 2,
+          "bytes": 19396524,
+          "extensions": {
+            ".zip": 2
+          }
+        },
+        {
+          "name": "arcade",
+          "files": 8457,
+          "bytes": 22782572551,
+          "extensions": {
+            ".zip": 8457
+          }
+        },
+        {
+          "name": "channelf",
+          "files": 50,
+          "bytes": 226226,
+          "extensions": {
+            ".zip": 50
+          }
+        },
+        {
+          "name": "coleco",
+          "files": 656,
+          "bytes": 11715986,
+          "extensions": {
+            ".zip": 656
+          }
+        },
+        {
+          "name": "fds",
+          "files": 207,
+          "bytes": 10637534,
+          "extensions": {
+            ".zip": 207
+          }
+        },
+        {
+          "name": "gamegear",
+          "files": 635,
+          "bytes": 111107852,
+          "extensions": {
+            ".zip": 635
+          }
+        },
+        {
+          "name": "hdd",
+          "files": 2,
+          "bytes": 588749824,
+          "extensions": {
+            ".img": 2
+          }
+        },
+        {
+          "name": "megadrive",
+          "files": 2921,
+          "bytes": 2226131715,
+          "extensions": {
+            ".zip": 2921
+          }
+        },
+        {
+          "name": "msx",
+          "files": 1797,
+          "bytes": 53930065,
+          "extensions": {
+            ".zip": 1797
+          }
+        },
+        {
+          "name": "nes",
+          "files": 2905,
+          "bytes": 332465631,
+          "extensions": {
+            ".zip": 2905
+          }
+        },
+        {
+          "name": "ngp",
+          "files": 174,
+          "bytes": 73568929,
+          "extensions": {
+            ".zip": 174
+          }
+        },
+        {
+          "name": "pce",
+          "files": 376,
+          "bytes": 83910148,
+          "extensions": {
+            ".zip": 376
+          }
+        },
+        {
+          "name": "samples",
+          "files": 65,
+          "bytes": 6898522460,
+          "extensions": {
+            ".zip": 65
+          }
+        },
+        {
+          "name": "sg1000",
+          "files": 255,
+          "bytes": 3860101,
+          "extensions": {
+            ".zip": 255
+          }
+        },
+        {
+          "name": "sgx",
+          "files": 10,
+          "bytes": 4929120,
+          "extensions": {
+            ".zip": 10
+          }
+        },
+        {
+          "name": "sms",
+          "files": 858,
+          "bytes": 101446905,
+          "extensions": {
+            ".zip": 858
+          }
+        },
+        {
+          "name": "snes",
+          "files": 2625,
+          "bytes": 2659516142,
+          "extensions": {
+            ".zip": 2625
+          }
+        },
+        {
+          "name": "spectrum",
+          "files": 3349,
+          "bytes": 109499990,
+          "extensions": {
+            ".zip": 3349
+          }
+        },
+        {
+          "name": "tg16",
+          "files": 102,
+          "bytes": 23384986,
+          "extensions": {
+            ".zip": 102
+          }
+        }
+      ]
+    }
+  ]
+}
