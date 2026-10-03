@@ -2,70 +2,55 @@
 
 English | [中文说明](README.zh-CN.md)
 
-A SQLite metadata catalog for NES ROM preservation, DAT validation, hardware documentation, and reproducible archive identities. **This public database contains no ROM payloads, original DAT file payloads, or media files.** It preserves the catalog, expected checksums, processing source code, and frontend metadata placeholders.
+A single-file SQLite archive design for NES preservation: exact ROM identities, shared bodies and headers, block deduplication, lossless grouped compression, DAT validation, dump provenance, and checksummed TorrentZip exports.
 
-| File | Purpose |
+**The public Catalog contains no ROM bodies, original DAT/DB/Dumplog file payloads, compressed content groups, or media payloads.** The populated `RetroBoxDB.sqlite` remains local. The Catalog retains metadata, expected checksums, small NES header fields, reconstruction recipes, and processing source code. It cannot independently restore or export the missing files.
+
+| Download / document | Purpose |
 | --- | --- |
-| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Metadata catalog with embedded processing code |
-| [RetroBoxDB.NES.Technical-Design.en.md](RetroBoxDB.NES.Technical-Design.en.md) | Detailed technical design |
-| [README.zh-CN.md](README.zh-CN.md) | Chinese guide and reproducibility instructions |
+| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Current metadata-only SQLite, distributed through GitHub Releases |
+| [Technical design](RetroBoxDB.NES.Technical-Design.en.md) | Storage format, invariants, migration, and validation |
+| [中文说明](README.zh-CN.md) | Chinese guide, extraction, and maintenance commands |
 
-Download the single SQLite file from the link above (GitHub Releases). The expanded catalog exceeds the 100 MiB regular Git file limit; the repository keeps the documentation and release download link.
+The Catalog exceeds GitHub's 100 MiB regular Git file limit. Download the SQLite attachment from Releases; the repository's source-code ZIP contains the documentation, not the database attachment. The attachment remains one ordinary SQLite file.
 
-The catalog retains 58,935 file records, 17,726 ROM records, 22,065 DAT ROM entries, and 24,487 archive plans. It includes source filenames, game/release associations, parsed DAT entries, validation outcomes, hardware declarations, header variants, and repair history. Small NES header fields and parsed DAT entry XML are retained as metadata.
+## Storage v3: grouped compression
 
-The payload tables `chunks` and `object_chunks` are empty. The catalog was built into a fresh file, so deleted ROM/DAT content is not left in free pages. The populated database is not included in this repository. **The catalog cannot independently reconstruct or export the original files.**
+Storage schema v3 places eligible independent LZMA blocks into lossless groups of at most **2 MiB uncompressed**, with a 4 MiB LZMA2 dictionary. It retains each logical block's ID, size and SHA256. Objects still assemble those blocks; Headered files still reference an exact 16-byte header and a shared complete body. Fill, raw, zlib, independent LZMA and bounded XOR-delta representations remain supported.
 
-Existing checksums were preserved and compared against the populated database. Logical file identities include size, CRC32, MD5, SHA1, and SHA256. Headered ROMs and their shared bodies have separate identities. Original ZIP checksums and generated TorrentZip checksums remain distinct. Missing checksum fields in a source DAT are not invented.
+The reference migration grouped **125,016 blocks into 489 groups**. Their encoded data decreased from 435,766,697 to 342,419,600 bytes: **89.02 MiB saved in compressed streams**. After migration, SQLite compaction and the final documentation/report refresh, the populated database decreased from **629.88 to 534.50 MiB**, a **95.38 MiB / 15.14%** reduction (660,471,808 → 560,463,872 bytes). The release notes and embedded `release-manifest` record final artifact sizes. These measurements are not a promise of the same ratio for other collections.
+
+Export decompresses only the required groups, verifies group and block hashes, assembles the selected ROM/header variant, and checks its full size/CRC32/MD5/SHA1/SHA256. TorrentZip bytes are generated from the existing archive plan and checked against its separately registered output identity. Groups do not change ROM bytes, DAT identities or ZIP checksums. The decoded group cache is bounded to 16 MiB in addition to the existing 64 MiB block cache; individual small reads may decode an entire group. Encoding uses additional temporary memory and at most four workers.
+
+New imports continue to deduplicate and encode ordinary blocks. Run `compact` after a batch to group eligible new blocks and reclaim SQLite free pages. Existing groups are left intact. Compaction is transactional and only adopts groups that save space after a reference/metadata allowance. Schema v2 files remain readable by the v3 engine, but must be migrated before group compaction. Old v2-only engines cannot read v3 databases.
+
+## Catalog contents
+
+The catalog preserves **58,935 files, 17,726 ROM records, 22,065 DAT ROM entries, and 24,487 archive plans**. Every pre-existing logical file/ROM/body checksum, source ZIP identity, generated ZIP identity, DAT record, naming decision, transformation, game/release association and frontend placeholder is retained.
+
+The public file is built from scratch by copying application metadata and **excluding `compression_groups`, `chunks`, and `object_chunks`**. All three tables are empty. It is not a populated database with its rows subsequently deleted. Parsed DAT entry XML and 16-byte NES headers remain metadata; no source-file or ROM content blocks are included. Compressed ROM bytes are ROM payloads and are excluded as well.
 
 ```sql
 SELECT * FROM v_file_checksums WHERE file_id = 1;
 SELECT * FROM v_rom_checksums WHERE rom_id = 1;
 SELECT * FROM archive_plans WHERE id = 1;
+SELECT dat_set_id, status, COUNT(*) FROM v_dat_coverage GROUP BY dat_set_id, status;
 SELECT content FROM resources WHERE name = 'catalog-report';
+SELECT content FROM resources WHERE name = 'group-migration-report';
+SELECT content FROM resources WHERE name = 'group-verification-report';
 ```
 
-Batocera / ScreenScraper placeholders cover all 7,385 catalog releases: 17 game-information fields, 8 local frontend-state fields, and 15 media roles. These are virtual placeholders generated from shared definitions, avoiding repeated empty rows. Descriptions, dates, ratings, languages/regions, provider IDs, artwork paths, and media checksums remain unknown until populated. A catalog title fallback is explicitly labeled. No live scraping has been performed and no API credentials are stored.
+Checksums describe expected byte identities. Missing hashes in a source DAT remain NULL; the Catalog does not claim to recalculate unavailable payloads.
 
-Media slots include screenshots, thumbnails/boxes, logos, videos, fan art, title screens, manuals, magazines, maps, bezels, cartridges, alternate box art, box backs, wheels, and composite images. Initial provider mappings are configurable; unsupported or unconfirmed mappings remain NULL. The definitions follow [Batocera metadata fields](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp), with provider mappings informed by the [ScreenScraper API](https://www.screenscraper.fr/webapi2.php) and [Batocera's adapter](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp).
+## No-Intro provenance
 
-```sql
-SELECT * FROM v_screenscraper_games WHERE release_id = 1;
-SELECT * FROM v_batocera_game_fields WHERE release_id = 1;
-SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
-SELECT * FROM frontend_fields WHERE category = 'media';
-```
+Snapshot `20261002-002752` contains **7,704 archive identities, 16,154 distinct file identities, 13,930 dump sources, 898 Scene records, and 7,674 Dumplog rows**. Source and Scene IDs have separate namespaces. Repeated file references preserve independent dump evidence without duplicating content.
 
-`frontend_game_values` supports language and region variants. `scraper_game_links` records confirmed provider identities and provenance. `frontend_media_slots` can link to `media`, whose complete asset bytes and checksums use the existing `files → objects → chunks` model in a populated database. The extension supplies schemas, mappings, states, and constraints; it does not implement a live ScreenScraper client or a Batocera gamelist exporter. A future adapter must select a concrete ROM variant and convert provider values to the required frontend representation.
+The snapshot retains 8,026 declared headers, 245 complete historical headers extracted from notes, and one incomplete historical-header note as an anomaly. One declared header belongs to a Headerless-classified record. Header declarations are distinct from physical cartridge evidence. All 6,414 serial-bearing source records remain available; 6,412 also anchor documented hardware assertions to an existing ROM or release. Different PCB/chip revisions are not collapsed into one hardware claim.
 
-Python 3.10+, SQLite 3.37+, and the Python standard-library `lzma` module are required to run the embedded engine. SQLite itself does not execute Python. From the downloaded files' directory:
+The companion has 178 additional, fully hash-verified Headered reconstructions, including 30 source-marked Bad variants. Old Headered DAT coverage is **7,100/7,288**; current Headered is **7,091/7,387** and current Headerless is **7,094/7,390**. Six recovered old-DAT games have checksummed TorrentZip plans. Missing ROMs cannot be synthesized from a DAT hash alone.
 
-```bash
-python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite stats
-```
-
-Replace `stats` with `checksums 1`, `audit`, or `help`. The catalog engine enables `query_only` and rejects content operations. Its audit checks metadata integrity and explicitly reports `payloads_verified=false`.
-
-The `resources` table contains the catalog engine (`engine.py`), production engine (`engine.full.py`), complete schema, frontend extension, fixture builder, configuration, and four test modules. To reproduce the tests, extract `engine.full.py` as **`engine.py`**, plus `schema.sql`, `build_v2.py`, `seed.json`, `tests.py`, `tests_storage.py`, `tests_frontend.py`, `tests_nointro.py`, `nointro.py`, and `nointro_schema.sql` into a separate directory, then run:
-
-```bash
-python3 -B -m unittest -v tests tests_storage tests_frontend tests_nointro
-```
-
-All 58 tests passed using synthetic fixtures. The [Chinese guide](README.zh-CN.md) includes a complete extraction command. Reproducing the original collection requires the same ROM/DAT inputs and a separate populated working database. The test builder uses 4 KiB NES blocks; the populated reference collection selected 8 KiB blocks after measurement.
-
-The full storage design combines shared NES bodies and independent headers, block deduplication, lossless compression, and bounded delta references. ZIP plans are encoded once to calculate expected output checksums, then regenerated and verified on export. Historical reference reports describe the populated collection; `catalog-report` and `frontend-report` describe this edition and its frontend extension.
-
-
-## NES DB Export and Dumplog snapshot
-
-The `20261002-002752` import adds 7,704 No-Intro archive identities, 16,154 distinct file records, 13,930 dump sources, 898 Scene release records, and 7,674 Dumplog status rows. Scene releases have their own ID namespace and are not frontend release IDs. Source files are linked through a many-to-many relation, preserving repeated independent dump evidence without duplicating ROM bytes.
-
-The snapshot retains 8,026 declared 16-byte headers (including one on a Headerless-classified record), 245 complete historical headers extracted from notes, and one incomplete historical-header note as an anomaly. Header declarations are distinct from documented PCB/chip evidence. All 6,414 source records with serial information are retained; 6,412 can also anchor a `hardware_assertions` record to an existing ROM or release. Their confidence is `documented`, not independently hardware-verified.
-
-The populated companion reconstructed 178 additional Headered objects using existing bodies and supplied headers, checking size, CRC32, MD5, SHA1, and SHA256. Of these, 30 retain the source's Bad flag. Six previously missing old-DAT targets were recovered and have new TorrentZip plans with complete output checksums. Old Headered coverage is now 7,100/7,288; current Headered remains 7,091/7,387 and current Headerless remains 7,094/7,390. These describe the populated companion; this catalog still contains no ROM body bytes.
-
-Source relationships remain separate from verified reconstruction relationships. There are 15 failed candidate pairings (including ambiguous cross-products), 11 Dumplog hardware-review cases, one Headerless header-field anomaly, and one incomplete historical-header note. Two Steel Legion demo associations cross-match after full checksum validation. Pressing Buttons has extra non-padding bytes in its Headerless record; no bytes were discarded. DB per-source serials take precedence over conflicting Dumplog hardware columns. Official Dumplog verification status is retained separately from local DAT match status.
+Original source associations remain separate from verified reconstruction relationships. There are 15 failed candidate pairings, 11 Dumplog hardware-review cases, one Headerless header-field anomaly and one incomplete historical-header note. Steel Legion date variants cross-match after full validation; Pressing Buttons retains its extra non-padding Headerless bytes. Source-level DB hardware fields take precedence over conflicting CSV columns. Official Dumplog status remains separate from local DAT matching.
 
 ```sql
 SELECT * FROM ni_snapshots;
@@ -74,13 +59,51 @@ SELECT * FROM v_nointro_headers WHERE file_id = '12868';
 SELECT * FROM v_nointro_hardware WHERE archive_id = '1214';
 SELECT * FROM ni_reconstructions;
 SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
-SELECT content FROM resources WHERE name = 'nointro-import-report';
 ```
 
-New embedded resources include `nointro.py`, `nointro_schema.sql`, `tests_nointro.py`, and `build_catalog.py`. After extracting these and the production engine as `engine.py`, import your own inputs into a populated working database with:
+## Batocera / ScreenScraper
+
+All 7,385 frontend releases have virtual placeholders for 17 game-information fields, 8 local-state fields and 15 media roles. Unknown descriptions, dates, ratings, provider IDs, URLs and checksums remain NULL. No live scraping, media download or credential storage has occurred. Media roles include screenshots, boxes, logos, video, fan art, title screens, manuals, magazines, maps, bezels, cartridges, alternate boxes, box backs, wheels and composites.
+
+`frontend_game_values` supports locales; `scraper_game_links` records confirmed provider identities; `frontend_media_slots` links complete future assets through the existing media/files/objects model. This supplies schemas and mappings, not a live scraping client or Batocera `gamelist.xml` exporter. References: [Batocera fields](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp), [ScreenScraper API](https://www.screenscraper.fr/webapi2.php), [Batocera adapter](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp).
+
+```sql
+SELECT * FROM v_screenscraper_games WHERE release_id = 1;
+SELECT * FROM v_batocera_game_fields WHERE release_id = 1;
+SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
+```
+
+## Embedded code and validation
+
+Python 3.10+, SQLite 3.37+, and standard-library `lzma` are required. SQLite itself does not execute Python. Query the Catalog without extracting source:
 
 ```bash
-python3 -B nointro.py RetroBoxDB.sqlite '/path/NES DB Export.zip' '/path/NES Dump Log.zip'
+python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite stats
 ```
 
-The importer is transactional and idempotent for the same pair of input hashes. It handles the DB export's sibling top-level XML nodes, escaped semicolon CSV, multi-file rows, and no-file placeholders. It rejects catalog imports, conflicting file IDs, malformed hashes, and entity declarations. The original DB XML and Dumplog CSV are stored only in the populated companion's deduplicated content store. Source ZIP identities and canonical export checksums are preserved separately; ZIP streams are regenerated on export. The public catalog excludes those raw source payloads, ROM bodies, and all media payloads.
+Use `checksums FILE_ID`, `audit`, or `help` in place of `stats`. The catalog engine enables `query_only`, rejects content operations, and reports `payloads_verified=false`.
+
+The resources include the catalog engine (`engine.py`), production engine (`engine.full.py`), `schema.sql`, `build_v3.py`, the compatibility alias `build_v2.py`, `seed.json`, `group_schema.sql`, `migrate_v3.py`, `nointro.py`, `nointro_schema.sql`, `build_catalog.py`, and five synthetic test modules. The [Chinese guide](README.zh-CN.md) has a complete extraction command. Extract the production resource as **`engine.py`** to run:
+
+```bash
+python3 -B -m unittest -v tests tests_storage tests_frontend tests_nointro tests_groups
+```
+
+All **70 synthetic tests** pass. The group migration additionally verifies all 165,019 block identities/content, 17,734 available logical objects and 24,487 generated archive plans. Group checks include compressed and uncompressed SHA256; object/archive checks include the full registered checksum set. Tests cover corruption, cross-group reads, grouped delta bases, rollback, duplicate imports, source anomalies and Catalog payload exclusion.
+
+With extracted production code and separately supplied inputs:
+
+```bash
+# Build a separate v3 file; the old populated database is opened read-only.
+python3 -B migrate_v3.py OLD.sqlite NEW.sqlite
+python3 -B engine.py NEW.sqlite audit-all
+
+# Import a No-Intro snapshot into a populated database, then compact new blocks.
+python3 -B nointro.py RetroBoxDB.sqlite '/path/NES DB Export.zip' '/path/NES Dump Log.zip'
+python3 -B engine.py RetroBoxDB.sqlite compact
+
+# Export an existing file identity, or generate its checksummed archive plan.
+python3 -B engine.py RetroBoxDB.sqlite export FILE_ID '/path/output.nes'
+```
+
+`migrate_v3.py` refuses an existing output path and does not overwrite its input. Migration temporarily requires both files; ordinary writes use a transient rollback journal. After committing and closing, the working archive has one persistent SQLite file. Current documentation is indexed by the embedded `documentation-index`; older reports and `legacy/` resources are historical evidence, not current size/test claims.
