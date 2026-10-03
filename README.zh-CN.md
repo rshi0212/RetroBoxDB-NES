@@ -6,12 +6,14 @@
 
 | 文件 | 内容 |
 | --- | --- |
-| [RetroBoxDB.NES.Catalog.sqlite](RetroBoxDB.NES.Catalog.sqlite) | 96.58 MiB 的 SQLite 目录库，含元数据、校验值和内嵌代码 |
+| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | SQLite 目录库，含元数据、校验值和内嵌代码 |
 | [RetroBoxDB.NES.Technical-Design.en.md](RetroBoxDB.NES.Technical-Design.en.md) | 英文技术说明 |
 | [README.md](README.md) | 英文首页 |
 | README.zh-CN.md | 中文使用与复现说明 |
 
-数据库保留 58,747 条文件记录、17,548 条 ROM 记录、22,065 条 DAT ROM 条目和 24,479 个 ZIP 打包配方，以及游戏名称、原始文件名、来源、DAT 匹配结果、头部版本、硬件声明和修复记录。DAT 的解析条目（包括条目 XML）和 NES 的 16 字节头部属于保留的元数据。
+数据库通过上方链接从 GitHub Releases 下载，仍然是一个 SQLite 文件。此次扩展后超过普通 Git 文件的 100 MiB 限制，因此仓库首页保留直接下载链接。
+
+数据库保留 58,935 条文件记录、17,726 条 ROM 记录、22,065 条 DAT ROM 条目和 24,487 个 ZIP 打包配方，以及游戏名称、原始文件名、来源、DAT 匹配结果、头部版本、硬件声明和修复记录。DAT 的解析条目（包括条目 XML）和 NES 的 16 字节头部属于保留的元数据。
 
 实际内容表 `chunks` 与块映射表 `object_chunks` 均为空。本库是在新文件中复制元数据生成的，不是从完整库删除内容后留下空闲页的副本。没有 ROM 正文、DAT 原始文件字节、原始 ZIP 或媒体文件的数据块；含实际内容的完整数据库不在本仓库内。**目录库不能独立恢复游戏文件，也不能替代完整内容备份。**
 
@@ -55,7 +57,7 @@ python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("
 | `engine.full.py` | 完整导入、去重、DAT 校验、头部处理和导出引擎 |
 | `schema.sql` | 表、索引、视图与约束 |
 | `build_v2.py`、`seed.json` | 测试用建库程序与初始化配置 |
-| `tests.py`、`tests_storage.py`、`tests_frontend.py` | 使用人工生成数据的功能测试 |
+| `tests.py`、`tests_storage.py`、`tests_frontend.py`、`tests_nointro.py` | 使用人工生成数据的功能测试 |
 | `frontend_schema.sql` | Batocera／ScreenScraper 占位结构与字段映射 |
 | `TECHNICAL-DESIGN.en` | 内嵌英文技术说明 |
 
@@ -79,6 +81,9 @@ resources = {
     'tests.py': 'tests.py',
     'tests_storage.py': 'tests_storage.py',
     'tests_frontend.py': 'tests_frontend.py',
+    'tests_nointro.py': 'tests_nointro.py',
+    'nointro.py': 'nointro.py',
+    'nointro_schema.sql': 'nointro_schema.sql',
 }
 for filename, resource in resources.items():
     content = db.execute(
@@ -88,13 +93,13 @@ for filename, resource in resources.items():
 db.close()
 print('Extracted source:', out, flush=True)
 subprocess.run(
-    [sys.executable, '-B', '-m', 'unittest', '-v', 'tests', 'tests_storage', 'tests_frontend'],
+    [sys.executable, '-B', '-m', 'unittest', '-v', 'tests', 'tests_storage', 'tests_frontend', 'tests_nointro'],
     cwd=out, check=True,
 )
 PY
 ```
 
-发布前已从本目录库提取代码运行，47 项测试全部通过（原有 39 项，加上 8 项前端扩展测试）。测试只使用人工生成的数据，不需要游戏或 DAT 文件。若要复现原收藏的处理结果，需要自行提供相同的 ROM/DAT 输入，并在另一个完整工作库中运行处理引擎；目录库本身不能补回缺失的字节。测试建库程序的默认 NES 块大小为 4 KiB，原完整收藏实测选用 8 KiB 块和 64 KiB SQLite 页，两项设置彼此独立。
+发布前已从本目录库提取代码运行，58 项测试全部通过（原有 39 项、8 项前端扩展测试和 11 项 No-Intro 导入测试）。测试只使用人工生成的数据，不需要游戏或 DAT 文件。若要复现原收藏的处理结果，需要自行提供相同的 ROM/DAT 输入，并在另一个完整工作库中运行处理引擎；目录库本身不能补回缺失的字节。测试建库程序的默认 NES 块大小为 4 KiB，原完整收藏实测选用 8 KiB 块和 64 KiB SQLite 页，两项设置彼此独立。
 
 完整方案通过“正文共享＋独立头部”、跨游戏分块去重、无损压缩及最多两层的差异引用减少占用。ZIP 仅保存配方；注册配方时实际编码一次取得输出校验值，导出时重新编码并复验。压缩器版本改变可能改变 ZIP 字节，此时引擎会报告校验不符。原完整库从 7.95 GiB 缩减到 594.88 MiB 是参考收藏的实测结果，不表示本目录库包含那些内容，也不保证其他收藏取得相同比例。
 
@@ -115,3 +120,34 @@ SELECT * FROM frontend_fields WHERE category = 'media';
 `frontend_game_values` 支持语言和地区区分，`scraper_game_links` 保存经确认的提供者游戏 ID 与来源，`frontend_media_slots` 可关联既有 `media` 记录。未来实际资产通过 `media → files → objects → chunks` 存放完整字节和校验值，PDF 可使用 `files.kind=other`。封面、截图、Logo 的初始映射可配置；杂志和卡带图保留占位但不猜测提供者媒体类型。
 
 此扩展提供字段、状态、约束及关联，不包含联网 ScreenScraper 客户端或 Batocera `gamelist.xml` 导出器。后续适配器需要选择语言／地区、转换评分与日期，并选定具体 ROM 版本和导出路径；不能把所有同名版本当成同一个文件。
+
+
+## NES DB Export 与 Dumplog 更新
+
+已导入 `20261002-002752`：7,704 个 No-Intro 档案、16,154 条独立文件身份、13,930 条 Dump 来源、898 条 Scene 发布来源，以及 7,674 条 Dumplog 状态。Scene 发布 ID 与游戏发行版本 ID 分开保存；同一文件与多个 Dump 的关系完整保留。
+
+保存了 8,026 条声明头部、从备注解析出的 245 条完整历史头部，以及一条不完整历史头部备注。声明头部中有一条属于 Headerless 分类，不能把存在 header 字段等同于文件含头部。历史头部不能自动视作某一版旧 DAT 的目标头部。
+
+6,414 条带卡带／硬件编号的来源记录全部保留，其中 6,412 条还可关联现有 ROM 或发行版本，形成 `hardware_assertions`。PCB、ROM 芯片、Lockout、SaveChip、卡带编号、印章和包装编号按来源保存，不合并不同实物修订版；可信级别标为 `documented`，不会冒充独立实物验证结果。
+
+完整库新增 178 个 Headered 重建版本，全部复用已有正文并通过大小、CRC32、MD5、SHA1、SHA256 校验。其中 30 个保留 Bad 标记。旧 DAT 补齐 6 项，匹配数为 **7,100 / 7,288**；新版 Headered **7,091 / 7,387**，新版 Headerless **7,094 / 7,390**。6 个新增旧 DAT 游戏也有 TorrentZip 配方及完整导出校验值。公开目录保留这些身份和配方，不包含 ROM 正文。
+
+异常记录保留了 15 个未通过拼接校验的候选配对、11 个 Dumplog 硬件待核查档案、一条 Headerless 附带头部字段的记录，以及一条历史头部缺少十六进制位的备注。两个 Steel Legion Demo 的交叉关联已通过完整哈希证明，但来源原始关系仍然保留。Pressing Buttons 的 Headerless 尾部额外数据没有删除。硬件信息采用 DB 逐来源字段；Dumplog 错位字段保留为证据，不覆盖硬件声明。官方 Verified 状态与本地 DAT 匹配状态分开记录。
+
+```sql
+SELECT * FROM ni_snapshots;
+SELECT status, COUNT(*) FROM v_nointro_status GROUP BY status;
+SELECT * FROM v_nointro_headers WHERE file_id = '12868';
+SELECT * FROM v_nointro_hardware WHERE archive_id = '1214';
+SELECT * FROM ni_reconstructions;
+SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
+SELECT content FROM resources WHERE name = 'nointro-import-report';
+```
+
+内嵌 `nointro.py`、`nointro_schema.sql`、`tests_nointro.py` 和 `build_catalog.py`。按上方提取说明取得代码后，可对自己持有的完整工作库执行：
+
+```bash
+python3 -B nointro.py RetroBoxDB.sqlite '/路径/NES DB Export.zip' '/路径/NES Dump Log.zip'
+```
+
+相同输入摘要重复导入不会重复增加数据，失败会回滚。导入器处理并列 XML 顶层节点、分号 CSV 转义、多文件行和无文件占位。DB XML、Dumplog CSV 的原始字节只进入本地完整库的数据块；公开 Catalog 排除它们和所有 ROM／媒体载荷。来源 ZIP 的原始校验值与重新打包的导出校验值分别保存，ZIP 字节仍在导出时生成。

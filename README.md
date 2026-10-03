@@ -6,11 +6,13 @@ A SQLite metadata catalog for NES ROM preservation, DAT validation, hardware doc
 
 | File | Purpose |
 | --- | --- |
-| [RetroBoxDB.NES.Catalog.sqlite](RetroBoxDB.NES.Catalog.sqlite) | Metadata catalog with embedded processing code |
+| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Metadata catalog with embedded processing code |
 | [RetroBoxDB.NES.Technical-Design.en.md](RetroBoxDB.NES.Technical-Design.en.md) | Detailed technical design |
 | [README.zh-CN.md](README.zh-CN.md) | Chinese guide and reproducibility instructions |
 
-The catalog retains 58,747 file records, 17,548 ROM records, 22,065 DAT ROM entries, and 24,479 archive plans. It includes source filenames, game/release associations, parsed DAT entries, validation outcomes, hardware declarations, header variants, and repair history. Small NES header fields and parsed DAT entry XML are retained as metadata.
+Download the single SQLite file from the link above (GitHub Releases). The expanded catalog exceeds the 100 MiB regular Git file limit; the repository keeps the documentation and release download link.
+
+The catalog retains 58,935 file records, 17,726 ROM records, 22,065 DAT ROM entries, and 24,487 archive plans. It includes source filenames, game/release associations, parsed DAT entries, validation outcomes, hardware declarations, header variants, and repair history. Small NES header fields and parsed DAT entry XML are retained as metadata.
 
 The payload tables `chunks` and `object_chunks` are empty. The catalog was built into a fresh file, so deleted ROM/DAT content is not left in free pages. The populated database is not included in this repository. **The catalog cannot independently reconstruct or export the original files.**
 
@@ -44,12 +46,41 @@ python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("
 
 Replace `stats` with `checksums 1`, `audit`, or `help`. The catalog engine enables `query_only` and rejects content operations. Its audit checks metadata integrity and explicitly reports `payloads_verified=false`.
 
-The `resources` table contains the catalog engine (`engine.py`), production engine (`engine.full.py`), complete schema, frontend extension, fixture builder, configuration, and three test modules. To reproduce the tests, extract `engine.full.py` as **`engine.py`**, plus `schema.sql`, `build_v2.py`, `seed.json`, `tests.py`, `tests_storage.py`, and `tests_frontend.py` into a separate directory, then run:
+The `resources` table contains the catalog engine (`engine.py`), production engine (`engine.full.py`), complete schema, frontend extension, fixture builder, configuration, and four test modules. To reproduce the tests, extract `engine.full.py` as **`engine.py`**, plus `schema.sql`, `build_v2.py`, `seed.json`, `tests.py`, `tests_storage.py`, `tests_frontend.py`, `tests_nointro.py`, `nointro.py`, and `nointro_schema.sql` into a separate directory, then run:
 
 ```bash
-python3 -B -m unittest -v tests tests_storage tests_frontend
+python3 -B -m unittest -v tests tests_storage tests_frontend tests_nointro
 ```
 
-All 47 tests passed using synthetic fixtures. The [Chinese guide](README.zh-CN.md) includes a complete extraction command. Reproducing the original collection requires the same ROM/DAT inputs and a separate populated working database. The test builder uses 4 KiB NES blocks; the populated reference collection selected 8 KiB blocks after measurement.
+All 58 tests passed using synthetic fixtures. The [Chinese guide](README.zh-CN.md) includes a complete extraction command. Reproducing the original collection requires the same ROM/DAT inputs and a separate populated working database. The test builder uses 4 KiB NES blocks; the populated reference collection selected 8 KiB blocks after measurement.
 
 The full storage design combines shared NES bodies and independent headers, block deduplication, lossless compression, and bounded delta references. ZIP plans are encoded once to calculate expected output checksums, then regenerated and verified on export. Historical reference reports describe the populated collection; `catalog-report` and `frontend-report` describe this edition and its frontend extension.
+
+
+## NES DB Export and Dumplog snapshot
+
+The `20261002-002752` import adds 7,704 No-Intro archive identities, 16,154 distinct file records, 13,930 dump sources, 898 Scene release records, and 7,674 Dumplog status rows. Scene releases have their own ID namespace and are not frontend release IDs. Source files are linked through a many-to-many relation, preserving repeated independent dump evidence without duplicating ROM bytes.
+
+The snapshot retains 8,026 declared 16-byte headers (including one on a Headerless-classified record), 245 complete historical headers extracted from notes, and one incomplete historical-header note as an anomaly. Header declarations are distinct from documented PCB/chip evidence. All 6,414 source records with serial information are retained; 6,412 can also anchor a `hardware_assertions` record to an existing ROM or release. Their confidence is `documented`, not independently hardware-verified.
+
+The populated companion reconstructed 178 additional Headered objects using existing bodies and supplied headers, checking size, CRC32, MD5, SHA1, and SHA256. Of these, 30 retain the source's Bad flag. Six previously missing old-DAT targets were recovered and have new TorrentZip plans with complete output checksums. Old Headered coverage is now 7,100/7,288; current Headered remains 7,091/7,387 and current Headerless remains 7,094/7,390. These describe the populated companion; this catalog still contains no ROM body bytes.
+
+Source relationships remain separate from verified reconstruction relationships. There are 15 failed candidate pairings (including ambiguous cross-products), 11 Dumplog hardware-review cases, one Headerless header-field anomaly, and one incomplete historical-header note. Two Steel Legion demo associations cross-match after full checksum validation. Pressing Buttons has extra non-padding bytes in its Headerless record; no bytes were discarded. DB per-source serials take precedence over conflicting Dumplog hardware columns. Official Dumplog verification status is retained separately from local DAT match status.
+
+```sql
+SELECT * FROM ni_snapshots;
+SELECT status, COUNT(*) FROM v_nointro_status GROUP BY status;
+SELECT * FROM v_nointro_headers WHERE file_id = '12868';
+SELECT * FROM v_nointro_hardware WHERE archive_id = '1214';
+SELECT * FROM ni_reconstructions;
+SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
+SELECT content FROM resources WHERE name = 'nointro-import-report';
+```
+
+New embedded resources include `nointro.py`, `nointro_schema.sql`, `tests_nointro.py`, and `build_catalog.py`. After extracting these and the production engine as `engine.py`, import your own inputs into a populated working database with:
+
+```bash
+python3 -B nointro.py RetroBoxDB.sqlite '/path/NES DB Export.zip' '/path/NES Dump Log.zip'
+```
+
+The importer is transactional and idempotent for the same pair of input hashes. It handles the DB export's sibling top-level XML nodes, escaped semicolon CSV, multi-file rows, and no-file placeholders. It rejects catalog imports, conflicting file IDs, malformed hashes, and entity declarations. The original DB XML and Dumplog CSV are stored only in the populated companion's deduplicated content store. Source ZIP identities and canonical export checksums are preserved separately; ZIP streams are regenerated on export. The public catalog excludes those raw source payloads, ROM bodies, and all media payloads.
