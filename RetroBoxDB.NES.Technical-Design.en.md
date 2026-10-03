@@ -37,3 +37,19 @@ Run the embedded catalog engine without extracting files:
 python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite stats
 
 Replace stats with checksums FILE_ID, audit, or help. SQLite viewers can inspect the game catalog and expected checksums directly. The companion RetroBoxDB.sqlite is unchanged and retains all original payloads.
+
+
+Batocera / ScreenScraper extension
+
+The additive frontend extension defines 17 game-information fields, 8 local-state fields, and 15 media roles for Batocera. The views v_screenscraper_games, v_batocera_game_fields, and v_batocera_media_slots expose placeholders for all 7,385 existing releases without storing a row for each unknown value. The catalog title is a labeled fallback; unknown IDs, descriptions, ratings, dates, media paths, URLs, and checksums remain NULL. No network scraping or media download has occurred.
+
+The normalized tables are scraper_providers, frontend_profiles, frontend_platforms, frontend_fields, scraper_game_links, frontend_game_values, and frontend_media_slots. Values support language and region variants. Media references reuse the existing media/files/objects/chunks model in the populated database. Known asset checksums are exposed through media slots; unavailable assets have no invented checksum. A status of available requires a linked media record, and ownership checks prevent linking artwork from an unrelated release/game. Catalog availability remains false even when an asset identity is known.
+
+Mappings use Batocera XML field names and distinguish the ScreenScraper game-ID attribute from XML elements. Configurable initial image choices include screenshots, boxes, and logos. Magazines and cartridge illustrations retain reserved slots without assuming an unconfirmed provider type. Ratings are normalized to 0..1 when values are supplied; dates require frontend formatting by a future adapter. No live ScreenScraper client or gamelist.xml exporter is claimed by this extension.
+
+The full creation schema and the separately stored frontend_schema.sql include this extension. The tests_frontend.py module adds eight tests for placeholder generation, locales, invalid values, provider IDs, media ownership, and checksum visibility. All 47 tests pass when engine.full.py is extracted as engine.py alongside the schema, fixture builder, seed, and test modules. Existing engines continue to use storage schema v2, with frontend_extension_version=1 recorded separately.
+
+Implementation references:
+- Batocera metadata definitions: https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp
+- Batocera ScreenScraper adapter: https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp
+- ScreenScraper API: https://www.screenscraper.fr/webapi2.php
