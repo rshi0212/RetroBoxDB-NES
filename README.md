@@ -15,6 +15,15 @@ A single-file SQLite archive design for NES preservation: exact ROM identities, 
 
 The Catalog exceeds GitHub's 100 MiB regular Git file limit. Download the SQLite attachment from Releases; the repository's source-code ZIP contains documentation and assessment tools/data, not the database attachment. The attachment remains one ordinary SQLite file.
 
+## SNES and Mega Drive
+
+Sibling repositories use the same schema, validation, TorrentZip plans, No-Intro DB/Dumplog import, Chinese names and frontend placeholders. Their storage was re-selected by measurement (storage v4: 64 KiB deduplicated blocks in family-ordered 32 MiB solid LZMA2 groups, about 20% (SNES) and 33% (MD) smaller than the NES v3 engine on the same data). Both old and new No-Intro DATs are imported and diffed, and RetroAchievements hashes are matched for local ROMs, DAT entries and DB Export files.
+
+| Repository | Catalog download |
+| --- | --- |
+| [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) | [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
+| [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) | [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+
 ## Platform research
 
 The [English assessment](RetroBoxDB.Platform-Assessment.en.md) and [Chinese assessment](RetroBoxDB.Platform-Assessment.zh-CN.md) cover 329 DAT members and distinguish measured NES results from metadata-derived estimates and proposed platform work. Reproducible aggregate evidence and a read-only survey tool are in `assessment/`; no original DAT, ROM or media files are included. NES remains the implemented platform. The research update does not replace the Catalog release.

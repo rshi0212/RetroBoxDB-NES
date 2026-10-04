@@ -116,7 +116,7 @@ MAME 的 `disk sha1` 按 CHD 格式／版本标识内部逻辑内容；CHD v5 �
 - **SNES：**区分外部 512 字节 copier header 与内部 ROM header。LoROM／HiROM、增强芯片、SRAM、区域信息写入元数据；修正头部或内部校验不能覆盖保存的原文件。[SNES 文件格式](https://snes.nesdev.org/wiki/ROM_file_formats)。
 - **Mega Drive／32X：**普通 ROM 可直接分块；交错或交换字节序的格式需检测后做可逆变换。不能仅看扩展名，也不能在本地没有这些变体时虚报共享收益。
 - **Atari 7800／Lynx：**本地是 BIN、LYX 清单。如果以后导入相应外部头部版本，可共享验证过的主体并保留各自原头部；不能默认本地已经同时存在。
-- **N64：**根据实际字节序检测交换规则，保留内部头部与精确长度。本地 No-Intro 是 BigEndian 清单，多字节序共享目前只是可能性。[N64 格式](https://n64dev.org/romformats.html)。
+- **N64：**根据实际字节序检测交换规则，保留内部头部与精确长度。本地 No-Intro 是 BigEndian 清单，多字节序共享目前只是可能性。[N64 格式](http://n64dev.org/romformats.html)。
 - **FDS／QD：**可选 FDS 包装头部与磁盘数据分开。QD 不是 FDS 简单换头：FDS 通常每面 65,500 字节，QD 每面 65,536 字节并包含 CRC。校验、顺序、填充和异常必须进入可逆配方。[FDS 文件格式](https://www.nesdev.org/wiki/FDS_file_format)、[磁盘格式](https://www.nesdev.org/wiki/FDS_disk_format)。
 - **DS／DSi／3DS：**保留文件系统偏移、安全／加密区域、签名、填充和精确裁剪状态。解密不等于所有内容都容易压缩。仅能运行却不符合原 DAT 的镜像不算成功复原。[3DS RomFS](https://www.3dbrew.org/wiki/RomFS)、[AES 寄存器](https://3dbrew.org/wiki/AES_Registers)。
 - **混合来源：**Atari 2600 含 WAV；C64 含 CRT／D64／PRG 和芯片数据；VIC-20 可能有按地址划分的芯片；Intellivision 混合 BIN／INT／ROM。GP32 的 `.smc` 不能当成 SNES。Game & Watch ROM 不意味着包含完整美术资源。NES、Satellaview 清单也含辅助文件，必须保留。

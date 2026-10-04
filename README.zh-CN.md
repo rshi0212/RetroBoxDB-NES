@@ -15,6 +15,15 @@ RetroBoxDB 将 ROM 正文、DAT 原始内容、校验信息、硬件来源、可
 
 Catalog 超过普通 Git 文件的 100 MiB 限制，因此通过 Release 发布。下载后仍是一个普通 SQLite 文件；GitHub 自动生成的源码 ZIP 包含仓库文档、调查工具和汇总数据，不包含数据库附件。
 
+## SNES 与 Mega Drive
+
+姊妹仓库沿用相同的表结构、校验、TorrentZip 配方、No-Intro DB／Dumplog、中文名和前端占位；存储层经实测重新选型（存储 v4：64 KiB 去重块按游戏族排序装入 32 MiB LZMA2 实体组，同样数据比 NES v3 引擎小约 20%（SNES）和 33%（MD））。新旧 No-Intro DAT 均导入并做差异对照，RetroAchievements 哈希对本地 ROM、DAT 条目和 DB Export 文件逐一匹配。
+
+| 仓库 | Catalog 下载 |
+| --- | --- |
+| [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) | [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
+| [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) | [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+
 ## 平台研究
 
 [中文评估](RetroBoxDB.Platform-Assessment.zh-CN.md)与[英文评估](RetroBoxDB.Platform-Assessment.en.md)覆盖 329 个 DAT 成员，区分 NES 实测、DAT 推算与平台实施建议。`assessment/` 提供可复现汇总证据和只读调查程序，不包含原始 DAT、ROM 或媒体文件。目前实际实现的平台仍为 NES；这次研究更新不更换 Catalog 发布附件。
