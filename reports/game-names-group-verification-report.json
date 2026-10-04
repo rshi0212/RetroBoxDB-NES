@@ -1,0 +1,50 @@
+{
+  "databases": {
+    "RetroBoxDB.sqlite": {
+      "integrity_check": "ok",
+      "foreign_key_errors": [],
+      "direct_names_and_original_relationships_unchanged": true,
+      "compared_table_sha256": {
+        "game_chinese_names": "d5d7273f9bc39ac2aca9cf4729c96fb7866b3afbfd986d42788d6cccf6d9cf8f",
+        "game_name_imports": "d5cf002d40840777e54ea1b2a55c904e731b197d7a7be245837c065036a2e19c",
+        "game_name_entries": "e2b6a7ccc4f3323d30d966eb8561cdcb3827426e9afedb5e9e7e99b0b4660901",
+        "release_name_links": "572f6d63bed9cf35f5c521152f21b75eac67eb56f856f1a1236ac4ce8015a6ee",
+        "games": "0add2087bdb528d511998b739c694836ead7705dd1c517a2d3a385deb15d9d2c",
+        "releases": "04e3efb853ed7ac31055aaee371000cbd7a2a69c5abd40e9d6f13a26fedfb835",
+        "rom_releases": "0557db789c73c18a03f7edfa122fd0d7bb0284d9ae19200aa9119720c67bf36b",
+        "dat_games": "030e8f5d45390605cbd47c878c3fda690a6eef2841685be3f29515c9ae23894d",
+        "release_dat_games": "db940bb17c6893121d2b4c7d7f83b3471cda5567bafd41cc2c6cbd12623d71e3"
+      },
+      "inherited_release_count": 342,
+      "effective_release_count": 4112,
+      "resources_sha256_verified": true
+    },
+    "RetroBoxDB.NES.Catalog.sqlite": {
+      "integrity_check": "ok",
+      "foreign_key_errors": [],
+      "direct_names_and_original_relationships_unchanged": true,
+      "compared_table_sha256": {
+        "game_chinese_names": "d5d7273f9bc39ac2aca9cf4729c96fb7866b3afbfd986d42788d6cccf6d9cf8f",
+        "game_name_imports": "ba0cd6187e2a7abd832480090857e49106a61b3699ccf7bbcae09501d6e0519f",
+        "game_name_entries": "e2b6a7ccc4f3323d30d966eb8561cdcb3827426e9afedb5e9e7e99b0b4660901",
+        "release_name_links": "572f6d63bed9cf35f5c521152f21b75eac67eb56f856f1a1236ac4ce8015a6ee",
+        "games": "0add2087bdb528d511998b739c694836ead7705dd1c517a2d3a385deb15d9d2c",
+        "releases": "04e3efb853ed7ac31055aaee371000cbd7a2a69c5abd40e9d6f13a26fedfb835",
+        "rom_releases": "0557db789c73c18a03f7edfa122fd0d7bb0284d9ae19200aa9119720c67bf36b",
+        "dat_games": "030e8f5d45390605cbd47c878c3fda690a6eef2841685be3f29515c9ae23894d",
+        "release_dat_games": "db940bb17c6893121d2b4c7d7f83b3471cda5567bafd41cc2c6cbd12623d71e3"
+      },
+      "inherited_release_count": 342,
+      "effective_release_count": 4112,
+      "resources_sha256_verified": true,
+      "payload_table_counts": {
+        "chunks": 0,
+        "object_chunks": 0,
+        "compression_groups": 0
+      }
+    }
+  },
+  "effective_names_identical_in_both_databases": true,
+  "synthetic_tests_passed": 82,
+  "extension_version": 3
+}

@@ -1,0 +1,229 @@
+{
+  "source_name": "Nintendo - Nintendo Entertainment System.csv",
+  "source_sha256": "9a53fff854719587d58af0a97b81cd33a5aa754ca81eb30958d8b1f99d8551ea",
+  "normalization_version": "parentheses-whitespace-casefold-v1",
+  "import_id": 1,
+  "matching_version": "game-qualified-title-v1",
+  "rows": 4453,
+  "rows_with_chinese": 3703,
+  "unique_chinese_names": 1875,
+  "normalized_titles": 2766,
+  "matched_rows": 4420,
+  "matched_rows_with_chinese": 3689,
+  "matched_releases": 4429,
+  "releases_with_chinese": 3698,
+  "matched_games": 2023,
+  "matched_roms": 8896,
+  "matched_links": 4475,
+  "ambiguous_links": 45,
+  "ambiguous_rows": 22,
+  "unmatched_rows": 11,
+  "unresolved_rows": [
+    {
+      "row_number": 2,
+      "name_en": "[BIOS] Game Genie (USA, Europe) (Unl)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 631,
+      "name_en": "EarthBound Beginnings (USA, Europe) (Virtual Console)",
+      "name_cn": "地球冒险",
+      "status": "unmatched"
+    },
+    {
+      "row_number": 1939,
+      "name_en": "Shanggu Shen Jian (China) (Unl)",
+      "name_cn": "爆笑三国志",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2025,
+      "name_en": "Baoxiao Sanguo (China) (Unl)",
+      "name_cn": "爆笑三国",
+      "status": "unmatched"
+    },
+    {
+      "row_number": 2286,
+      "name_en": "Policeman (Spain) (En) (Micro Genius) (Unl)",
+      "name_cn": "警察",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2580,
+      "name_en": "Tank (Taiwan) (En) (Caltron) (Unl)",
+      "name_cn": "坦克",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2581,
+      "name_en": "Tank (Asia) (En) (Asder) (Unl)",
+      "name_cn": "坦克",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2583,
+      "name_en": "Tanque (Spain) (En) (NTDEC) (Unl)",
+      "name_cn": "舌头",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2806,
+      "name_en": "Venice Beach Volleyball (USA) (MB-91) (Unl)",
+      "name_cn": "威尼斯沙滩排球赛",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 2818,
+      "name_en": "Volley Ball (Spain) (En) (Idea-Tek) (Unl)",
+      "name_cn": "排球",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3190,
+      "name_en": "168-in-1 (Asia) (En,Ja) (AB CARD-15) (Pirate)",
+      "name_cn": "游戏168合1",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3194,
+      "name_en": "1993 290-in-1 (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3203,
+      "name_en": "52-in-1 (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3241,
+      "name_en": "Earthworm Jim 2 (Taiwan) (En) (Super Game) (SPC009 Extract) (Pirate)",
+      "name_cn": "蚯蚓吉姆 2",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3271,
+      "name_en": "Hunter (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3355,
+      "name_en": "Street Fighter II - The World Warrior (Asia) (En) (Invincibility) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3367,
+      "name_en": "Super 9999999-in-1 (China) (En) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3378,
+      "name_en": "Super Gun Game 1992 Puzzle Edition 36-in-1 (China) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3423,
+      "name_en": "93 Chaoji Hun (Asia) (En) (Spread Gun Cheat) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3542,
+      "name_en": "Diveman (Asia) (En) (Unl)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3716,
+      "name_en": "Monster Brother (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3814,
+      "name_en": "Sky Invader (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3830,
+      "name_en": "Street Fighter II - The World Warrior (Taiwan) (En) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 3923,
+      "name_en": "Tunshi Tiandi - Sanguo Waizhuan (China) (Xianfeng) (NTSC) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3924,
+      "name_en": "Tunshi Tiandi - Sanguo Waizhuan (China) (Xianfeng) (PAL) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3929,
+      "name_en": "Venice Beach Volleyball (USA) (NINA-06) (Unl)",
+      "name_cn": "威尼斯沙滩排球赛",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3942,
+      "name_en": "Wonder Rabbit (Asia) (En) (Unl)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 3991,
+      "name_en": "93 Chaoji Hun (China) (Pirate)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 4127,
+      "name_en": "Super Micro Machines 1999 (Asia) (En) (NT-6036) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 4149,
+      "name_en": "93 Zuixin Yizhi Chaoji Jinka 4-in-1 (China) (Unl)",
+      "name_cn": null,
+      "status": "unmatched"
+    },
+    {
+      "row_number": 4200,
+      "name_en": "Earthworm Jim 2 (Taiwan) (En) (Super Game) (Super 808 Extract) (Pirate)",
+      "name_cn": "蚯蚓吉姆 2",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 4201,
+      "name_en": "Earthworm Jim 2 (Taiwan) (En) (Super Game) (SPC009 Extract) (Pirate) (Alt)",
+      "name_cn": "蚯蚓吉姆 2",
+      "status": "ambiguous"
+    },
+    {
+      "row_number": 4342,
+      "name_en": "999999999-in-1 (Asia) (En) (Pirate)",
+      "name_cn": null,
+      "status": "ambiguous"
+    }
+  ],
+  "multiple_translation_keys": [
+    "nhk gakuen - space school - sansu 6 nen"
+  ],
+  "matched_rows_by_method": {
+    "exact_title": 4376,
+    "qualified_title": 40,
+    "structured_title": 4
+  }
+}

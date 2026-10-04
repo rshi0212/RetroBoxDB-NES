@@ -1,0 +1,35 @@
+{
+  "platform_id": 1,
+  "policy": "inherit only a unique group translation; retain all direct aliases",
+  "game_status_counts": {
+    "missing": 1754,
+    "needs_review": 167,
+    "unique_translation": 1556
+  },
+  "release_counts_by_basis": {
+    "direct": 3698,
+    "group_inherited": 389
+  },
+  "effective_releases_with_chinese": 4087,
+  "effective_roms_with_chinese": 8100,
+  "release_coverage_by_role": [
+    {
+      "role": "clone",
+      "total": 3908,
+      "direct": 1991,
+      "inherited": 375,
+      "effective": 2366,
+      "direct_percent": 50.95,
+      "effective_percent": 60.54
+    },
+    {
+      "role": "parent",
+      "total": 3477,
+      "direct": 1707,
+      "inherited": 14,
+      "effective": 1721,
+      "direct_percent": 49.09,
+      "effective_percent": 49.5
+    }
+  ]
+}

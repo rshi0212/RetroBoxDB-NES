@@ -1,0 +1,95 @@
+{
+  "tag": "nes-names-v4-20261004",
+  "title": "NES Catalog: Chinese names and parent/clone matching",
+  "base_url": "https://github.com/rshi0212/RetroBoxDB-NES/releases/download/nes-v3-20261003/RetroBoxDB.NES.Catalog.sqlite",
+  "base_sha256": "fd6652970362892085092f0c2a8df4db4ff67007b659a399b305064827513371",
+  "source_csv": "data/Nintendo - Nintendo Entertainment System.csv",
+  "source_csv_sha256": "9a53fff854719587d58af0a97b81cd33a5aa754ca81eb30958d8b1f99d8551ea",
+  "source_imported_at": "2026-10-04T04:33:42.599884+00:00",
+  "name_table_sha256": {
+    "game_chinese_names": "153d89359a83a232b21643e064e81ef32f3bf8dd7589d2b9af4ea9fa4650df99",
+    "game_name_imports": "dfb0e56540a4308ec411ad1c9c8089723b31c2ae5576cb14a36b1f076ff07dec",
+    "game_name_entries": "f57192f20013726b8bc8dc805c1b06dfd4a2388a0e93955e9b2afccef21fa724",
+    "game_name_match_decisions": "3005786a669c9775e86906071258d8a9bd946eddcae2937e5a30c9fa6965413d",
+    "release_name_links": "b8a6aac33c686944ae4c03917671f212ede8112ad3d0eb557b49d4de20afb20e",
+    "v_release_effective_chinese_names": "79614a07867e28c50d8725653eb034e2c58f739ecfcf85b5fdbf106ab24183f4"
+  },
+  "resources": {
+    "README.en": {
+      "kind": "markdown",
+      "path": "README.md"
+    },
+    "README.zh-CN": {
+      "kind": "markdown",
+      "path": "README.zh-CN.md"
+    },
+    "TECHNICAL-DESIGN.en": {
+      "kind": "markdown",
+      "path": "RetroBoxDB.NES.Technical-Design.en.md"
+    },
+    "tests_game_names.py": {
+      "kind": "python",
+      "path": "tests/test_game_names.py"
+    },
+    "import_game_names.py": {
+      "kind": "python",
+      "path": "tools/import_game_names.py"
+    },
+    "game_names_schema.sql": {
+      "kind": "sql",
+      "path": "tools/game_names_schema.sql"
+    },
+    "build_name_catalog_release.py": {
+      "kind": "python",
+      "path": "tools/build_name_catalog_release.py"
+    },
+    "documentation-index": {
+      "kind": "json",
+      "path": "release/documentation-index.json"
+    },
+    "game-names/group-report": {
+      "kind": "json",
+      "path": "reports/game-names-group-report.json"
+    },
+    "game-names/group-review.csv": {
+      "kind": "csv",
+      "path": "reports/game-names-review.csv"
+    },
+    "game-names/group-verification-report": {
+      "kind": "json",
+      "path": "reports/game-names-group-verification-report.json"
+    },
+    "game-names/import-report": {
+      "kind": "json",
+      "path": "reports/game-names-import-report.json"
+    },
+    "game-names/match-review.csv": {
+      "kind": "csv",
+      "path": "reports/game-names-match-review.csv"
+    },
+    "game-names/matching-changes": {
+      "kind": "json",
+      "path": "reports/game-names-matching-changes.json"
+    },
+    "game-names/matching-verification-report": {
+      "kind": "json",
+      "path": "reports/game-names-matching-verification-report.json"
+    },
+    "game-names/verification-report": {
+      "kind": "json",
+      "path": "reports/game-names-verification-report.json"
+    },
+    "game-names/test-report": {
+      "kind": "text",
+      "path": "reports/history/game-names-v2-tests.txt"
+    },
+    "game-names/group-test-report": {
+      "kind": "text",
+      "path": "reports/history/game-names-v3-tests.txt"
+    },
+    "game-names/matching-test-report": {
+      "kind": "text",
+      "path": "reports/game-names-matching-tests.txt"
+    }
+  }
+}

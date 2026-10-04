@@ -1,0 +1,213 @@
+{
+  "old_effective_release_count": 4112,
+  "effective_release_count": 4087,
+  "removed_cross_game_source_links": 488,
+  "removed_effective_names": [
+    {
+      "release_id": 46,
+      "game_id": 36,
+      "title": "168-in-1 (Asia) (En,Ja) (ABCARD-15) (Pirate)",
+      "name_cn": "游戏168合1",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 723,
+      "game_id": 368,
+      "title": "Baoxiao Sanguo - Jacks in Tri-Empire (China) (v1.1) (Unl)",
+      "name_cn": "爆笑三国志",
+      "old_basis": "group_inherited"
+    },
+    {
+      "release_id": 724,
+      "game_id": 368,
+      "title": "Baoxiao Sanguo - Jacks in Tri-Empire (China) (Unl)",
+      "name_cn": "爆笑三国志",
+      "old_basis": "group_inherited"
+    },
+    {
+      "release_id": 725,
+      "game_id": 368,
+      "title": "Shanggu Shen Jian (China) (Hengge) (Unl)",
+      "name_cn": "爆笑三国志",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 749,
+      "game_id": 378,
+      "title": "Baseball (USA) (Intellivision) (Aftermarket) (Unl)",
+      "name_cn": "任天堂棒球",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 1061,
+      "game_id": 520,
+      "title": "Brian Lara 2003 (China) (En) (Aftermarket) (Pirate)",
+      "name_cn": "国际板球赛",
+      "old_basis": "group_inherited"
+    },
+    {
+      "release_id": 1062,
+      "game_id": 520,
+      "title": "International Cricket (China) (En) (Aftermarket) (Pirate)",
+      "name_cn": "国际板球赛",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 1756,
+      "game_id": 843,
+      "title": "Destiny of an Emperor (USA) (Capcom Town)",
+      "name_cn": "吞食天地",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 1852,
+      "game_id": 885,
+      "title": "Donkey Kong (World) (Demo) (Vertical Orientation) (Aftermarket) (Pirate)",
+      "name_cn": "大金刚",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 1943,
+      "game_id": 915,
+      "title": "Dr. Mario (Asia) (En) (VT605) (Pirate)",
+      "name_cn": "马里奥医生",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 3016,
+      "game_id": 1428,
+      "title": "AV Pachi-Slot (China) (Ja) (Aftermarket) (Pirate)",
+      "name_cn": "A.V.柏青哥",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 3858,
+      "game_id": 1831,
+      "title": "Poke Block (Taiwan) (Unl)",
+      "name_cn": "扑克方块",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4162,
+      "game_id": 1954,
+      "title": "Millipede (USA) (Atari Flashback) (Aftermarket) (Unl)",
+      "name_cn": "杀虫大战",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4471,
+      "game_id": 2113,
+      "title": "NHK Gakuen - Space School - Sansu 6 Nen (Ge) (Japan)",
+      "name_cn": "NHK学园 - 算术六年级上",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4472,
+      "game_id": 2114,
+      "title": "NHK Gakuen - Space School - Sansu 6 Nen (Jou) (Japan)",
+      "name_cn": "NHK学园 - 算术六年级下",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4777,
+      "game_id": 2256,
+      "title": "AV Poker (China) (Ja) (Aftermarket) (Pirate)",
+      "name_cn": "AV美女扑克牌",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4897,
+      "game_id": 2327,
+      "title": "Policeman (Spain) (En) (Unl)",
+      "name_cn": "警察",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 4923,
+      "game_id": 2345,
+      "title": "Mike Tyson's Intergalactic Power Punch (USA) (Proto) (NintendoAge) (Aftermarket) (Pirate)",
+      "name_cn": "麦克泰森拳击",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 5035,
+      "game_id": 2377,
+      "title": "Punch-Out!! (USA) (Beta)",
+      "name_cn": "拳无虚发",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6465,
+      "game_id": 3045,
+      "title": "Tank (Taiwan) (En) (Unl)",
+      "name_cn": "坦克",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6466,
+      "game_id": 3045,
+      "title": "Tank (Asia) (En) (Extract) (Unl)",
+      "name_cn": "坦克",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6467,
+      "game_id": 3045,
+      "title": "Tanque (Spain) (En) (Unl)",
+      "name_cn": "舌头",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6595,
+      "game_id": 3091,
+      "title": "Tetris (World) (Aftermarket) (Unl)",
+      "name_cn": "俄罗斯方块",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6655,
+      "game_id": 3120,
+      "title": "Tiles of Fate (USA) (Beta 1) (Unl)",
+      "name_cn": "天命麻将",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6656,
+      "game_id": 3120,
+      "title": "Tiles of Fate (USA) (Beta 2) (Unl)",
+      "name_cn": "天命麻将",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6657,
+      "game_id": 3120,
+      "title": "Tiles of Fate (USA) (Beta 3) (Unl)",
+      "name_cn": "天命麻将",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6658,
+      "game_id": 3120,
+      "title": "Tiles of Fate (USA) (Beta 4) (Unl)",
+      "name_cn": "天命麻将",
+      "old_basis": "direct"
+    },
+    {
+      "release_id": 6999,
+      "game_id": 3272,
+      "title": "Volley Ball (Spain) (En) (Unl)",
+      "name_cn": "排球",
+      "old_basis": "direct"
+    }
+  ],
+  "added_effective_names": [
+    {
+      "release_id": 6999,
+      "game_id": 3272,
+      "title": "Volley Ball (Spain) (En) (Unl)",
+      "name_cn": "威尼斯沙滩排球赛",
+      "basis": "group_inherited"
+    }
+  ],
+  "direct_to_inherited_name_count": 49
+}

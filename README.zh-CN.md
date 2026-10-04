@@ -19,6 +19,45 @@ Catalog 超过普通 Git 文件的 100 MiB 限制，因此通过 Release 发布�
 
 [中文评估](RetroBoxDB.Platform-Assessment.zh-CN.md)与[英文评估](RetroBoxDB.Platform-Assessment.en.md)覆盖 329 个 DAT 成员，区分 NES 实测、DAT 推算与平台实施建议。`assessment/` 提供可复现汇总证据和只读调查程序，不包含原始 DAT、ROM 或媒体文件。目前实际实现的平台仍为 NES；这次研究更新不更换 Catalog 发布附件。
 
+## CSV 中英文游戏名
+
+本地完整库和 Catalog 保留 `Nintendo - Nintendo Entertainment System.csv` 的 **4,453 条**原始记录，其中 **3,703 条**提供中文名。名称扩展 v4 按游戏身份消歧后，**4,420 条**确认关联到 **4,429 个发行版本、2,023 个游戏和 8,896 条 ROM 记录**；其中 **3,698 个发行版本**有直接匹配的中文名称。**22 条**保留为待消歧候选，**11 条**尚无同名候选。这里是名称匹配，不代表新增哈希验证或 ROM 正文；存储格式仍为 v3。
+
+**3,703 条中文名去重为 1,875 个唯一名称**，集中保存在 `game_chinese_names`，通过 `game_name_entries.name_cn_id` 引用。同名中文不会按英文名、地区或版本重复存储；`v_release_chinese_names` 提供每个发行版本去重后的中文名称。`game_name_entries`／`game_name_imports` 保留原始英文、去括号英文、CSV 记录序号和来源 SHA256，`release_name_links` 保留匹配依据；原始 CSV 文本（含原始中文和换行）保存在 `resources`，可追溯每条来源。
+
+去括号英文名现在仅用于候选检索和简洁显示，不作为跨游戏自动关联的充分依据。匹配依次使用完整标题、括号字段等价匹配、身份限定字段匹配，每条已确认来源只能对应一个 `game_id`。解析结果保留地区、语言、版本和身份标识；未知括号按身份标识保留。册别、厂商、卡带编号参与识别，`Bulletproof`／`Bullet-Proof` 支持已知别名归一化，括号顺序不影响结构化匹配。地区以及 Beta／Proto 等标记在同名跨组时参与消歧；无法消歧的候选不进入标准名或继承依据。
+
+NHK 六年级 `(Jou)`／`(Ge)` 已分别关联“上”／“下”，两个独立游戏不再共享错配名称。`Baseball (USA) (Intellivision)` 不再从另一个同名游戏组获得“任天堂棒球”。本次移除了 **488 条跨游戏组的旧来源关联**；其余部分旧的版本名称匹配改为明确的组内继承。原始 CSV、中文名去重记录和游戏分组均保留。决策及解析字段见 `game_name_match_decisions`，候选清单见 [game-names-match-review.csv](reports/game-names-match-review.csv)，变更明细见 [game-names-matching-changes.json](reports/game-names-matching-changes.json)。
+
+Parent／Clone 通过现有 `game_id` 共享游戏组名称。**1,556 个组**只有一个已确认中文译名，该名称自动作为组内标准名，为 **14 个 Parent 和 375 个 Clone**提供继承名称。计入继承后，**4,087 个发行版本、8,100 条本地 ROM 记录**有可用中文名。按发行条目统计，Parent 中文覆盖率为 **49.50%**（1,721／3,477），Clone 为 **60.54%**（2,366／3,908）。这是中文覆盖率，区别于英文名称直接匹配率。消歧前的 4,112 个发行版本包含部分依据不足的关联，不再作为当前覆盖数。
+
+另有 **167 个已确认多译名组**标记为 `needs_review`，标准名保持空，已确认的别名保留；**1,754 个组**尚无已确认中文名。待选标准名清单见 [game-names-review.csv](reports/game-names-review.csv)，与尚未确认游戏身份的 22 条来源候选分别统计。标准名及继承关系通过数据库视图实时推导，不复制中文字符串，也不把继承伪装成 CSV 直接匹配。新增来源若令唯一译名变为多译名，继承会自动停止。`v_game_chinese_name_evidence` 可追溯组内名称的原始发行版本和 CSV 来源。
+
+**11 条未匹配记录仍保存在库中**，其中有中文名的是 `EarthBound Beginnings`（地球冒险）和 `Baoxiao Sanguo`（爆笑三国）。空白中文名保持为空，不生成译名。既有游戏标题、ROM、校验值和前端字段不变。GitHub Release 提供无载荷 Catalog，完整数据库保留在本地；前文压缩体积是此前 v3 迁移时的测量值。
+
+```sql
+-- 按游戏或 ROM 查询；发行级视图还包含原始英文名和来源。
+SELECT * FROM v_game_names WHERE name_cn LIKE '%魂斗罗%';
+SELECT * FROM v_release_chinese_names WHERE name_cn LIKE '%魂斗罗%';
+-- 推荐用于展示：同时返回 direct / group_inherited，保留多译名。
+SELECT * FROM v_release_effective_chinese_names WHERE name_cn LIKE '%地球冒险%';
+SELECT * FROM v_rom_effective_chinese_names WHERE rom_id = 1;
+SELECT * FROM v_game_chinese_name_status WHERE status = 'needs_review';
+SELECT DISTINCT rom_id, release_id, name_en, name_cn
+FROM v_rom_game_names WHERE name_cn LIKE '%魂斗罗%';
+SELECT * FROM v_game_name_import_status WHERE status != 'matched';
+SELECT * FROM v_game_name_match_review;
+SELECT content FROM resources WHERE name = 'game-names/import-report';
+SELECT content FROM resources WHERE name = 'game-names/group-report';
+```
+
+可重复运行导入，相同平台和 CSV SHA256 不会重复建源或记录；所有已存来源的关联会按当前目录及规则刷新，避免旧来源保留已失效的跨组匹配。导入采用事务，`--dry-run` 会回滚全部更改，包括扩展升级。独立脚本与 SQL 同时内嵌于 `resources`（`import_game_names.py`、`game_names_schema.sql`），提取到同一目录即可使用。
+
+```bash
+python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertainment System.csv" RetroBoxDB.sqlite RetroBoxDB.NES.Catalog.sqlite
+python3 -B -m unittest discover -s tests -v
+```
+
 ## 分组压缩已经实施
 
 独立 LZMA 块按最多 **2 MiB 未压缩内容**组成一组，使用 4 MiB 字典的 LZMA2 压缩。每个原有块的编号、大小和 SHA256 保留；对象按原块映射恢复正文，Headered ROM 再拼接独立保存的准确 16 字节头部。

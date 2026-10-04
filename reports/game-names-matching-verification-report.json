@@ -1,0 +1,465 @@
+{
+  "extension_version": 4,
+  "databases": {
+    "RetroBoxDB.sqlite": {
+      "integrity_check": "ok",
+      "foreign_key_errors": [],
+      "original_data_tables_unchanged": 53,
+      "original_data_fingerprints": {
+        "archive_entries": {
+          "count": 24490,
+          "sha256": "0db87bb9179971049b77ac625f2cd210f9bd5bd73a5dd5a199ba3879f955987b"
+        },
+        "archive_plans": {
+          "count": 24487,
+          "sha256": "77c74ef90ab0dc9806a5702f03f0a73b6f483e9351ee1f97c9b3986bde816ed3"
+        },
+        "archive_profiles": {
+          "count": 1,
+          "sha256": "923f1acf67cd1b0d8edbebb8940d8c053dec6f9b48ae6b7d113f42c7c6b6d9e6"
+        },
+        "chunks": {
+          "count": 165019,
+          "sha256": "eb24c27c95dbddec3b60615c52ab01bbf917dd94609d7848a715ecad2a31b0b8"
+        },
+        "compression_groups": {
+          "count": 489,
+          "sha256": "2d1a1c382388eb27939967b3f8f70b28468e6ea793c5b48fcacced06f55595e2"
+        },
+        "dat_changes": {
+          "count": 7444,
+          "sha256": "b0b73afda80ebaab78ea2e0499438e91b111f0fec25a8d2e6b854a1ac8e8e6f1"
+        },
+        "dat_games": {
+          "count": 22059,
+          "sha256": "0095bf84f7a3d037da3fbb3071f58516806e6dcec7cfb327461c0416568e8cb7"
+        },
+        "dat_roms": {
+          "count": 22065,
+          "sha256": "54e9191f67bd94a2efc5f7924f507c4e07067a85fa24e4d4f4589a86ea5a920c"
+        },
+        "dat_sets": {
+          "count": 3,
+          "sha256": "f8454a063145fffe80ed33a83b39f57025c0602da03966835a1319016a22face"
+        },
+        "events": {
+          "count": 998,
+          "sha256": "eaeabb9f77beddb59d88818a004d8b58d68d67c5e731fc79895bb652390acb2d"
+        },
+        "file_archives": {
+          "count": 35984,
+          "sha256": "041a000fcd6d39c95f54bb43f20e769aeb9fdbba4589a7da5d7fa626afb87f09"
+        },
+        "files": {
+          "count": 58935,
+          "sha256": "bf0031fb510d65a44877c17e09656c48d8d81b94edf8cfb394a9795846674baa"
+        },
+        "frontend_fields": {
+          "count": 40,
+          "sha256": "0f5870712f3d541aad650788362c273540bcda4eb3a4303c79c7cde92f6a8727"
+        },
+        "frontend_game_values": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "frontend_media_slots": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "frontend_platforms": {
+          "count": 1,
+          "sha256": "70286ed3a5fab30da477119db43bb56614701e8ecf1f3d49523135dd6639dff5"
+        },
+        "frontend_profiles": {
+          "count": 1,
+          "sha256": "4c871ee12a89681cb2ad0f2eb2f7c2ca6392d53a2f8e085902fa673ff76782ee"
+        },
+        "games": {
+          "count": 3477,
+          "sha256": "7461239c89050c41e781f3ee7573c419a891878d683eb48f77ebe0454900ee3c"
+        },
+        "hardware_assertions": {
+          "count": 6412,
+          "sha256": "c0e7f083b2058bc2d94b0c9a160947d5bcc1932d83f33b45f0abe6a79cf6d6c1"
+        },
+        "media": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "naming_decisions": {
+          "count": 18144,
+          "sha256": "ab0d73f3e5b095c02fe6173c3c16631db09024144ae63b347a5637b6a0f0498a"
+        },
+        "nes_hardware": {
+          "count": 9651,
+          "sha256": "14bbfcab8ce19953ef4b8d3b9483ecf95ed16d13b4e2344eb502c69d913f3b75"
+        },
+        "nes_recipes": {
+          "count": 9651,
+          "sha256": "ad7322327b86187db34b969eaa23dc458e2801c9727a7c3e179885aa3b624487"
+        },
+        "ni_anomalies": {
+          "count": 28,
+          "sha256": "f04777f883389c5579b747cba2dcdae2469fe844f4b37031ddb840412ccd087c"
+        },
+        "ni_archive_releases": {
+          "count": 7385,
+          "sha256": "57ef3ad05c986858f12495578209d5841cb288bd6dec2d7347fed0fb944766b2"
+        },
+        "ni_archives": {
+          "count": 7704,
+          "sha256": "73256043e7c143f694698105dffe997bf622467de2d399229cc534d199a852ed"
+        },
+        "ni_dat_links": {
+          "count": 21077,
+          "sha256": "421d4c54ceae55481bef2cf38c686808be6e84019081c63e005a7e73a9a771c6"
+        },
+        "ni_dumplog": {
+          "count": 7674,
+          "sha256": "770c52735e7a4c3cecfb4048048e23134d4c56a4f1992b8d817462e9ba5f7163"
+        },
+        "ni_dumplog_files": {
+          "count": 7660,
+          "sha256": "66877f93a75ac3f8341c47afe7645214f3c785685989d17dd1c2c73619d3b725"
+        },
+        "ni_files": {
+          "count": 16154,
+          "sha256": "d4df21520c454142784925fa28356ec78fd7d6e37fd47ca3869457cd989d4052"
+        },
+        "ni_headers": {
+          "count": 8271,
+          "sha256": "456445fcf420f35082a72ed46101c68a10027dfed063b221073942b11c1590a7"
+        },
+        "ni_pair_checks": {
+          "count": 8040,
+          "sha256": "579cf58e29fada086d7871e2c3554c6994bc161655c650b0b1f7c928be95459b"
+        },
+        "ni_reconstructions": {
+          "count": 178,
+          "sha256": "bfb982ba02e1eaf2f45fe988c84396dc6c6fb2351823e2ce4d0ba8b750542390"
+        },
+        "ni_snapshots": {
+          "count": 1,
+          "sha256": "240904536baff1c9b6613903566c5e17650addabcce1f4f9844aa6af8907e02c"
+        },
+        "ni_source_files": {
+          "count": 29530,
+          "sha256": "2d2ac0a5cad4a4cadb8b2b824283d5260ee91a164ef7919add3df74cd0f16948"
+        },
+        "ni_sources": {
+          "count": 14828,
+          "sha256": "da28b8e8a437260a8fa04dbc4dd560bf16e083dc9d9aecb485030147225d5f7e"
+        },
+        "object_chunks": {
+          "count": 445328,
+          "sha256": "3d2d27b9a4b95c9468ae7fe5da82a8184c2da0d5c2735bdac5dacd14346e59f8"
+        },
+        "objects": {
+          "count": 42221,
+          "sha256": "5aaa609b1b8d0bf0e042b727aef1120e0cc86f81a9f1f2c6ea4c01858f4f12c4"
+        },
+        "package_members": {
+          "count": 14189,
+          "sha256": "9ddf5747e87a6adc01890823f61277ebe9eced971c42d8d23af400a5b083bd61"
+        },
+        "packages": {
+          "count": 14187,
+          "sha256": "98debd6c8764fec302f62aac87d71ca6f5e1cfc4f7a6803c3117decdef1478e4"
+        },
+        "platforms": {
+          "count": 1,
+          "sha256": "f58ab3ba429eb6195cb34545886c5927b5871c16e988e6b33b2e1d78de5e39a4"
+        },
+        "release_dat_games": {
+          "count": 14770,
+          "sha256": "4eeaa6659829b219c3ce6aa2baf86486baac139b4b3a1f54ddd196353bbb167e"
+        },
+        "releases": {
+          "count": 7385,
+          "sha256": "c5d0fad4b732d682a7a934622145d00d1fd3763b1704a0a72153e45b61911194"
+        },
+        "repair_attempts": {
+          "count": 1281,
+          "sha256": "515c13f5229504e394530f8a4d2768bec875ce396eb894e06484580a070a1fdd"
+        },
+        "rom_components": {
+          "count": 24162,
+          "sha256": "84f6d34b8329a0f62beabcfcaf3574e45b8850eb488e7003f5b646ac9fe67930"
+        },
+        "rom_releases": {
+          "count": 15519,
+          "sha256": "daf6405e42b1273f1c011d79df1a7e61bbef5cfe45d10f4c42c2dabad217f6c0"
+        },
+        "roms": {
+          "count": 17726,
+          "sha256": "1fd5d68668fcc3db995e0cbdf66b2e07d88077804cd7777acb8b177e8af0b05f"
+        },
+        "scrape_records": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scraper_game_links": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scraper_providers": {
+          "count": 1,
+          "sha256": "2710a668fac1c9a4a5117ce18075ff9fd3029fcf8c2a992d4127270ff1252b02"
+        },
+        "sources": {
+          "count": 14834,
+          "sha256": "1e0e39829e3ffdd37b82b94f14b37bd1d2adb4593ce93031c65eecf3a9ede001"
+        },
+        "transformations": {
+          "count": 1150,
+          "sha256": "76cfcb92ee6a83d08d31d858a0e3106d57bb1ad4afef4a8a0074b02eb14ae452"
+        },
+        "validations": {
+          "count": 29688,
+          "sha256": "5eaa3750dda54d5d163699fa0d3ce98b5caa5cbcdb428e15ad68b00934412397"
+        }
+      },
+      "source_rows_and_chinese_dictionary_unchanged": true,
+      "resources_sha256_verified": true,
+      "confirmed_entries_resolve_to_one_game": true,
+      "unconfirmed_candidates_excluded_from_name_evidence": true,
+      "inheritance_uses_unique_confirmed_group_names": true,
+      "nhk_volumes_correct": true,
+      "intellivision_baseball_not_misnamed": true
+    },
+    "RetroBoxDB.NES.Catalog.sqlite": {
+      "integrity_check": "ok",
+      "foreign_key_errors": [],
+      "original_data_tables_unchanged": 53,
+      "original_data_fingerprints": {
+        "archive_entries": {
+          "count": 24490,
+          "sha256": "0db87bb9179971049b77ac625f2cd210f9bd5bd73a5dd5a199ba3879f955987b"
+        },
+        "archive_plans": {
+          "count": 24487,
+          "sha256": "77c74ef90ab0dc9806a5702f03f0a73b6f483e9351ee1f97c9b3986bde816ed3"
+        },
+        "archive_profiles": {
+          "count": 1,
+          "sha256": "923f1acf67cd1b0d8edbebb8940d8c053dec6f9b48ae6b7d113f42c7c6b6d9e6"
+        },
+        "chunks": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "compression_groups": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "dat_changes": {
+          "count": 7444,
+          "sha256": "b0b73afda80ebaab78ea2e0499438e91b111f0fec25a8d2e6b854a1ac8e8e6f1"
+        },
+        "dat_games": {
+          "count": 22059,
+          "sha256": "0095bf84f7a3d037da3fbb3071f58516806e6dcec7cfb327461c0416568e8cb7"
+        },
+        "dat_roms": {
+          "count": 22065,
+          "sha256": "54e9191f67bd94a2efc5f7924f507c4e07067a85fa24e4d4f4589a86ea5a920c"
+        },
+        "dat_sets": {
+          "count": 3,
+          "sha256": "f8454a063145fffe80ed33a83b39f57025c0602da03966835a1319016a22face"
+        },
+        "events": {
+          "count": 998,
+          "sha256": "eaeabb9f77beddb59d88818a004d8b58d68d67c5e731fc79895bb652390acb2d"
+        },
+        "file_archives": {
+          "count": 35984,
+          "sha256": "041a000fcd6d39c95f54bb43f20e769aeb9fdbba4589a7da5d7fa626afb87f09"
+        },
+        "files": {
+          "count": 58935,
+          "sha256": "bf0031fb510d65a44877c17e09656c48d8d81b94edf8cfb394a9795846674baa"
+        },
+        "frontend_fields": {
+          "count": 40,
+          "sha256": "0f5870712f3d541aad650788362c273540bcda4eb3a4303c79c7cde92f6a8727"
+        },
+        "frontend_game_values": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "frontend_media_slots": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "frontend_platforms": {
+          "count": 1,
+          "sha256": "70286ed3a5fab30da477119db43bb56614701e8ecf1f3d49523135dd6639dff5"
+        },
+        "frontend_profiles": {
+          "count": 1,
+          "sha256": "4c871ee12a89681cb2ad0f2eb2f7c2ca6392d53a2f8e085902fa673ff76782ee"
+        },
+        "games": {
+          "count": 3477,
+          "sha256": "7461239c89050c41e781f3ee7573c419a891878d683eb48f77ebe0454900ee3c"
+        },
+        "hardware_assertions": {
+          "count": 6412,
+          "sha256": "c0e7f083b2058bc2d94b0c9a160947d5bcc1932d83f33b45f0abe6a79cf6d6c1"
+        },
+        "media": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "naming_decisions": {
+          "count": 18144,
+          "sha256": "ab0d73f3e5b095c02fe6173c3c16631db09024144ae63b347a5637b6a0f0498a"
+        },
+        "nes_hardware": {
+          "count": 9651,
+          "sha256": "14bbfcab8ce19953ef4b8d3b9483ecf95ed16d13b4e2344eb502c69d913f3b75"
+        },
+        "nes_recipes": {
+          "count": 9651,
+          "sha256": "ad7322327b86187db34b969eaa23dc458e2801c9727a7c3e179885aa3b624487"
+        },
+        "ni_anomalies": {
+          "count": 28,
+          "sha256": "f04777f883389c5579b747cba2dcdae2469fe844f4b37031ddb840412ccd087c"
+        },
+        "ni_archive_releases": {
+          "count": 7385,
+          "sha256": "57ef3ad05c986858f12495578209d5841cb288bd6dec2d7347fed0fb944766b2"
+        },
+        "ni_archives": {
+          "count": 7704,
+          "sha256": "73256043e7c143f694698105dffe997bf622467de2d399229cc534d199a852ed"
+        },
+        "ni_dat_links": {
+          "count": 21077,
+          "sha256": "421d4c54ceae55481bef2cf38c686808be6e84019081c63e005a7e73a9a771c6"
+        },
+        "ni_dumplog": {
+          "count": 7674,
+          "sha256": "770c52735e7a4c3cecfb4048048e23134d4c56a4f1992b8d817462e9ba5f7163"
+        },
+        "ni_dumplog_files": {
+          "count": 7660,
+          "sha256": "66877f93a75ac3f8341c47afe7645214f3c785685989d17dd1c2c73619d3b725"
+        },
+        "ni_files": {
+          "count": 16154,
+          "sha256": "d4df21520c454142784925fa28356ec78fd7d6e37fd47ca3869457cd989d4052"
+        },
+        "ni_headers": {
+          "count": 8271,
+          "sha256": "456445fcf420f35082a72ed46101c68a10027dfed063b221073942b11c1590a7"
+        },
+        "ni_pair_checks": {
+          "count": 8040,
+          "sha256": "579cf58e29fada086d7871e2c3554c6994bc161655c650b0b1f7c928be95459b"
+        },
+        "ni_reconstructions": {
+          "count": 178,
+          "sha256": "bfb982ba02e1eaf2f45fe988c84396dc6c6fb2351823e2ce4d0ba8b750542390"
+        },
+        "ni_snapshots": {
+          "count": 1,
+          "sha256": "240904536baff1c9b6613903566c5e17650addabcce1f4f9844aa6af8907e02c"
+        },
+        "ni_source_files": {
+          "count": 29530,
+          "sha256": "2d2ac0a5cad4a4cadb8b2b824283d5260ee91a164ef7919add3df74cd0f16948"
+        },
+        "ni_sources": {
+          "count": 14828,
+          "sha256": "da28b8e8a437260a8fa04dbc4dd560bf16e083dc9d9aecb485030147225d5f7e"
+        },
+        "object_chunks": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "objects": {
+          "count": 42221,
+          "sha256": "5aaa609b1b8d0bf0e042b727aef1120e0cc86f81a9f1f2c6ea4c01858f4f12c4"
+        },
+        "package_members": {
+          "count": 14189,
+          "sha256": "9ddf5747e87a6adc01890823f61277ebe9eced971c42d8d23af400a5b083bd61"
+        },
+        "packages": {
+          "count": 14187,
+          "sha256": "98debd6c8764fec302f62aac87d71ca6f5e1cfc4f7a6803c3117decdef1478e4"
+        },
+        "platforms": {
+          "count": 1,
+          "sha256": "f58ab3ba429eb6195cb34545886c5927b5871c16e988e6b33b2e1d78de5e39a4"
+        },
+        "release_dat_games": {
+          "count": 14770,
+          "sha256": "4eeaa6659829b219c3ce6aa2baf86486baac139b4b3a1f54ddd196353bbb167e"
+        },
+        "releases": {
+          "count": 7385,
+          "sha256": "c5d0fad4b732d682a7a934622145d00d1fd3763b1704a0a72153e45b61911194"
+        },
+        "repair_attempts": {
+          "count": 1281,
+          "sha256": "515c13f5229504e394530f8a4d2768bec875ce396eb894e06484580a070a1fdd"
+        },
+        "rom_components": {
+          "count": 24162,
+          "sha256": "84f6d34b8329a0f62beabcfcaf3574e45b8850eb488e7003f5b646ac9fe67930"
+        },
+        "rom_releases": {
+          "count": 15519,
+          "sha256": "daf6405e42b1273f1c011d79df1a7e61bbef5cfe45d10f4c42c2dabad217f6c0"
+        },
+        "roms": {
+          "count": 17726,
+          "sha256": "1fd5d68668fcc3db995e0cbdf66b2e07d88077804cd7777acb8b177e8af0b05f"
+        },
+        "scrape_records": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scraper_game_links": {
+          "count": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "scraper_providers": {
+          "count": 1,
+          "sha256": "2710a668fac1c9a4a5117ce18075ff9fd3029fcf8c2a992d4127270ff1252b02"
+        },
+        "sources": {
+          "count": 14834,
+          "sha256": "1e0e39829e3ffdd37b82b94f14b37bd1d2adb4593ce93031c65eecf3a9ede001"
+        },
+        "transformations": {
+          "count": 1150,
+          "sha256": "76cfcb92ee6a83d08d31d858a0e3106d57bb1ad4afef4a8a0074b02eb14ae452"
+        },
+        "validations": {
+          "count": 29688,
+          "sha256": "5eaa3750dda54d5d163699fa0d3ce98b5caa5cbcdb428e15ad68b00934412397"
+        }
+      },
+      "source_rows_and_chinese_dictionary_unchanged": true,
+      "resources_sha256_verified": true,
+      "confirmed_entries_resolve_to_one_game": true,
+      "unconfirmed_candidates_excluded_from_name_evidence": true,
+      "inheritance_uses_unique_confirmed_group_names": true,
+      "nhk_volumes_correct": true,
+      "intellivision_baseball_not_misnamed": true,
+      "payload_table_counts": {
+        "chunks": 0,
+        "object_chunks": 0,
+        "compression_groups": 0
+      }
+    }
+  },
+  "matching_decisions_and_effective_names_identical": true,
+  "upgrade_dry_run_rollback_verified": true,
+  "synthetic_tests_passed": 94
+}
