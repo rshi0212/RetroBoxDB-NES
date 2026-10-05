@@ -1,5 +1,7 @@
 # RetroBoxDB NES — Storage v3 technical design
 
+> **Historical document.** This describes NES storage v3 as used until 2026-10-05. The NES database now uses storage v4 (family-ordered solid groups, same 16-byte header recipes and 8 KiB blocks); see the [storage v4 technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md). Figures below are the v3-era measurements.
+
 RetroBoxDB is a single-file SQLite archive for exact NES ROM preservation, DAT validation, reversible header variants, hardware provenance, and reproducible export. The populated companion stores payloads and processing code. The public Catalog stores metadata and code without payloads. Python executes the embedded engine; SQLite itself does not execute Python. Runtime requirements are Python 3.10+, SQLite 3.37+, and standard-library `lzma`.
 
 ## Logical identity remains independent of encoding

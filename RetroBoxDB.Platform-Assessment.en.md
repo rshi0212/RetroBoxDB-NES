@@ -2,6 +2,8 @@
 
 English | [中文报告](RetroBoxDB.Platform-Assessment.zh-CN.md) | [Project homepage](README.md)
 
+> **Implementation status (2026-10-05)**: NES, SNES, Mega Drive, Game Boy, Game Boy Color and Game Boy Advance are implemented, all with storage v4 and parameters measured per platform; see the [storage v4 guide](RetroBoxDB.Storage-v4.en.md). The text below is the 2026-10-04 survey; its figures and proposals were not updated after implementation.
+
 Published 2026-10-04; local inventory collected 2026-10-03, Asia/Shanghai. This is a research report and implementation roadmap. **NES is implemented; the other platform adapters described here are proposals, not newly supported import/export features.** This documentation update does not change the populated NES database or the public Catalog release.
 
 ## Findings and recommended order

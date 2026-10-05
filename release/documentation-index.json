@@ -1,9 +1,11 @@
 {
-  "storage_schema_version": 3,
+  "storage_schema_version": 4,
   "active_documents": [
     "README.en",
     "README.zh-CN",
     "TECHNICAL-DESIGN.en",
+    "STORAGE-V4.en",
+    "STORAGE-V4.zh-CN",
     "frontend-guide.en"
   ],
   "current_reports": [
@@ -11,17 +13,17 @@
     "frontend-report",
     "frontend-test-report",
     "nointro-test-report",
-    "group-test-report",
-    "group-migration-smoke-report",
-    "group-migration-report",
-    "group-verification-report",
-    "release-manifest",
     "game-names/import-report",
     "game-names/group-report",
     "game-names/matching-test-report",
     "game-names/matching-verification-report",
     "game-names/matching-changes",
-    "name-release-manifest"
+    "ra-report.json",
+    "ra-report-games.csv",
+    "storage-experiment-nes",
+    "storage-experiment-snes-md",
+    "storage-experiment-gb-gbc-gba",
+    "audit-resolution"
   ],
   "public_only_report": "catalog-report",
   "historical_resources": [
@@ -60,7 +62,16 @@
     "game-names/test-report",
     "game-names/verification-report",
     "game-names/group-test-report",
-    "game-names/group-verification-report"
+    "game-names/group-verification-report",
+    "TECHNICAL-DESIGN.v3.en",
+    "group-test-report",
+    "group-migration-smoke-report",
+    "group-migration-report",
+    "group-verification-report",
+    "release-manifest",
+    "name-release-manifest",
+    "migrate_v3.py",
+    "group_schema.sql"
   ],
-  "note": "Historical resources describe earlier states; use active documents and current reports for v3. Frontend and No-Intro test reports include the complete current 70-test suite. No-Intro import/verification reports remain immutable evidence from the preceding import; the v3 verification separately proves those application tables are unchanged."
+  "note": "Storage v4 since 2026-10-05: TECHNICAL-DESIGN.en is the shared storage-v4 technical design and TECHNICAL-DESIGN.v3.en the previous NES design. Historical resources describe earlier states (v1, v2, v3) and remain as provenance. The embedded NES test suite (tests*.py with schema.sql and build_v3.py) still builds v3 fixtures and runs against the unified engine."
 }

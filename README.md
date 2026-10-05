@@ -2,35 +2,69 @@
 
 English | [中文说明](README.zh-CN.md)
 
-A single-file SQLite archive design for NES preservation: exact ROM identities, shared bodies and headers, block deduplication, lossless grouped compression, DAT validation, dump provenance, and checksummed TorrentZip exports.
+Single-file SQLite preservation database for NES / Famicom: ROM data, original DAT content, checksums, hardware provenance, reversible header variants and the processing code in one SQLite file. The public Catalog holds metadata only (checksums, DAT and provenance records, 16-byte headers, archive recipes and the code); it contains no ROM data and cannot restore files. The populated `RetroBoxDB.sqlite` stays local.
 
-**The public Catalog contains no ROM bodies, original DAT/DB/Dumplog file payloads, compressed content groups, or media payloads.** The populated `RetroBoxDB.sqlite` remains local. The Catalog retains metadata, expected checksums, small NES header fields, reconstruction recipes, and processing source code. It cannot independently restore or export the missing files.
-
-| Download / document | Purpose |
+| Item | Value |
 | --- | --- |
-| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Current metadata-only SQLite, distributed through GitHub Releases |
-| [Technical design](RetroBoxDB.NES.Technical-Design.en.md) | Storage format, invariants, migration, and validation |
-| [中文说明](README.zh-CN.md) | Chinese guide, extraction, and maintenance commands |
-| [Platform assessment — English](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | No-Intro, Redump, MAME, FBNeo, HBMAME, Demul and Visual Pinball; 172 local DAT archives |
+| Original size | 21,792 No-Intro ZIPs (Headered and Headerless folders with their Aftermarket/Private folders), 4.12 GiB; 21,793 ROM files, 10.69 GiB uncompressed |
+| Stored size | populated `RetroBoxDB.sqlite` 506.2 MiB; public Catalog 138.7 MiB (no ROM data) |
+| Ratio | 12.0% of the source ZIPs, 4.6% of the uncompressed ROM files |
+| Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
+| Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. Whole-set export (22,943 ROM files in storage order, each group decoded once): 54.1 MiB/s, 9 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.339 s, TorrentZip 2.216 s on average |
 
-The Catalog exceeds GitHub's 100 MiB regular Git file limit. Download the SQLite attachment from Releases; the repository's source-code ZIP contains documentation and assessment tools/data, not the database attachment. The attachment remains one ordinary SQLite file.
+## Downloads and documents
 
-## SNES and Mega Drive
-
-Sibling repositories use the same schema, validation, TorrentZip plans, No-Intro DB/Dumplog import, Chinese names and frontend placeholders. Their storage was re-selected by measurement (storage v4: 64 KiB deduplicated blocks in family-ordered 32 MiB solid LZMA2 groups, about 20% (SNES) and 33% (MD) smaller than the NES v3 engine on the same data). Both old and new No-Intro DATs are imported and diffed, and RetroAchievements hashes are matched for local ROMs, DAT entries and DB Export files.
-
-| Repository | Catalog download |
+| File / document | Content |
 | --- | --- |
-| [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) | [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
-| [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) | [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Public Catalog (Release asset with `SHA256SUMS`) |
+| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by six platforms |
+| [NES v3 technical design (history)](RetroBoxDB.NES.Technical-Design.en.md) | Storage v3, used until 2026-10-05 |
+| [Platform assessment](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | Survey of the 172 local DAT archives |
 
-## Platform research
+## Other platforms
 
-The [English assessment](RetroBoxDB.Platform-Assessment.en.md) and [Chinese assessment](RetroBoxDB.Platform-Assessment.zh-CN.md) cover 329 DAT members and distinguish measured NES results from metadata-derived estimates and proposed platform work. Reproducible aggregate evidence and a read-only survey tool are in `assessment/`; no original DAT, ROM or media files are included. NES remains the implemented platform. The research update does not replace the Catalog release.
+| Platform | Repository and Catalog |
+| --- | --- |
+| SNES | [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) · [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
+| Mega Drive | [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) · [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+| Game Boy | [RetroBoxDB-GB](https://github.com/rshi0212/RetroBoxDB-GB) · [RetroBoxDB.GB.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GB/releases/latest/download/RetroBoxDB.GB.Catalog.sqlite) |
+| Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
+| Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
+
+## Storage: migrated from v3 to v4
+
+From 2026-10-05 the NES database uses storage v4 like the other five platforms. Basis:
+
+- **Sample** (600 families, 652.6 MiB of ZIPs): the unchanged NES v3 engine gives 91.8 MiB; v4 with 8 KiB blocks and 128 MiB family-ordered groups gives 81.9 MiB (block metadata estimate included). 4 KiB blocks add more metadata than they save, and 64 KiB blocks cannot follow PRG/CHR boundaries; both are larger.
+- **Full data**: after migrating to 32 MiB groups, adjacent groups were merged and measured (against 32 MiB): 64 MiB −1.40%, 128 MiB −2.59%, 256 MiB −5.66%. Smaller caps stay more than 0.5% above the 256 MiB result, so 256 MiB groups were chosen by the rule.
+- **Whole database**: ROM data went from 364.4 MiB in v3 (489 lzma2-4m groups plus XOR-delta loose blocks) to 328.3 MiB (−9.91%, 6 groups). A format migration must save at least 2%.
+- **Cost**: a single file read with a cold cache decodes its group up to the file (about 2.3 s on average); set exports decode each group once.
+
+The migration (`tools/migrate_v4.py`) works on a copy: it relaxes the `compression_groups` constraint for solid groups, adds the v4 tables and views, records a family and an RA hash for every body object, decodes all body blocks in block-ID order (164,951 blocks), packs them in family order, verifies every block and removes the v3 groups left empty (489). Block IDs, SHA256, sizes, object extents, 16-byte header recipes and all metadata are unchanged. The full audit after migration passed: 17,734 objects, 6 groups, 24,487 archive plans.
+
+See the [storage v4 guide](RetroBoxDB.Storage-v4.en.md) and [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) for the format and the per-platform evaluation.
+
+## Catalog contents
+
+The catalog preserves **58,935 files, 17,726 ROM records, 22,065 DAT ROM entries, and 24,487 archive plans**. Every pre-existing logical file/ROM/body checksum, source ZIP identity, generated ZIP identity, DAT record, naming decision, transformation, game/release association and frontend placeholder is retained.
+
+The public file is built from scratch by copying application metadata and **excluding `compression_groups`, `chunks`, and `object_chunks`**. All three tables are empty. It is not a populated database with its rows subsequently deleted. Parsed DAT entry XML and 16-byte NES headers remain metadata; no source-file or ROM content blocks are included. Compressed ROM bytes are ROM payloads and are excluded as well.
+
+```sql
+SELECT * FROM v_file_checksums WHERE file_id = 1;
+SELECT * FROM v_rom_checksums WHERE rom_id = 1;
+SELECT * FROM archive_plans WHERE id = 1;
+SELECT dat_set_id, status, COUNT(*) FROM v_dat_coverage GROUP BY dat_set_id, status;
+SELECT content FROM resources WHERE name = 'catalog-report';
+SELECT content FROM resources WHERE name = 'group-migration-report';
+SELECT content FROM resources WHERE name = 'group-verification-report';
+```
+
+Checksums describe expected byte identities. Missing hashes in a source DAT remain NULL; the Catalog does not claim to recalculate unavailable payloads.
 
 ## English / Chinese CSV names
 
-Both local databases retain all **4,453 rows** from `Nintendo - Nintendo Entertainment System.csv`, including **3,703 rows** with Chinese names. Name extension v4 resolves game identity before accepting matches: **4,420 source rows** match **4,429 releases, 2,023 games and 8,896 ROM records**; **3,698 releases** have directly matched Chinese names. **22 rows** remain review candidates and **11 rows** have no base-title candidates. These are name associations, not new checksum verification or ROM payloads. The storage format remains v3.
+Both local databases retain all **4,453 rows** from `Nintendo - Nintendo Entertainment System.csv`, including **3,703 rows** with Chinese names. Name extension v4 resolves game identity before accepting matches: **4,420 source rows** match **4,429 releases, 2,023 games and 8,896 ROM records**; **3,698 releases** have directly matched Chinese names. **22 rows** remain review candidates and **11 rows** have no base-title candidates. These are name associations, not new checksum verification or ROM payloads.
 
 The **3,703 translated rows share 1,875 unique Chinese names** in `game_chinese_names`, referenced by `game_name_entries.name_cn_id`. Identical Chinese names are stored once across English titles, regions and revisions. `v_release_chinese_names` returns deduplicated Chinese names for each release. `game_name_imports` and `game_name_entries` retain original and cleaned English names, source record numbers and SHA256 provenance; `release_name_links` records associations. The original CSV text, including original Chinese strings, any BOM and original newlines, is embedded in `resources` for provenance.
 
@@ -66,34 +100,6 @@ python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertai
 python3 -B -m unittest discover -s tests -v
 ```
 
-## Storage v3: grouped compression
-
-Storage schema v3 places eligible independent LZMA blocks into lossless groups of at most **2 MiB uncompressed**, with a 4 MiB LZMA2 dictionary. It retains each logical block's ID, size and SHA256. Objects still assemble those blocks; Headered files still reference an exact 16-byte header and a shared complete body. Fill, raw, zlib, independent LZMA and bounded XOR-delta representations remain supported.
-
-The reference migration grouped **125,016 blocks into 489 groups**. Their encoded data decreased from 435,766,697 to 342,419,600 bytes: **89.02 MiB saved in compressed streams**. After migration, SQLite compaction and the final documentation/report refresh, the populated database decreased from **629.88 to 534.50 MiB**, a **95.38 MiB / 15.14%** reduction (660,471,808 → 560,463,872 bytes). The release notes and embedded `release-manifest` record final artifact sizes. These measurements are not a promise of the same ratio for other collections.
-
-Export decompresses only the required groups, verifies group and block hashes, assembles the selected ROM/header variant, and checks its full size/CRC32/MD5/SHA1/SHA256. TorrentZip bytes are generated from the existing archive plan and checked against its separately registered output identity. Groups do not change ROM bytes, DAT identities or ZIP checksums. The decoded group cache is bounded to 16 MiB in addition to the existing 64 MiB block cache; individual small reads may decode an entire group. Encoding uses additional temporary memory and at most four workers.
-
-New imports continue to deduplicate and encode ordinary blocks. Run `compact` after a batch to group eligible new blocks and reclaim SQLite free pages. Existing groups are left intact. Compaction is transactional and only adopts groups that save space after a reference/metadata allowance. Schema v2 files remain readable by the v3 engine, but must be migrated before group compaction. Old v2-only engines cannot read v3 databases.
-
-## Catalog contents
-
-The catalog preserves **58,935 files, 17,726 ROM records, 22,065 DAT ROM entries, and 24,487 archive plans**. Every pre-existing logical file/ROM/body checksum, source ZIP identity, generated ZIP identity, DAT record, naming decision, transformation, game/release association and frontend placeholder is retained.
-
-The public file is built from scratch by copying application metadata and **excluding `compression_groups`, `chunks`, and `object_chunks`**. All three tables are empty. It is not a populated database with its rows subsequently deleted. Parsed DAT entry XML and 16-byte NES headers remain metadata; no source-file or ROM content blocks are included. Compressed ROM bytes are ROM payloads and are excluded as well.
-
-```sql
-SELECT * FROM v_file_checksums WHERE file_id = 1;
-SELECT * FROM v_rom_checksums WHERE rom_id = 1;
-SELECT * FROM archive_plans WHERE id = 1;
-SELECT dat_set_id, status, COUNT(*) FROM v_dat_coverage GROUP BY dat_set_id, status;
-SELECT content FROM resources WHERE name = 'catalog-report';
-SELECT content FROM resources WHERE name = 'group-migration-report';
-SELECT content FROM resources WHERE name = 'group-verification-report';
-```
-
-Checksums describe expected byte identities. Missing hashes in a source DAT remain NULL; the Catalog does not claim to recalculate unavailable payloads.
-
 ## No-Intro provenance
 
 Snapshot `20261002-002752` contains **7,704 archive identities, 16,154 distinct file identities, 13,930 dump sources, 898 Scene records, and 7,674 Dumplog rows**. Source and Scene IDs have separate namespaces. Repeated file references preserve independent dump evidence without duplicating content.
@@ -113,6 +119,10 @@ SELECT * FROM ni_reconstructions;
 SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 ```
 
+## RetroAchievements
+
+The migration computed each NES ROM's RA hash (MD5 of the body without the 16-byte header, as rcheevos does) and imported an RA public-API snapshot for console 7. Of 1,123 RA games with achievements, 933 have a matching local ROM (2,708 ROMs), 1 are DAT-only, 2 match only a DB Export file and 187 have no No-Intro counterpart (133 hacks). Per-game list: [reports/ra-nes-games.csv](reports/ra-nes-games.csv).
+
 ## Batocera / ScreenScraper
 
 All 7,385 frontend releases have virtual placeholders for 17 game-information fields, 8 local-state fields and 15 media roles. Unknown descriptions, dates, ratings, provider IDs, URLs and checksums remain NULL. No live scraping, media download or credential storage has occurred. Media roles include screenshots, boxes, logos, video, fan art, title screens, manuals, magazines, maps, bezels, cartridges, alternate boxes, box backs, wheels and composites.
@@ -125,37 +135,32 @@ SELECT * FROM v_batocera_game_fields WHERE release_id = 1;
 SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
 ```
 
-## Embedded code and validation
-
-Python 3.10+, SQLite 3.37+, and standard-library `lzma` are required. SQLite itself does not execute Python. Query the Catalog without extracting source:
+## Export, maintenance and releases
 
 ```bash
-python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite stats
+# Export by DAT (headered / headerless), 1G1R, RA achievements, TorrentZip or plain ROMs
+python3 -B tools/export_set.py RetroBoxDB.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
+# Add new DATs, DB Export / Dump Log snapshots, ROMs and RA snapshots (NES uses its headered/headerless import path and NES DB importer)
+python3 -B tools/update_db.py RetroBoxDB.sqlite --discover --ra
+# Query-only audit with the Catalog's embedded engine (also: stats, checksums FILE_ID, help)
+python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite audit
 ```
 
-Use `checksums FILE_ID`, `audit`, or `help` in place of `stats`. The catalog engine enables `query_only`, rejects content operations, and reports `payloads_verified=false`.
+Releases: a push of `release/catalog-release.json` runs `.github/workflows/publish-catalog.yml`, which starts from the base Catalog pinned by SHA256 in that manifest, injects the unified engine and documents of the commit, checks every data-table digest, integrity, foreign keys, the Catalog audit, the repository tests and the NES embedded test suite, confirms zero free pages and publishes the Release with `SHA256SUMS`. The programs in `resources` are executable code; run them only from a database you built or a Release asset whose SHA256 you verified.
 
-The resources include the catalog engine (`engine.py`), production engine (`engine.full.py`), `schema.sql`, `build_v3.py`, the compatibility alias `build_v2.py`, `seed.json`, `group_schema.sql`, `migrate_v3.py`, `nointro.py`, `nointro_schema.sql`, `build_catalog.py`, and five synthetic test modules. The [Chinese guide](README.zh-CN.md) has a complete extraction command. Extract the production resource as **`engine.py`** to run:
+## History
 
-```bash
-python3 -B -m unittest -v tests tests_storage tests_frontend tests_nointro tests_groups
-```
+The NES database used formats v1 (1 MiB raw blocks), v2 (8 KiB blocks, XOR deltas) and v3 (2 MiB LZMA2 groups); their programs, reports and designs are kept under `legacy/` in `resources` and in the [NES v3 technical design](RetroBoxDB.NES.Technical-Design.en.md). The measurements recorded at the v3 grouping (original text):
 
-All **70 synthetic tests** pass. The group migration additionally verifies all 165,019 block identities/content, 17,734 available logical objects and 24,487 generated archive plans. Group checks include compressed and uncompressed SHA256; object/archive checks include the full registered checksum set. Tests cover corruption, cross-group reads, grouped delta bases, rollback, duplicate imports, source anomalies and Catalog payload exclusion.
+Storage schema v3 places eligible independent LZMA blocks into lossless groups of at most **2 MiB uncompressed**, with a 4 MiB LZMA2 dictionary. It retains each logical block's ID, size and SHA256. Objects still assemble those blocks; Headered files still reference an exact 16-byte header and a shared complete body. Fill, raw, zlib, independent LZMA and bounded XOR-delta representations remain supported.
 
-With extracted production code and separately supplied inputs:
+The reference migration grouped **125,016 blocks into 489 groups**. Their encoded data decreased from 435,766,697 to 342,419,600 bytes: **89.02 MiB saved in compressed streams**. After migration, SQLite compaction and the final documentation/report refresh, the populated database decreased from **629.88 to 534.50 MiB**, a **95.38 MiB / 15.14%** reduction (660,471,808 → 560,463,872 bytes). The release notes and embedded `release-manifest` record final artifact sizes. These measurements are not a promise of the same ratio for other collections.
 
-```bash
-# Build a separate v3 file; the old populated database is opened read-only.
-python3 -B migrate_v3.py OLD.sqlite NEW.sqlite
-python3 -B engine.py NEW.sqlite audit-all
+Export decompresses only the required groups, verifies group and block hashes, assembles the selected ROM/header variant, and checks its full size/CRC32/MD5/SHA1/SHA256. TorrentZip bytes are generated from the existing archive plan and checked against its separately registered output identity. Groups do not change ROM bytes, DAT identities or ZIP checksums. The decoded group cache is bounded to 16 MiB in addition to the existing 64 MiB block cache; individual small reads may decode an entire group. Encoding uses additional temporary memory and at most four workers.
 
-# Import a No-Intro snapshot into a populated database, then compact new blocks.
-python3 -B nointro.py RetroBoxDB.sqlite '/path/NES DB Export.zip' '/path/NES Dump Log.zip'
-python3 -B engine.py RetroBoxDB.sqlite compact
+New imports continue to deduplicate and encode ordinary blocks. Run `compact` after a batch to group eligible new blocks and reclaim SQLite free pages. Existing groups are left intact. Compaction is transactional and only adopts groups that save space after a reference/metadata allowance. Schema v2 files remain readable by the v3 engine, but must be migrated before group compaction. Old v2-only engines cannot read v3 databases.
 
-# Export an existing file identity, or generate its checksummed archive plan.
-python3 -B engine.py RetroBoxDB.sqlite export FILE_ID '/path/output.nes'
-```
+## Platform research
 
-`migrate_v3.py` refuses an existing output path and does not overwrite its input. Migration temporarily requires both files; ordinary writes use a transient rollback journal. After committing and closing, the working archive has one persistent SQLite file. Current documentation is indexed by the embedded `documentation-index`; older reports and `legacy/` resources are historical evidence, not current size/test claims.
+The [English assessment](RetroBoxDB.Platform-Assessment.en.md) and [Chinese assessment](RetroBoxDB.Platform-Assessment.zh-CN.md) cover 329 DAT members and distinguish measured NES results from metadata-derived estimates and proposed platform work. Reproducible aggregate evidence and a read-only survey tool are in `assessment/`; no original DAT, ROM or media files are included. NES remains the implemented platform. The research update does not replace the Catalog release.
+

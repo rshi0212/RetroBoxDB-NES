@@ -2,35 +2,69 @@
 
 [English](README.md) | 中文
 
-RetroBoxDB 将 ROM 正文、DAT 原始内容、校验信息、硬件来源、可逆头部版本和处理代码集中保存在本地单个 SQLite 文件中。存储格式 v3 在分块去重、独立头部和差异编码之上，加入了共享压缩组。
+NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、校验信息、硬件来源、可逆的头部变体和处理程序都在一个 SQLite 文件中。公开的 Catalog 只含元数据（校验值、DAT 与来源记录、16 字节头部、打包配方和程序），不含 ROM 数据，不能独立恢复文件；完整库 `RetroBoxDB.sqlite` 保留在本地。
 
-**GitHub 公开的是无载荷 Catalog，不包含 ROM 正文、DAT／DB／Dumplog 原始文件、压缩后的游戏数据或媒体实体。** 含实际内容的 `RetroBoxDB.sqlite` 只保留在本地。公开 Catalog 有元数据、预期校验值、小型头部字段、重建配方和程序代码，不能独立恢复 ROM。
-
-| 文件 | 用途 |
+| 项目 | 数值 |
 | --- | --- |
-| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 当前公开目录库，作为 GitHub Release 附件下载 |
-| [英文技术说明](RetroBoxDB.NES.Technical-Design.en.md) | 存储格式、约束、迁移和验证细节 |
-| [英文首页](README.md) | 项目首页与使用说明 |
-| [平台评估中文报告](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | No-Intro、Redump、MAME、FBNeo、HBMAME、Demul、Visual Pinball，覆盖本地 172 个 DAT 压缩包 |
+| 原始大小 | No-Intro ZIP 21,792 个（有头、无头目录及各自的 Aftermarket／Private），4.12 GiB；解压后 ROM 21,793 个，10.69 GiB |
+| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 506.2 MiB；公开 Catalog 138.7 MiB（不含 ROM 数据） |
+| 比例 | 完整库为原 ZIP 的 12.0%，为解压后 ROM 总量的 4.6% |
+| 使用的技术 | 存储 v4：16 字节头部与正文分开存储，有头、无头版本共用正文；正文按头部／PRG／CHR 边界切成 8 KiB 块，按 SHA256 去重，按 No-Intro 游戏族顺序装入最大 256 MiB 的 LZMA2 实体组（字典 256 MiB）；逐块、逐对象完整校验；源 ZIP 由 TorrentZip 配方逐字节重建 |
+| 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。全集合顺序导出（22,943 个 ROM 文件，每组解压一次）：54.1 MiB/s，平均 9 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.339 秒，TorrentZip 平均 2.216 秒 |
 
-Catalog 超过普通 Git 文件的 100 MiB 限制，因此通过 Release 发布。下载后仍是一个普通 SQLite 文件；GitHub 自动生成的源码 ZIP 包含仓库文档、调查工具和汇总数据，不包含数据库附件。
+## 下载与文档
 
-## SNES 与 Mega Drive
-
-姊妹仓库沿用相同的表结构、校验、TorrentZip 配方、No-Intro DB／Dumplog、中文名和前端占位；存储层经实测重新选型（存储 v4：64 KiB 去重块按游戏族排序装入 32 MiB LZMA2 实体组，同样数据比 NES v3 引擎小约 20%（SNES）和 33%（MD））。新旧 No-Intro DAT 均导入并做差异对照，RetroAchievements 哈希对本地 ROM、DAT 条目和 DB Export 文件逐一匹配。
-
-| 仓库 | Catalog 下载 |
+| 文件／文档 | 内容 |
 | --- | --- |
-| [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) | [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
-| [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) | [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+| [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 公开 Catalog（Release 附件，附 `SHA256SUMS`） |
+| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 六个平台共用的存储格式、评估与维护 |
+| [NES v3 技术设计（历史）](RetroBoxDB.NES.Technical-Design.en.md) | 2026-10-05 之前的存储 v3 |
+| [平台评估](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | 本地 172 个 DAT 压缩包的调查 |
 
-## 平台研究
+## 其他平台
 
-[中文评估](RetroBoxDB.Platform-Assessment.zh-CN.md)与[英文评估](RetroBoxDB.Platform-Assessment.en.md)覆盖 329 个 DAT 成员，区分 NES 实测、DAT 推算与平台实施建议。`assessment/` 提供可复现汇总证据和只读调查程序，不包含原始 DAT、ROM 或媒体文件。目前实际实现的平台仍为 NES；这次研究更新不更换 Catalog 发布附件。
+| 平台 | 仓库与 Catalog |
+| --- | --- |
+| SNES | [RetroBoxDB-SNES](https://github.com/rshi0212/RetroBoxDB-SNES) · [RetroBoxDB.SNES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SNES/releases/latest/download/RetroBoxDB.SNES.Catalog.sqlite) |
+| Mega Drive | [RetroBoxDB-MegaDrive](https://github.com/rshi0212/RetroBoxDB-MegaDrive) · [RetroBoxDB.MegaDrive.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MegaDrive/releases/latest/download/RetroBoxDB.MegaDrive.Catalog.sqlite) |
+| Game Boy | [RetroBoxDB-GB](https://github.com/rshi0212/RetroBoxDB-GB) · [RetroBoxDB.GB.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GB/releases/latest/download/RetroBoxDB.GB.Catalog.sqlite) |
+| Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
+| Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
+
+## 存储：从 v3 迁移到 v4
+
+2026-10-05 起 NES 库改用与其他五个平台相同的存储 v4。依据：
+
+- **抽样**（600 个游戏族，652.6 MiB ZIP）：NES v3 引擎原样导入为 91.8 MiB；v4 的 8 KiB 块 + 128 MiB 族排序组为 81.9 MiB（含块元数据估算）。4 KiB 块的元数据开销抵消了去重收益，64 KiB 块不能对齐 PRG／CHR 边界，二者都更大。
+- **真实全量数据**：迁移到 32 MiB 组后，把相邻组合并测量（相对 32 MiB）：64 MiB −1.40%、128 MiB −2.59%、256 MiB −5.66%。较小的组都比 256 MiB 组大 0.5% 以上，按规则采用 256 MiB 组。
+- **全库结果**：ROM 数据从 v3 的 364.4 MiB（489 个 lzma2-4m 组加 XOR 差分散块）降到 328.3 MiB（−9.91%，6 个组）。格式迁移要求收益不少于 2%。
+- **代价**：单个文件冷读取需解压所在组的前段（平均约 2.3 秒）；按集合导出时每个组只解压一次。
+
+迁移（`tools/migrate_v4.py`）复制原库后在新文件上进行：放宽 `compression_groups` 的约束以接受实体组，补齐 v4 的表与视图，为每个正文对象记录游戏族和 RA 哈希，按块编号顺序解码全部正文块（164,951 个），按游戏族顺序重新装入实体组，逐块核对后删除不再使用的 v3 组（489 个）。块编号、SHA256、大小、对象拼接、16 字节头部配方及全部元数据不变。迁移后全量审计通过：17,734 个对象、6 个组、24,487 个 ZIP 配方。
+
+存储格式与各平台的评估详见 [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md) 与 [Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md)。
+
+## 保留的目录与校验信息
+
+库中保留 **58,935 条文件记录、17,726 条 ROM 记录、22,065 条 DAT ROM 条目和 24,487 个打包配方**。原文件名、目录、游戏发行关联、DAT 条目、命名更正、旧新头部、硬件资料、修复记录和前端占位均保留。
+
+完整文件、Headerless 正文、原始 ZIP 和导出 TorrentZip 分别有自己的身份与校验值。DAT 没提供的摘要字段仍为空；不能凭一个预期哈希恢复缺失的游戏正文。
+
+公开库从新 SQLite 文件建立，排除 **`compression_groups`、`chunks`、`object_chunks`** 三张表的全部内容。这三张表均为空；不是从含 ROM 的数据库删除数据后留下空闲页的副本。解析后的 DAT 条目 XML 和 16 字节 NES 头部属于保留的元数据，压缩的 ROM／DAT 数据不属于允许公开的元数据。
+
+```sql
+SELECT * FROM v_file_checksums WHERE file_id = 1;
+SELECT * FROM v_rom_checksums WHERE rom_id = 1;
+SELECT * FROM archive_plans WHERE id = 1;
+SELECT dat_set_id, status, COUNT(*) FROM v_dat_coverage GROUP BY dat_set_id, status;
+SELECT content FROM resources WHERE name = 'catalog-report';
+SELECT content FROM resources WHERE name = 'group-migration-report';
+SELECT content FROM resources WHERE name = 'group-verification-report';
+```
 
 ## CSV 中英文游戏名
 
-本地完整库和 Catalog 保留 `Nintendo - Nintendo Entertainment System.csv` 的 **4,453 条**原始记录，其中 **3,703 条**提供中文名。名称扩展 v4 按游戏身份消歧后，**4,420 条**确认关联到 **4,429 个发行版本、2,023 个游戏和 8,896 条 ROM 记录**；其中 **3,698 个发行版本**有直接匹配的中文名称。**22 条**保留为待消歧候选，**11 条**尚无同名候选。这里是名称匹配，不代表新增哈希验证或 ROM 正文；存储格式仍为 v3。
+本地完整库和 Catalog 保留 `Nintendo - Nintendo Entertainment System.csv` 的 **4,453 条**原始记录，其中 **3,703 条**提供中文名。名称扩展 v4 按游戏身份消歧后，**4,420 条**确认关联到 **4,429 个发行版本、2,023 个游戏和 8,896 条 ROM 记录**；其中 **3,698 个发行版本**有直接匹配的中文名称。**22 条**保留为待消歧候选，**11 条**尚无同名候选。这里是名称匹配，不代表新增哈希验证或 ROM 正文。
 
 **3,703 条中文名去重为 1,875 个唯一名称**，集中保存在 `game_chinese_names`，通过 `game_name_entries.name_cn_id` 引用。同名中文不会按英文名、地区或版本重复存储；`v_release_chinese_names` 提供每个发行版本去重后的中文名称。`game_name_entries`／`game_name_imports` 保留原始英文、去括号英文、CSV 记录序号和来源 SHA256，`release_name_links` 保留匹配依据；原始 CSV 文本（含原始中文和换行）保存在 `resources`，可追溯每条来源。
 
@@ -42,7 +76,7 @@ Parent／Clone 通过现有 `game_id` 共享游戏组名称。**1,556 个组**�
 
 另有 **167 个已确认多译名组**标记为 `needs_review`，标准名保持空，已确认的别名保留；**1,754 个组**尚无已确认中文名。待选标准名清单见 [game-names-review.csv](reports/game-names-review.csv)，与尚未确认游戏身份的 22 条来源候选分别统计。标准名及继承关系通过数据库视图实时推导，不复制中文字符串，也不把继承伪装成 CSV 直接匹配。新增来源若令唯一译名变为多译名，继承会自动停止。`v_game_chinese_name_evidence` 可追溯组内名称的原始发行版本和 CSV 来源。
 
-**11 条未匹配记录仍保存在库中**，其中有中文名的是 `EarthBound Beginnings`（地球冒险）和 `Baoxiao Sanguo`（爆笑三国）。空白中文名保持为空，不生成译名。既有游戏标题、ROM、校验值和前端字段不变。GitHub Release 提供无载荷 Catalog，完整数据库保留在本地；前文压缩体积是此前 v3 迁移时的测量值。
+**11 条未匹配记录仍保存在库中**，其中有中文名的是 `EarthBound Beginnings`（地球冒险）和 `Baoxiao Sanguo`（爆笑三国）。空白中文名保持为空，不生成译名。既有游戏标题、ROM、校验值和前端字段不变。GitHub Release 提供无载荷 Catalog，完整数据库保留在本地。
 
 ```sql
 -- 按游戏或 ROM 查询；发行级视图还包含原始英文名和来源。
@@ -67,36 +101,6 @@ python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertai
 python3 -B -m unittest discover -s tests -v
 ```
 
-## 分组压缩已经实施
-
-独立 LZMA 块按最多 **2 MiB 未压缩内容**组成一组，使用 4 MiB 字典的 LZMA2 压缩。每个原有块的编号、大小和 SHA256 保留；对象按原块映射恢复正文，Headered ROM 再拼接独立保存的准确 16 字节头部。
-
-此次迁移将 **125,016 个块**收入 **489 个压缩组**。这些块的压缩数据从 435,766,697 字节变成 342,419,600 字节，减少 **89.02 MiB**。迁移、整理 SQLite 页并完成文档和报告更新后，完整库从 **629.88 MiB 降至 534.50 MiB**，减少 **95.38 MiB，约 15.14%**（660,471,808 → 560,463,872 字节）。准确大小同时记录在 Release 说明与内嵌 `release-manifest` 中。其他收藏的收益需要另行实测。
-
-导出时按需解压所需分组，核验分组和块的 SHA256，组装正文、头部及尾部数据，最后核对文件的大小、CRC32、MD5、SHA1、SHA256。TorrentZip 仍然按既有配方生成，并核对已经保存的导出校验值。迁移不会改变 ROM、DAT 或 ZIP 的逻辑字节身份。
-
-分组解码缓存限制为 16 MiB，原块缓存限制为 64 MiB；读取一个小块有时需要解压整个组。编码最多使用四个工作线程，还需要额外临时内存。原有 raw、fill、zlib、独立 LZMA 和最多两层 XOR 差异编码继续有效。
-
-新导入的数据先使用原有分块去重和压缩流程；批量导入完成后运行 `compact`，把符合条件的新块归组并回收 SQLite 空闲页。已有压缩组不会被反复重写。只有扣除一部分映射／元数据开销后仍节省空间的分组才会采用；失败时事务回滚。v3 引擎可以读取 v2 库，但分组维护需要先迁移到 v3，旧 v2 引擎不能读取 v3 格式。
-
-## 保留的目录与校验信息
-
-库中保留 **58,935 条文件记录、17,726 条 ROM 记录、22,065 条 DAT ROM 条目和 24,487 个打包配方**。原文件名、目录、游戏发行关联、DAT 条目、命名更正、旧新头部、硬件资料、修复记录和前端占位均保留。
-
-完整文件、Headerless 正文、原始 ZIP 和导出 TorrentZip 分别有自己的身份与校验值。DAT 没提供的摘要字段仍为空；不能凭一个预期哈希恢复缺失的游戏正文。
-
-公开库从新 SQLite 文件建立，排除 **`compression_groups`、`chunks`、`object_chunks`** 三张表的全部内容。这三张表均为空；不是从含 ROM 的数据库删除数据后留下空闲页的副本。解析后的 DAT 条目 XML 和 16 字节 NES 头部属于保留的元数据，压缩的 ROM／DAT 数据不属于允许公开的元数据。
-
-```sql
-SELECT * FROM v_file_checksums WHERE file_id = 1;
-SELECT * FROM v_rom_checksums WHERE rom_id = 1;
-SELECT * FROM archive_plans WHERE id = 1;
-SELECT dat_set_id, status, COUNT(*) FROM v_dat_coverage GROUP BY dat_set_id, status;
-SELECT content FROM resources WHERE name = 'catalog-report';
-SELECT content FROM resources WHERE name = 'group-migration-report';
-SELECT content FROM resources WHERE name = 'group-verification-report';
-```
-
 ## No-Intro DB 与 Dumplog
 
 `20261002-002752` 快照保留 7,704 个档案、16,154 条独立文件身份、13,930 条 Dump 来源、898 条 Scene 来源和 7,674 条 Dumplog 状态。来源 ID 按类型与快照隔离；同一文件被多个 Dump 引用时，不重复保存正文。
@@ -118,6 +122,10 @@ SELECT * FROM ni_reconstructions;
 SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 ```
 
+## RetroAchievements 成就匹配
+
+迁移时为每个 NES ROM 计算 RA 哈希（去掉 16 字节头后的正文 MD5，与 rcheevos 一致），并导入 RA 公开 API 的 console 7 快照。有成就的 RA 游戏 1,123 个：本地有匹配 ROM 的 933 个（2,708 个 ROM），仅 DAT 有 1 个，仅对应 DB Export 文件 2 个，无 No-Intro 对应 187 个（其中 Hack 133 个）。逐游戏清单见 [reports/ra-nes-games.csv](reports/ra-nes-games.csv)。
+
 ## Batocera／ScreenScraper 占位
 
 全部 7,385 个现有发行版本具有 17 项游戏信息、8 项本地运行状态和 15 类媒体的虚拟占位。未知简介、日期、评分、提供者 ID、URL、路径和校验值仍为空；未执行联网刮削，没有下载实际图片／视频，没有保存 API 凭据。
@@ -132,61 +140,34 @@ SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
 
 映射参考 [Batocera 字段定义](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp)、[ScreenScraper API](https://www.screenscraper.fr/webapi2.php) 和 [Batocera 适配器](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp)。
 
-## 内嵌程序与复现
-
-需要 Python 3.10+、SQLite 3.37+ 和 Python 标准库 `lzma`；SQLite 本身不会执行 Python。无需提取文件即可查询公开库：
+## 导出、维护与发布
 
 ```bash
-python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite stats
+# 按 DAT（有头／无头）、1G1R、RA 成就、TorrentZip／裸 ROM 组合导出
+python3 -B tools/export_set.py RetroBoxDB.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
+# 增量加入新的 DAT、DB Export／Dump Log、ROM 与 RA 快照（NES 使用其有头／无头导入路径与 NES 专用 DB 导入器）
+python3 -B tools/update_db.py RetroBoxDB.sqlite --discover --ra
+# Catalog 内嵌引擎只读审计（stats、checksums FILE_ID、help 同理）
+python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite audit
 ```
 
-可将 `stats` 换成 `checksums FILE_ID`、`audit` 或 `help`。目录引擎启用 `query_only`，拒绝导入、压缩维护和导出；审计明确返回 `payloads_verified=false`。
+发布流程：推送 `release/catalog-release.json` 后，`.github/workflows/publish-catalog.yml` 从清单中按 SHA256 固定的基础 Catalog 出发，注入本次提交的统一引擎和文档，核对全部数据表摘要、完整性、外键、Catalog 审计、仓库测试和 NES 内嵌测试套件，确认无空闲页后发布 Release 与 `SHA256SUMS`。`resources` 中的程序是可执行代码，只应从自己构建或 SHA256 已核对的 Release 附件中执行。
 
-下面从 Catalog 提取程序到临时目录并运行全部测试。**测试使用的 `engine.py` 必须来自生产资源 `engine.full.py`。**
+## 历史
 
-```bash
-python3 -B - <<'PY'
-import pathlib, sqlite3, subprocess, sys, tempfile
-c = sqlite3.connect('file:RetroBoxDB.NES.Catalog.sqlite?mode=ro', uri=True)
-out = pathlib.Path(tempfile.mkdtemp(prefix='retroboxdb-nes-v3-'))
-names = ['schema.sql', 'build_v3.py', 'build_v2.py', 'seed.json',
-         'group_schema.sql', 'migrate_v3.py', 'build_catalog.py',
-         'nointro.py', 'nointro_schema.sql',
-         'tests.py', 'tests_storage.py', 'tests_frontend.py',
-         'tests_nointro.py', 'tests_groups.py']
-resources = {name: name for name in names}
-resources.update({'engine.py': 'engine.full.py', 'catalog_engine.py': 'engine.py'})
-for filename, resource in resources.items():
-    text = c.execute('SELECT content FROM resources WHERE name=?', (resource,)).fetchone()[0]
-    (out / filename).write_text(text, encoding='utf-8')
-c.close()
-print('Extracted source:', out, flush=True)
-subprocess.run([sys.executable, '-B', '-m', 'unittest', '-v',
-                'tests', 'tests_storage', 'tests_frontend', 'tests_nointro', 'tests_groups'],
-               cwd=out, check=True)
-PY
-```
+NES 库先后使用过 v1（1 MiB 原始块）、v2（8 KiB 块、XOR 差分）和 v3（2 MiB LZMA2 分组）格式，相关程序、报告和设计文档保存在 `resources` 的 `legacy/` 名下及 [NES v3 技术设计](RetroBoxDB.NES.Technical-Design.en.md) 中。v3 分组时的实测记录如下（原文保留）：
 
-**70 项人工数据测试通过**。本次真实收藏迁移还校验全部 165,019 个块、17,734 个可读取对象和 24,487 个导出打包配方。分组有压缩前／后的 SHA256，块继续独立校验，文件和 ZIP 继续核对原有完整校验集合。测试覆盖损坏检测、跨组读取、差异块基础归组、事务回滚、重复导入、来源异常和公开库排除载荷。
+独立 LZMA 块按最多 **2 MiB 未压缩内容**组成一组，使用 4 MiB 字典的 LZMA2 压缩。每个原有块的编号、大小和 SHA256 保留；对象按原块映射恢复正文，Headered ROM 再拼接独立保存的准确 16 字节头部。
 
-提取程序后，可对自己持有的完整库执行：
+此次迁移将 **125,016 个块**收入 **489 个压缩组**。这些块的压缩数据从 435,766,697 字节变成 342,419,600 字节，减少 **89.02 MiB**。迁移、整理 SQLite 页并完成文档和报告更新后，完整库从 **629.88 MiB 降至 534.50 MiB**，减少 **95.38 MiB，约 15.14%**（660,471,808 → 560,463,872 字节）。准确大小同时记录在 Release 说明与内嵌 `release-manifest` 中。其他收藏的收益需要另行实测。
 
-```bash
-# 只读旧库，生成另一个 v3 文件；不会覆盖已有输出路径。
-python3 -B migrate_v3.py OLD.sqlite NEW.sqlite
-python3 -B engine.py NEW.sqlite audit-all
+导出时按需解压所需分组，核验分组和块的 SHA256，组装正文、头部及尾部数据，最后核对文件的大小、CRC32、MD5、SHA1、SHA256。TorrentZip 仍然按既有配方生成，并核对已经保存的导出校验值。迁移不会改变 ROM、DAT 或 ZIP 的逻辑字节身份。
 
-# 导入自己的 DB／Dumplog 后，将符合条件的新块归组。
-python3 -B nointro.py RetroBoxDB.sqlite '/路径/NES DB Export.zip' '/路径/NES Dump Log.zip'
-python3 -B engine.py RetroBoxDB.sqlite compact
+分组解码缓存限制为 16 MiB，原块缓存限制为 64 MiB；读取一个小块有时需要解压整个组。编码最多使用四个工作线程，还需要额外临时内存。原有 raw、fill、zlib、独立 LZMA 和最多两层 XOR 差异编码继续有效。
 
-# 按文件 ID 导出裸 ROM，或生成该文件对应的 TorrentZip。
-python3 -B engine.py RetroBoxDB.sqlite export FILE_ID '/路径/output.nes'
+新导入的数据先使用原有分块去重和压缩流程；批量导入完成后运行 `compact`，把符合条件的新块归组并回收 SQLite 空闲页。已有压缩组不会被反复重写。只有扣除一部分映射／元数据开销后仍节省空间的分组才会采用；失败时事务回滚。v3 引擎可以读取 v2 库，但分组维护需要先迁移到 v3，旧 v2 引擎不能读取 v3 格式。
 
-# 从完整库生成另一个不含载荷的 Catalog。
-python3 -B build_catalog.py RetroBoxDB.sqlite Catalog.sqlite catalog_engine.py
-```
+## 平台研究
 
-文件 ID 决定导出内容，扩展名不会自动把裸 ROM 转成 ZIP；需要 ZIP 时，应选择已有归档文件 ID 或先建立相应 DAT 游戏的打包配方。只包含 DAT 摘要、没有正文的缺失游戏不能恢复。
+[中文评估](RetroBoxDB.Platform-Assessment.zh-CN.md)与[英文评估](RetroBoxDB.Platform-Assessment.en.md)覆盖 329 个 DAT 成员，区分 NES 实测、DAT 推算与平台实施建议。`assessment/` 提供可复现汇总证据和只读调查程序，不包含原始 DAT、ROM 或媒体文件。目前实际实现的平台仍为 NES；这次研究更新不更换 Catalog 发布附件。
 
-迁移期间需要旧库与新库两份空间；正常写事务也可能短暂创建回滚日志。提交、关闭之后，每个数据库只有一个持久 SQLite 文件。内嵌 `documentation-index` 区分当前说明与历史报告；`legacy/` 下的原始代码、旧测试报告和历史体积数据保留为来源证据。

@@ -4,6 +4,6 @@
 *.sqlite-shm
 __pycache__/
 *.pyc
-dist/
 .build-*/
 build-*.log
+dist/
