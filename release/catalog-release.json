@@ -1,10 +1,10 @@
 {
-  "tag": "nes-catalog-20261005-2",
+  "tag": "nes-catalog-20261005-3",
   "title": "NES Catalog: RetroAchievements ROM set, source collections, FDS images moved to the FDS database",
   "platform": "nes",
   "catalog_name": "RetroBoxDB.NES.Catalog.sqlite",
-  "base_url": "https://github.com/rshi0212/RetroBoxDB-NES/releases/download/nes-catalog-base-20261005-2/RetroBoxDB.NES.Catalog.sqlite",
-  "base_sha256": "914b59765dcb8b482b42e39914ae8fb233b449a463f2145d752fb4a268a6ad51",
+  "base_url": "https://github.com/rshi0212/RetroBoxDB-NES/releases/download/nes-catalog-base-20261005-3/RetroBoxDB.NES.Catalog.sqlite",
+  "base_sha256": "9303ec76a9d74deb559f1796f500af11a0316dcb4df8706bc410b4262a2f8db0",
   "data_table_sha256": {
     "archive_entries": {
       "rows": 25371,
@@ -43,8 +43,8 @@
       "sha256": "e35655a85f0be61c4b5b8102db564742d208b13ac349eb78853fb61ed67af4e9"
     },
     "events": {
-      "rows": 1010,
-      "sha256": "cbdbb0cc97a8c31e35848d88135a4389f363166a8b98018a82b0427b620ca25a"
+      "rows": 1012,
+      "sha256": "1d1ee3b2c3807c782cf107e7c621fb83193122274d99dacce8c675da37b6cbdd"
     },
     "fds_hardware": {
       "rows": 0,
