@@ -7,7 +7,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Item | Value |
 | --- | --- |
 | Original size | 23,761 source ZIPs, 4.35 GiB (21,792 from the No-Intro Headered and Headerless folders with their Aftermarket/Private folders, 1,969 from the RetroAchievements set); 23,762 ROM files, 11.18 GiB uncompressed |
-| Stored size | populated `RetroBoxDB.sqlite` 536.8 MiB; public Catalog 145.1 MiB (no ROM data) |
+| Stored size | populated `RetroBoxDB.sqlite` 537.0 MiB; public Catalog 145.2 MiB (no ROM data) |
 | Ratio | 12.1% of the source ZIPs, 4.7% of the uncompressed ROM files |
 | Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
 | Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. whole newest-DAT set with `export_set.py` (7,090 files, each checked against the DAT hashes): 71.7 MiB/s, 5 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
@@ -17,7 +17,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | File / document | Content |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Public Catalog (Release asset with `SHA256SUMS`) |
-| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by seven platforms |
+| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by eight platforms |
 | [NES v3 technical design (history)](RetroBoxDB.NES.Technical-Design.en.md) | Storage v3, used until 2026-10-05 |
 | [Platform assessment](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | Survey of the 172 local DAT archives |
 
@@ -31,6 +31,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
 | Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
+| Satellaview | [RetroBoxDB-Satellaview](https://github.com/rshi0212/RetroBoxDB-Satellaview) · [RetroBoxDB.Satellaview.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-Satellaview/releases/latest/download/RetroBoxDB.Satellaview.Catalog.sqlite) |
 
 ## Storage: migrated from v3 to v4
 

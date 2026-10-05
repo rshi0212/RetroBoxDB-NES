@@ -7,7 +7,7 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | 项目 | 数值 |
 | --- | --- |
 | 原始大小 | 源 ZIP 23,761 个，4.35 GiB（No-Intro 有头、无头目录及各自的 Aftermarket／Private 21,792 个，RetroAchievements 集合 1,969 个）；解压后 ROM 23,762 个，11.18 GiB |
-| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 536.8 MiB；公开 Catalog 145.1 MiB（不含 ROM 数据） |
+| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 537.0 MiB；公开 Catalog 145.2 MiB（不含 ROM 数据） |
 | 比例 | 完整库为原 ZIP 的 12.1%，为解压后 ROM 总量的 4.7% |
 | 使用的技术 | 存储 v4：16 字节头部与正文分开存储，有头、无头版本共用正文；正文按头部／PRG／CHR 边界切成 8 KiB 块，按 SHA256 去重，按 No-Intro 游戏族顺序装入最大 256 MiB 的 LZMA2 实体组（字典 256 MiB）；逐块、逐对象完整校验；源 ZIP 由 TorrentZip 配方逐字节重建 |
 | 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。按最新 DAT 整套导出（`export_set.py`，7,090 个文件，逐个按 DAT 哈希校验）：71.7 MiB/s，平均 5 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.325 秒，TorrentZip 平均 1.983 秒 |
@@ -17,7 +17,7 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | 文件／文档 | 内容 |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 公开 Catalog（Release 附件，附 `SHA256SUMS`） |
-| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 七个平台共用的存储格式、评估与维护 |
+| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 八个平台共用的存储格式、评估与维护 |
 | [NES v3 技术设计（历史）](RetroBoxDB.NES.Technical-Design.en.md) | 2026-10-05 之前的存储 v3 |
 | [平台评估](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | 本地 172 个 DAT 压缩包的调查 |
 
@@ -31,6 +31,7 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
 | Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
+| Satellaview | [RetroBoxDB-Satellaview](https://github.com/rshi0212/RetroBoxDB-Satellaview) · [RetroBoxDB.Satellaview.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-Satellaview/releases/latest/download/RetroBoxDB.Satellaview.Catalog.sqlite) |
 
 ## 存储：从 v3 迁移到 v4
 

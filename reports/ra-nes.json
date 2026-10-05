@@ -5,6 +5,7 @@
   "ra_games_with_achievements": 1123,
   "status_totals": {
     "local": 1110,
+    "local_other_platform": 0,
     "dat_only": 0,
     "nointro_db_only": 0,
     "unmatched": 13
@@ -41,6 +42,10 @@
       "local": 2
     }
   },
+  "sibling_databases": [
+    "fds"
+  ],
+  "shared_console_scope": false,
   "local_roms_with_achievements": 3385,
   "rule": "RA hash = MD5 of the ROM body without the 16-byte iNES/NES 2.0 header (headered and headerless dumps hash the same); exact hash equality only",
   "local_games_by_source": {
