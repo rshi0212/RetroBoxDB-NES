@@ -2,7 +2,7 @@
 
 [English report](RetroBoxDB.Platform-Assessment.en.md) | 中文 | [项目首页](README.md)
 
-> **实施状态（2026-10-05）**：NES、SNES、Mega Drive、Game Boy、Game Boy Color、Game Boy Advance 六个平台已实现，均使用存储 v4，参数按各平台实测确定，见 [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)。下文是 2026-10-04 的调查原文，其中的数字和建议未随后续实施更新。
+> **实施状态（2026-10-05）**：NES、SNES、Mega Drive、Game Boy、Game Boy Color、Game Boy Advance、Famicom Disk System（FDS／QD）七个平台已实现，均使用存储 v4，参数按各平台实测确定，并已导入 RetroAchievements 整理的 ROM 目录，见 [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)。Satellaview 作为独立平台，计划以后单独建库，不并入 SNES。下文是 2026-10-04 的调查原文，其中的数字和建议未随后续实施更新。
 
 发布日期：2026-10-04；本地盘点日期：2026-10-03，Asia/Shanghai。本报告是研究结论与实施路线。**NES 已实现，其他平台的适配方案仍属于建议，并不表示现在已经支持导入或导出。** 本次文档更新不修改含游戏的 NES 本地数据库，也不更换公开 Catalog 发布附件。
 
