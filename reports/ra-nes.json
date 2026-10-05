@@ -4,33 +4,29 @@
   "fetched_at": "2026-10-04T18:27:14.420596+00:00",
   "ra_games_with_achievements": 1123,
   "status_totals": {
-    "local": 933,
-    "dat_only": 1,
-    "nointro_db_only": 2,
-    "unmatched": 187
+    "local": 1110,
+    "dat_only": 0,
+    "nointro_db_only": 0,
+    "unmatched": 13
   },
   "by_category": {
     "Official": {
-      "local": 728,
-      "unmatched": 38
+      "local": 763,
+      "unmatched": 3
     },
     "Unlicensed": {
-      "unmatched": 8,
-      "local": 73,
-      "nointro_db_only": 2
+      "local": 83
     },
     "Hack": {
-      "unmatched": 133,
-      "local": 1
+      "local": 125,
+      "unmatched": 9
     },
     "Homebrew": {
-      "local": 111,
-      "unmatched": 7,
-      "dat_only": 1
+      "local": 118,
+      "unmatched": 1
     },
     "Unlicensed/Prototype": {
-      "local": 2,
-      "unmatched": 1
+      "local": 3
     },
     "Prototype": {
       "local": 9
@@ -45,6 +41,24 @@
       "local": 2
     }
   },
-  "local_roms_with_achievements": 2708,
-  "rule": "RA hash = MD5 of the ROM body without the 16-byte iNES/NES 2.0 header (headered and headerless dumps hash the same); exact hash equality only"
+  "local_roms_with_achievements": 3385,
+  "rule": "RA hash = MD5 of the ROM body without the 16-byte iNES/NES 2.0 header (headered and headerless dumps hash the same); exact hash equality only",
+  "local_games_by_source": {
+    "nointro": 29,
+    "nointro,retroachievements": 904,
+    "retroachievements": 177
+  },
+  "retroachievements_collections": {
+    "RA - Nintendo Entertainment System": {
+      "in_nointro_dat": 1256,
+      "ra_hash_unknown": 22,
+      "ra_only": 691
+    }
+  },
+  "collection_files_with_unknown_ra_hash": 22,
+  "missing_by_category": {
+    "Hack": 9,
+    "Official": 3,
+    "Homebrew": 1
+  }
 }

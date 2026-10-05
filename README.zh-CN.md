@@ -6,18 +6,18 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 
 | 项目 | 数值 |
 | --- | --- |
-| 原始大小 | No-Intro ZIP 21,792 个（有头、无头目录及各自的 Aftermarket／Private），4.12 GiB；解压后 ROM 21,793 个，10.69 GiB |
-| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 506.2 MiB；公开 Catalog 138.7 MiB（不含 ROM 数据） |
-| 比例 | 完整库为原 ZIP 的 12.0%，为解压后 ROM 总量的 4.6% |
+| 原始大小 | 源 ZIP 23,761 个，4.35 GiB（No-Intro 有头、无头目录及各自的 Aftermarket／Private 21,792 个，RetroAchievements 集合 1,969 个）；解压后 ROM 23,762 个，11.18 GiB |
+| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 536.8 MiB；公开 Catalog 145.1 MiB（不含 ROM 数据） |
+| 比例 | 完整库为原 ZIP 的 12.1%，为解压后 ROM 总量的 4.7% |
 | 使用的技术 | 存储 v4：16 字节头部与正文分开存储，有头、无头版本共用正文；正文按头部／PRG／CHR 边界切成 8 KiB 块，按 SHA256 去重，按 No-Intro 游戏族顺序装入最大 256 MiB 的 LZMA2 实体组（字典 256 MiB）；逐块、逐对象完整校验；源 ZIP 由 TorrentZip 配方逐字节重建 |
-| 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。全集合顺序导出（22,943 个 ROM 文件，每组解压一次）：54.1 MiB/s，平均 9 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.339 秒，TorrentZip 平均 2.216 秒 |
+| 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。全集合顺序导出（24,912 个 ROM 文件，每组解压一次）：32.3 MiB/s，平均 15 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.325 秒，TorrentZip 平均 1.983 秒 |
 
 ## 下载与文档
 
 | 文件／文档 | 内容 |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 公开 Catalog（Release 附件，附 `SHA256SUMS`） |
-| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 六个平台共用的存储格式、评估与维护 |
+| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 七个平台共用的存储格式、评估与维护 |
 | [NES v3 技术设计（历史）](RetroBoxDB.NES.Technical-Design.en.md) | 2026-10-05 之前的存储 v3 |
 | [平台评估](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | 本地 172 个 DAT 压缩包的调查 |
 
@@ -30,17 +30,18 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | Game Boy | [RetroBoxDB-GB](https://github.com/rshi0212/RetroBoxDB-GB) · [RetroBoxDB.GB.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GB/releases/latest/download/RetroBoxDB.GB.Catalog.sqlite) |
 | Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
+| Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
 
 ## 存储：从 v3 迁移到 v4
 
-2026-10-05 起 NES 库改用与其他五个平台相同的存储 v4。依据：
+2026-10-05 起 NES 库改用与其他平台相同的存储 v4。依据：
 
 - **抽样**（600 个游戏族，652.6 MiB ZIP）：NES v3 引擎原样导入为 91.8 MiB；v4 的 8 KiB 块 + 128 MiB 族排序组为 81.9 MiB（含块元数据估算）。4 KiB 块的元数据开销抵消了去重收益，64 KiB 块不能对齐 PRG／CHR 边界，二者都更大。
 - **真实全量数据**：迁移到 32 MiB 组后，把相邻组合并测量（相对 32 MiB）：64 MiB −1.40%、128 MiB −2.59%、256 MiB −5.66%。较小的组都比 256 MiB 组大 0.5% 以上，按规则采用 256 MiB 组。
 - **全库结果**：ROM 数据从 v3 的 364.4 MiB（489 个 lzma2-4m 组加 XOR 差分散块）降到 328.3 MiB（−9.91%，6 个组）。格式迁移要求收益不少于 2%。
 - **代价**：单个文件冷读取需解压所在组的前段（平均约 2.3 秒）；按集合导出时每个组只解压一次。
 
-迁移（`tools/migrate_v4.py`）复制原库后在新文件上进行：放宽 `compression_groups` 的约束以接受实体组，补齐 v4 的表与视图，为每个正文对象记录游戏族和 RA 哈希，按块编号顺序解码全部正文块（164,951 个），按游戏族顺序重新装入实体组，逐块核对后删除不再使用的 v3 组（489 个）。块编号、SHA256、大小、对象拼接、16 字节头部配方及全部元数据不变。迁移后全量审计通过：17,734 个对象、6 个组、24,487 个 ZIP 配方。
+迁移（`tools/migrate_v4.py`）复制原库后在新文件上进行：放宽 `compression_groups` 的约束以接受实体组，补齐 v4 的表与视图，为每个正文对象记录游戏族和 RA 哈希，按块编号顺序解码全部正文块（164,951 个），按游戏族顺序重新装入实体组，逐块核对后删除不再使用的 v3 组（489 个）。块编号、SHA256、大小、对象拼接、16 字节头部配方及全部元数据不变。迁移后全量审计通过：19,069 个对象、9 个组、25,368 个 ZIP 配方。
 
 存储格式与各平台的评估详见 [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md) 与 [Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md)。
 
@@ -124,7 +125,9 @@ SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 
 ## RetroAchievements 成就匹配
 
-迁移时为每个 NES ROM 计算 RA 哈希（去掉 16 字节头后的正文 MD5，与 rcheevos 一致），并导入 RA 公开 API 的 console 7 快照。有成就的 RA 游戏 1,123 个：本地有匹配 ROM 的 933 个（2,708 个 ROM），仅 DAT 有 1 个，仅对应 DB Export 文件 2 个，无 No-Intro 对应 187 个（其中 Hack 133 个）。逐游戏清单见 [reports/ra-nes-games.csv](reports/ra-nes-games.csv)。
+每个 NES ROM 都计算 RA 哈希（去掉 16 字节头后的正文 MD5，与 rcheevos 一致），并导入 RA 公开 API 的 console 7 快照。有成就的 RA 游戏 1,123 个：本地有匹配 ROM 的 1,110 个（3,385 个 ROM），仅 DAT 有 0 个，仅对应 DB Export 文件 0 个，无 No-Intro 对应 13 个（其中 Hack 9 个）。逐游戏清单见 [reports/ra-nes-games.csv](reports/ra-nes-games.csv)。
+
+RetroAchievements 整理的 NES ROM 目录（1,969 个 ZIP）已去重入库：DAT 中有的 1,256 个文件只增加来源关联，仅 RA 收录的 691 个（多为 Hack、翻译版和自制游戏）按块去重存入，并归入与其共享块最多的原版游戏族；哈希不在最新 RA 快照中的 22 个文件列在 [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv)。`v_ra_collection` 给出每个文件的 RA 游戏、DAT 条目和发行版本。该目录中的 Famicom Disk System 磁碟镜像属于另一平台，未导入本库，由 [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) 收录。
 
 ## Batocera／ScreenScraper 占位
 

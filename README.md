@@ -6,18 +6,18 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 
 | Item | Value |
 | --- | --- |
-| Original size | 21,792 No-Intro ZIPs (Headered and Headerless folders with their Aftermarket/Private folders), 4.12 GiB; 21,793 ROM files, 10.69 GiB uncompressed |
-| Stored size | populated `RetroBoxDB.sqlite` 506.2 MiB; public Catalog 138.7 MiB (no ROM data) |
-| Ratio | 12.0% of the source ZIPs, 4.6% of the uncompressed ROM files |
+| Original size | 23,761 source ZIPs, 4.35 GiB (21,792 from the No-Intro Headered and Headerless folders with their Aftermarket/Private folders, 1,969 from the RetroAchievements set); 23,762 ROM files, 11.18 GiB uncompressed |
+| Stored size | populated `RetroBoxDB.sqlite` 536.8 MiB; public Catalog 145.1 MiB (no ROM data) |
+| Ratio | 12.1% of the source ZIPs, 4.7% of the uncompressed ROM files |
 | Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
-| Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. Whole-set export (22,943 ROM files in storage order, each group decoded once): 54.1 MiB/s, 9 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.339 s, TorrentZip 2.216 s on average |
+| Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. Whole-set export (24,912 ROM files in storage order, each group decoded once): 32.3 MiB/s, 15 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
 
 ## Downloads and documents
 
 | File / document | Content |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Public Catalog (Release asset with `SHA256SUMS`) |
-| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by six platforms |
+| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by seven platforms |
 | [NES v3 technical design (history)](RetroBoxDB.NES.Technical-Design.en.md) | Storage v3, used until 2026-10-05 |
 | [Platform assessment](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | Survey of the 172 local DAT archives |
 
@@ -30,17 +30,18 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Game Boy | [RetroBoxDB-GB](https://github.com/rshi0212/RetroBoxDB-GB) · [RetroBoxDB.GB.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GB/releases/latest/download/RetroBoxDB.GB.Catalog.sqlite) |
 | Game Boy Color | [RetroBoxDB-GBC](https://github.com/rshi0212/RetroBoxDB-GBC) · [RetroBoxDB.GBC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBC/releases/latest/download/RetroBoxDB.GBC.Catalog.sqlite) |
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
+| Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
 
 ## Storage: migrated from v3 to v4
 
-From 2026-10-05 the NES database uses storage v4 like the other five platforms. Basis:
+From 2026-10-05 the NES database uses storage v4 like the other platforms. Basis:
 
 - **Sample** (600 families, 652.6 MiB of ZIPs): the unchanged NES v3 engine gives 91.8 MiB; v4 with 8 KiB blocks and 128 MiB family-ordered groups gives 81.9 MiB (block metadata estimate included). 4 KiB blocks add more metadata than they save, and 64 KiB blocks cannot follow PRG/CHR boundaries; both are larger.
 - **Full data**: after migrating to 32 MiB groups, adjacent groups were merged and measured (against 32 MiB): 64 MiB −1.40%, 128 MiB −2.59%, 256 MiB −5.66%. Smaller caps stay more than 0.5% above the 256 MiB result, so 256 MiB groups were chosen by the rule.
 - **Whole database**: ROM data went from 364.4 MiB in v3 (489 lzma2-4m groups plus XOR-delta loose blocks) to 328.3 MiB (−9.91%, 6 groups). A format migration must save at least 2%.
 - **Cost**: a single file read with a cold cache decodes its group up to the file (about 2.3 s on average); set exports decode each group once.
 
-The migration (`tools/migrate_v4.py`) works on a copy: it relaxes the `compression_groups` constraint for solid groups, adds the v4 tables and views, records a family and an RA hash for every body object, decodes all body blocks in block-ID order (164,951 blocks), packs them in family order, verifies every block and removes the v3 groups left empty (489). Block IDs, SHA256, sizes, object extents, 16-byte header recipes and all metadata are unchanged. The full audit after migration passed: 17,734 objects, 6 groups, 24,487 archive plans.
+The migration (`tools/migrate_v4.py`) works on a copy: it relaxes the `compression_groups` constraint for solid groups, adds the v4 tables and views, records a family and an RA hash for every body object, decodes all body blocks in block-ID order (164,951 blocks), packs them in family order, verifies every block and removes the v3 groups left empty (489). Block IDs, SHA256, sizes, object extents, 16-byte header recipes and all metadata are unchanged. The full audit after migration passed: 19,069 objects, 9 groups, 25,368 archive plans.
 
 See the [storage v4 guide](RetroBoxDB.Storage-v4.en.md) and [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) for the format and the per-platform evaluation.
 
@@ -121,7 +122,9 @@ SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 
 ## RetroAchievements
 
-The migration computed each NES ROM's RA hash (MD5 of the body without the 16-byte header, as rcheevos does) and imported an RA public-API snapshot for console 7. Of 1,123 RA games with achievements, 933 have a matching local ROM (2,708 ROMs), 1 are DAT-only, 2 match only a DB Export file and 187 have no No-Intro counterpart (133 hacks). Per-game list: [reports/ra-nes-games.csv](reports/ra-nes-games.csv).
+Each NES ROM has an RA hash (MD5 of the body without the 16-byte header, as rcheevos does) and imported an RA public-API snapshot for console 7. Of 1,123 RA games with achievements, 1,110 have a matching local ROM (3,385 ROMs), 0 are DAT-only, 0 match only a DB Export file and 13 have no No-Intro counterpart (9 hacks). Per-game list: [reports/ra-nes-games.csv](reports/ra-nes-games.csv).
+
+The RetroAchievements-curated NES ROM folder (1,969 ZIPs) is imported with deduplication: 1,256 files that are in a DAT only gain a source link; 691 files found only in the RA set (mostly hacks, translations and homebrew) are stored block-deduplicated in the family of the original they share the most blocks with; 22 files whose hash is not in the latest RA snapshot are listed in [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv). `v_ra_collection` gives each file's RA game, DAT entries and release. Famicom Disk System images in that folder belong to another platform and are in [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS), not here.
 
 ## Batocera / ScreenScraper
 
