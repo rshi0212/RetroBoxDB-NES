@@ -10,7 +10,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Stored size | populated `RetroBoxDB.sqlite` 536.8 MiB; public Catalog 145.1 MiB (no ROM data) |
 | Ratio | 12.1% of the source ZIPs, 4.7% of the uncompressed ROM files |
 | Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
-| Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. Whole-set export (24,912 ROM files in storage order, each group decoded once): 32.3 MiB/s, 15 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
+| Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. whole newest-DAT set with `export_set.py` (7,090 files, each checked against the DAT hashes): 71.7 MiB/s, 5 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
 
 ## Downloads and documents
 
@@ -39,7 +39,7 @@ From 2026-10-05 the NES database uses storage v4 like the other platforms. Basis
 - **Sample** (600 families, 652.6 MiB of ZIPs): the unchanged NES v3 engine gives 91.8 MiB; v4 with 8 KiB blocks and 128 MiB family-ordered groups gives 81.9 MiB (block metadata estimate included). 4 KiB blocks add more metadata than they save, and 64 KiB blocks cannot follow PRG/CHR boundaries; both are larger.
 - **Full data**: after migrating to 32 MiB groups, adjacent groups were merged and measured (against 32 MiB): 64 MiB −1.40%, 128 MiB −2.59%, 256 MiB −5.66%. Smaller caps stay more than 0.5% above the 256 MiB result, so 256 MiB groups were chosen by the rule.
 - **Whole database**: ROM data went from 364.4 MiB in v3 (489 lzma2-4m groups plus XOR-delta loose blocks) to 328.3 MiB (−9.91%, 6 groups). A format migration must save at least 2%.
-- **Cost**: a single file read with a cold cache decodes its group up to the file (about 2.3 s on average); set exports decode each group once.
+- **Cost**: a single file read with a cold cache decodes its group up to the file (about 2.3 s on average); set exports read groups in storage order with a bulk cache.
 
 The migration (`tools/migrate_v4.py`) works on a copy: it relaxes the `compression_groups` constraint for solid groups, adds the v4 tables and views, records a family and an RA hash for every body object, decodes all body blocks in block-ID order (164,951 blocks), packs them in family order, verifies every block and removes the v3 groups left empty (489). Block IDs, SHA256, sizes, object extents, 16-byte header recipes and all metadata are unchanged. The full audit after migration passed: 19,069 objects, 9 groups, 25,368 archive plans.
 
