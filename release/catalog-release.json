@@ -1,10 +1,10 @@
 {
-  "tag": "nes-catalog-20261005-3",
-  "title": "NES Catalog: RetroAchievements ROM set, source collections, FDS images moved to the FDS database",
+  "tag": "nes-catalog-20261006",
+  "title": "NES Catalog: cross-database RetroAchievements links, eight-platform documentation",
   "platform": "nes",
   "catalog_name": "RetroBoxDB.NES.Catalog.sqlite",
-  "base_url": "https://github.com/rshi0212/RetroBoxDB-NES/releases/download/nes-catalog-base-20261005-3/RetroBoxDB.NES.Catalog.sqlite",
-  "base_sha256": "9303ec76a9d74deb559f1796f500af11a0316dcb4df8706bc410b4262a2f8db0",
+  "base_url": "https://github.com/rshi0212/RetroBoxDB-NES/releases/download/nes-catalog-base-20261006/RetroBoxDB.NES.Catalog.sqlite",
+  "base_sha256": "dd9b00c6835d45713713d81c07d27f6ba49969e4c11eb0b44e5cc0acfc564b16",
   "data_table_sha256": {
     "archive_entries": {
       "rows": 25371,
@@ -17,6 +17,10 @@
     "archive_profiles": {
       "rows": 1,
       "sha256": "a8247ca6bd7302d45bbf2e6dfe2fae5b8624f1333cc6a4087cd18bac6e463690"
+    },
+    "bsx_hardware": {
+      "rows": 0,
+      "sha256": "44f335cb2b7c8f195e63c47f303f37dadc7e880771c4b23baef96323d6cb90d3"
     },
     "chunks": {
       "rows": 0,
@@ -43,8 +47,8 @@
       "sha256": "e35655a85f0be61c4b5b8102db564742d208b13ac349eb78853fb61ed67af4e9"
     },
     "events": {
-      "rows": 1012,
-      "sha256": "1d1ee3b2c3807c782cf107e7c621fb83193122274d99dacce8c675da37b6cbdd"
+      "rows": 1014,
+      "sha256": "0caeb97f1a53bf839ad907978b2d81d5589cff86aea0bb3ffc196e5ab7234123"
     },
     "fds_hardware": {
       "rows": 0,
@@ -383,6 +387,10 @@
     "storage-experiment-fds": {
       "kind": "json",
       "path": "assessment/data/storage-experiment-fds.json"
+    },
+    "storage-experiment-satellaview": {
+      "kind": "json",
+      "path": "assessment/data/storage-experiment-satellaview.json"
     },
     "storage-curves": {
       "kind": "json",
