@@ -2,7 +2,7 @@
 
 English | [中文报告](RetroBoxDB.Platform-Assessment.zh-CN.md) | [Project homepage](README.md)
 
-> **Implementation status (2026-10-05)**: NES, SNES, Mega Drive, Game Boy, Game Boy Color, Game Boy Advance and Famicom Disk System (FDS/QD) are implemented, all with storage v4 and parameters measured per platform, with the RetroAchievements-curated ROM folders imported. Satellaview is a separate platform planned as its own database, not part of SNES; see the [storage v4 guide](RetroBoxDB.Storage-v4.en.md). The text below is the 2026-10-04 survey; its figures and proposals were not updated after implementation.
+> **Implementation status (2026-10-05)**: NES, SNES, Mega Drive, Game Boy, Game Boy Color, Game Boy Advance, Famicom Disk System (FDS/QD) and Satellaview are implemented, all with storage v4 and parameters measured per platform, with the RetroAchievements-curated ROM folders imported. Satellaview and FDS are separate platforms with their own databases; see the [storage v4 guide](RetroBoxDB.Storage-v4.en.md). The text below is the 2026-10-04 survey; its figures and proposals were not updated after implementation.
 
 Published 2026-10-04; local inventory collected 2026-10-03, Asia/Shanghai. This is a research report and implementation roadmap. **NES is implemented; the other platform adapters described here are proposals, not newly supported import/export features.** This documentation update does not change the populated NES database or the public Catalog release.
 
