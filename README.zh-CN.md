@@ -2,13 +2,13 @@
 
 [English](README.md) | 中文
 
-NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、校验信息、硬件来源、可逆的头部变体和处理程序都在一个 SQLite 文件中。公开的 Catalog 只含元数据（校验值、DAT 与来源记录、16 字节头部、打包配方和程序），不含 ROM 数据，不能独立恢复文件；完整库 `RetroBoxDB.sqlite` 保留在本地。
+NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、校验信息、硬件来源、可逆的头部变体和处理程序都在一个 SQLite 文件中。公开的 Catalog 只含元数据（校验值、DAT 与来源记录、16 字节头部、打包配方和程序），不含 ROM 数据，不能独立恢复文件；完整库 `RetroBoxDB.NES.sqlite` 保留在本地。
 
 | 项目 | 数值 |
 | --- | --- |
-| 原始大小 | 源 ZIP 23,761 个，4.35 GiB（No-Intro 有头、无头目录及各自的 Aftermarket／Private 21,792 个，RetroAchievements 集合 1,969 个）；解压后 ROM 23,762 个，11.18 GiB |
-| 入库后大小 | 完整库 `RetroBoxDB.sqlite` 537.0 MiB；公开 Catalog 145.2 MiB（不含 ROM 数据） |
-| 比例 | 完整库为原 ZIP 的 12.1%，为解压后 ROM 总量的 4.7% |
+| 原始大小 | 源 ZIP 23,765 个，4.35 GiB（No-Intro 有头、无头目录及各自的 Aftermarket／Private 21,792 个，RetroAchievements 集合 1,973 个）；解压后 ROM 23,766 个，11.18 GiB |
+| 入库后大小 | 完整库 `RetroBoxDB.NES.sqlite` 529.9 MiB；公开 Catalog 145.4 MiB（不含 ROM 数据） |
+| 比例 | 完整库为原 ZIP 的 11.9%，为解压后 ROM 总量的 4.6% |
 | 使用的技术 | 存储 v4：16 字节头部与正文分开存储，有头、无头版本共用正文；正文按头部／PRG／CHR 边界切成 8 KiB 块，按 SHA256 去重，按 No-Intro 游戏族顺序装入最大 256 MiB 的 LZMA2 实体组（字典 256 MiB）；逐块、逐对象完整校验；源 ZIP 由 TorrentZip 配方逐字节重建 |
 | 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。按最新 DAT 整套导出（`export_set.py`，7,090 个文件，逐个按 DAT 哈希校验）：71.7 MiB/s，平均 5 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.325 秒，TorrentZip 平均 1.983 秒 |
 
@@ -17,7 +17,7 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | 文件／文档 | 内容 |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | 公开 Catalog（Release 附件，附 `SHA256SUMS`） |
-| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 八个平台共用的存储格式、评估与维护 |
+| [存储 v4 说明](RetroBoxDB.Storage-v4.zh-CN.md)／[English](RetroBoxDB.Storage-v4.en.md)、[Technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | 各平台共用的存储格式、评估与维护 |
 | [NES v3 技术设计（历史）](RetroBoxDB.NES.Technical-Design.en.md) | 2026-10-05 之前的存储 v3 |
 | [平台评估](RetroBoxDB.Platform-Assessment.zh-CN.md)／[English](RetroBoxDB.Platform-Assessment.en.md) | 本地 172 个 DAT 压缩包的调查 |
 
@@ -32,6 +32,13 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
 | Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
 | Satellaview | [RetroBoxDB-Satellaview](https://github.com/rshi0212/RetroBoxDB-Satellaview) · [RetroBoxDB.Satellaview.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-Satellaview/releases/latest/download/RetroBoxDB.Satellaview.Catalog.sqlite) |
+| Master System | [RetroBoxDB-MasterSystem](https://github.com/rshi0212/RetroBoxDB-MasterSystem) · [RetroBoxDB.MasterSystem.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MasterSystem/releases/latest/download/RetroBoxDB.MasterSystem.Catalog.sqlite) |
+| 32X | [RetroBoxDB-32X](https://github.com/rshi0212/RetroBoxDB-32X) · [RetroBoxDB.32X.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-32X/releases/latest/download/RetroBoxDB.32X.Catalog.sqlite) |
+| WonderSwan | [RetroBoxDB-WonderSwan](https://github.com/rshi0212/RetroBoxDB-WonderSwan) · [RetroBoxDB.WonderSwan.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-WonderSwan/releases/latest/download/RetroBoxDB.WonderSwan.Catalog.sqlite) |
+| WonderSwan Color | [RetroBoxDB-WonderSwanColor](https://github.com/rshi0212/RetroBoxDB-WonderSwanColor) · [RetroBoxDB.WonderSwanColor.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-WonderSwanColor/releases/latest/download/RetroBoxDB.WonderSwanColor.Catalog.sqlite) |
+| NeoGeo Pocket | [RetroBoxDB-NGP](https://github.com/rshi0212/RetroBoxDB-NGP) · [RetroBoxDB.NGP.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGP/releases/latest/download/RetroBoxDB.NGP.Catalog.sqlite) |
+| NeoGeo Pocket Color | [RetroBoxDB-NGPC](https://github.com/rshi0212/RetroBoxDB-NGPC) · [RetroBoxDB.NGPC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGPC/releases/latest/download/RetroBoxDB.NGPC.Catalog.sqlite) |
+| Pokémon Mini | [RetroBoxDB-PokemonMini](https://github.com/rshi0212/RetroBoxDB-PokemonMini) · [RetroBoxDB.PokemonMini.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PokemonMini/releases/latest/download/RetroBoxDB.PokemonMini.Catalog.sqlite) |
 
 ## 存储：从 v3 迁移到 v4
 
@@ -72,11 +79,11 @@ SELECT content FROM resources WHERE name = 'group-verification-report';
 
 去括号英文名现在仅用于候选检索和简洁显示，不作为跨游戏自动关联的充分依据。匹配依次使用完整标题、括号字段等价匹配、身份限定字段匹配，每条已确认来源只能对应一个 `game_id`。解析结果保留地区、语言、版本和身份标识；未知括号按身份标识保留。册别、厂商、卡带编号参与识别，`Bulletproof`／`Bullet-Proof` 支持已知别名归一化，括号顺序不影响结构化匹配。地区以及 Beta／Proto 等标记在同名跨组时参与消歧；无法消歧的候选不进入标准名或继承依据。
 
-NHK 六年级 `(Jou)`／`(Ge)` 已分别关联“上”／“下”，两个独立游戏不再共享错配名称。`Baseball (USA) (Intellivision)` 不再从另一个同名游戏组获得“任天堂棒球”。本次移除了 **488 条跨游戏组的旧来源关联**；其余部分旧的版本名称匹配改为明确的组内继承。原始 CSV、中文名去重记录和游戏分组均保留。决策及解析字段见 `game_name_match_decisions`，候选清单见 [game-names-match-review.csv](reports/game-names-match-review.csv)，变更明细见 [game-names-matching-changes.json](reports/game-names-matching-changes.json)。
+NHK 六年级 `(Jou)`／`(Ge)` 已分别关联“上”／“下”，两个独立游戏不再共享错配名称。`Baseball (USA) (Intellivision)` 不再从另一个同名游戏组获得“任天堂棒球”。本次移除了 **488 条跨游戏组的旧来源关联**；其余部分旧的版本名称匹配改为明确的组内继承。原始 CSV、中文名去重记录和游戏分组均保留。决策及解析字段见 `game_name_match_decisions`，候选清单见 [nes-game-names-match-review.csv](reports/nes-game-names-match-review.csv)，变更明细见 [nes-game-names-matching-changes.json](reports/nes-game-names-matching-changes.json)。
 
 Parent／Clone 通过现有 `game_id` 共享游戏组名称。**1,556 个组**只有一个已确认中文译名，该名称自动作为组内标准名，为 **14 个 Parent 和 375 个 Clone**提供继承名称。计入继承后，**4,087 个发行版本、8,100 条本地 ROM 记录**有可用中文名。按发行条目统计，Parent 中文覆盖率为 **49.50%**（1,721／3,477），Clone 为 **60.54%**（2,366／3,908）。这是中文覆盖率，区别于英文名称直接匹配率。消歧前的 4,112 个发行版本包含部分依据不足的关联，不再作为当前覆盖数。
 
-另有 **167 个已确认多译名组**标记为 `needs_review`，标准名保持空，已确认的别名保留；**1,754 个组**尚无已确认中文名。待选标准名清单见 [game-names-review.csv](reports/game-names-review.csv)，与尚未确认游戏身份的 22 条来源候选分别统计。标准名及继承关系通过数据库视图实时推导，不复制中文字符串，也不把继承伪装成 CSV 直接匹配。新增来源若令唯一译名变为多译名，继承会自动停止。`v_game_chinese_name_evidence` 可追溯组内名称的原始发行版本和 CSV 来源。
+另有 **167 个已确认多译名组**标记为 `needs_review`，标准名保持空，已确认的别名保留；**1,754 个组**尚无已确认中文名。待选标准名清单见 [nes-game-names-review.csv](reports/nes-game-names-review.csv)，与尚未确认游戏身份的 22 条来源候选分别统计。标准名及继承关系通过数据库视图实时推导，不复制中文字符串，也不把继承伪装成 CSV 直接匹配。新增来源若令唯一译名变为多译名，继承会自动停止。`v_game_chinese_name_evidence` 可追溯组内名称的原始发行版本和 CSV 来源。
 
 **11 条未匹配记录仍保存在库中**，其中有中文名的是 `EarthBound Beginnings`（地球冒险）和 `Baoxiao Sanguo`（爆笑三国）。空白中文名保持为空，不生成译名。既有游戏标题、ROM、校验值和前端字段不变。GitHub Release 提供无载荷 Catalog，完整数据库保留在本地。
 
@@ -99,7 +106,7 @@ SELECT content FROM resources WHERE name = 'game-names/group-report';
 可重复运行导入，相同平台和 CSV SHA256 不会重复建源或记录；所有已存来源的关联会按当前目录及规则刷新，避免旧来源保留已失效的跨组匹配。导入采用事务，`--dry-run` 会回滚全部更改，包括扩展升级。独立脚本与 SQL 同时内嵌于 `resources`（`import_game_names.py`、`game_names_schema.sql`），提取到同一目录即可使用。
 
 ```bash
-python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertainment System.csv" RetroBoxDB.sqlite RetroBoxDB.NES.Catalog.sqlite
+python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertainment System.csv" RetroBoxDB.NES.sqlite RetroBoxDB.NES.Catalog.sqlite
 python3 -B -m unittest discover -s tests -v
 ```
 
@@ -128,13 +135,11 @@ SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 
 每个 NES ROM 都计算 RA 哈希（去掉 16 字节头后的正文 MD5，与 rcheevos 一致），并导入 RA 公开 API 的 console 7 快照。有成就的 RA 游戏 1,123 个：本地有匹配 ROM 的 1,110 个（3,385 个 ROM），仅 DAT 有 0 个，仅对应 DB Export 文件 0 个，无 No-Intro 对应 13 个（其中 Hack 9 个）。逐游戏清单见 [reports/ra-nes-games.csv](reports/ra-nes-games.csv)。
 
-RetroAchievements 整理的 NES ROM 目录（1,969 个 ZIP）已去重入库：DAT 中有的 1,256 个文件只增加来源关联，仅 RA 收录的 691 个（多为 Hack、翻译版和自制游戏）按块去重存入，并归入与其共享块最多的原版游戏族；哈希不在最新 RA 快照中的 22 个文件列在 [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv)。`v_ra_collection` 给出每个文件的 RA 游戏、DAT 条目和发行版本。该目录中的 Famicom Disk System 磁碟镜像属于另一平台，未导入本库，由 [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) 收录。
+RetroAchievements 整理的 NES ROM 目录（1,973 个 ZIP）已去重入库：DAT 中有的 1,256 个文件只增加来源关联，仅 RA 收录的 691 个（多为 Hack、翻译版和自制游戏）按块去重存入，并归入与其共享块最多的原版游戏族；哈希不在最新 RA 快照中的 26 个文件列在 [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv)。`v_ra_collection` 给出每个文件的 RA 游戏、DAT 条目和发行版本。该目录中的 Famicom Disk System 磁碟镜像属于另一平台，未导入本库，由 [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) 收录。
 
 ## Batocera／ScreenScraper 占位
 
-全部 7,385 个现有发行版本具有 17 项游戏信息、8 项本地运行状态和 15 类媒体的虚拟占位。未知简介、日期、评分、提供者 ID、URL、路径和校验值仍为空；未执行联网刮削，没有下载实际图片／视频，没有保存 API 凭据。
-
-媒体包括截图、盒图、Logo、视频、背景图、标题图、说明书、杂志、地图、边框、卡带图、备用盒图、盒背、Wheel 和混合图。`frontend_game_values` 支持语言／地区，`scraper_game_links` 保留经确认的提供者身份，`frontend_media_slots` 可关联未来存入完整库的媒体实体。此扩展不包含联网 ScreenScraper 客户端或 Batocera `gamelist.xml` 导出器。
+全部 7,385 个现有发行版本具有 17 项游戏信息、8 项本地运行状态和 15 类媒体的虚拟占位。媒体包括截图、盒图、Logo、视频、背景图、标题图、说明书、杂志、地图、边框、卡带图、备用盒图、盒背、Wheel 和混合图。提供者信息表只在本地完整库中填充，公开的 Catalog 保留相同的表但不含数据。`frontend_game_values` 保留给本地覆盖值，`frontend_media_slots` 可关联未来存入完整库的媒体实体。目前不下载媒体文件，也没有 Batocera `gamelist.xml` 导出器。
 
 ```sql
 SELECT * FROM v_screenscraper_games WHERE release_id = 1;
@@ -148,9 +153,9 @@ SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
 
 ```bash
 # 按 DAT（有头／无头）、1G1R、RA 成就、TorrentZip／裸 ROM 组合导出
-python3 -B tools/export_set.py RetroBoxDB.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
+python3 -B tools/export_set.py RetroBoxDB.NES.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
 # 增量加入新的 DAT、DB Export／Dump Log、ROM 与 RA 快照（NES 使用其有头／无头导入路径与 NES 专用 DB 导入器）
-python3 -B tools/update_db.py RetroBoxDB.sqlite --discover --ra
+python3 -B tools/update_db.py RetroBoxDB.NES.sqlite --discover --ra
 # Catalog 内嵌引擎只读审计（stats、checksums FILE_ID、help 同理）
 python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite audit
 ```

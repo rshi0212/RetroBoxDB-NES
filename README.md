@@ -2,13 +2,13 @@
 
 English | [中文说明](README.zh-CN.md)
 
-Single-file SQLite preservation database for NES / Famicom: ROM data, original DAT content, checksums, hardware provenance, reversible header variants and the processing code in one SQLite file. The public Catalog holds metadata only (checksums, DAT and provenance records, 16-byte headers, archive recipes and the code); it contains no ROM data and cannot restore files. The populated `RetroBoxDB.sqlite` stays local.
+Single-file SQLite preservation database for NES / Famicom: ROM data, original DAT content, checksums, hardware provenance, reversible header variants and the processing code in one SQLite file. The public Catalog holds metadata only (checksums, DAT and provenance records, 16-byte headers, archive recipes and the code); it contains no ROM data and cannot restore files. The populated `RetroBoxDB.NES.sqlite` stays local.
 
 | Item | Value |
 | --- | --- |
-| Original size | 23,761 source ZIPs, 4.35 GiB (21,792 from the No-Intro Headered and Headerless folders with their Aftermarket/Private folders, 1,969 from the RetroAchievements set); 23,762 ROM files, 11.18 GiB uncompressed |
-| Stored size | populated `RetroBoxDB.sqlite` 537.0 MiB; public Catalog 145.2 MiB (no ROM data) |
-| Ratio | 12.1% of the source ZIPs, 4.7% of the uncompressed ROM files |
+| Original size | 23,765 source ZIPs, 4.35 GiB (21,792 from the No-Intro Headered and Headerless folders with their Aftermarket/Private folders, 1,973 from the RetroAchievements set); 23,766 ROM files, 11.18 GiB uncompressed |
+| Stored size | populated `RetroBoxDB.NES.sqlite` 529.9 MiB; public Catalog 145.4 MiB (no ROM data) |
+| Ratio | 11.9% of the source ZIPs, 4.6% of the uncompressed ROM files |
 | Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
 | Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. whole newest-DAT set with `export_set.py` (7,090 files, each checked against the DAT hashes): 71.7 MiB/s, 5 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
 
@@ -17,7 +17,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | File / document | Content |
 | --- | --- |
 | [RetroBoxDB.NES.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NES/releases/latest/download/RetroBoxDB.NES.Catalog.sqlite) | Public Catalog (Release asset with `SHA256SUMS`) |
-| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by eight platforms |
+| [Storage v4 guide](RetroBoxDB.Storage-v4.en.md) / [中文](RetroBoxDB.Storage-v4.zh-CN.md), [technical design](RetroBoxDB.Storage-v4.Technical-Design.en.md) | Storage format, evaluation and maintenance shared by every platform |
 | [NES v3 technical design (history)](RetroBoxDB.NES.Technical-Design.en.md) | Storage v3, used until 2026-10-05 |
 | [Platform assessment](RetroBoxDB.Platform-Assessment.en.md) / [中文](RetroBoxDB.Platform-Assessment.zh-CN.md) | Survey of the 172 local DAT archives |
 
@@ -32,6 +32,13 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Game Boy Advance | [RetroBoxDB-GBA](https://github.com/rshi0212/RetroBoxDB-GBA) · [RetroBoxDB.GBA.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GBA/releases/latest/download/RetroBoxDB.GBA.Catalog.sqlite) |
 | Famicom Disk System | [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS) · [RetroBoxDB.FDS.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-FDS/releases/latest/download/RetroBoxDB.FDS.Catalog.sqlite) |
 | Satellaview | [RetroBoxDB-Satellaview](https://github.com/rshi0212/RetroBoxDB-Satellaview) · [RetroBoxDB.Satellaview.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-Satellaview/releases/latest/download/RetroBoxDB.Satellaview.Catalog.sqlite) |
+| Master System | [RetroBoxDB-MasterSystem](https://github.com/rshi0212/RetroBoxDB-MasterSystem) · [RetroBoxDB.MasterSystem.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MasterSystem/releases/latest/download/RetroBoxDB.MasterSystem.Catalog.sqlite) |
+| 32X | [RetroBoxDB-32X](https://github.com/rshi0212/RetroBoxDB-32X) · [RetroBoxDB.32X.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-32X/releases/latest/download/RetroBoxDB.32X.Catalog.sqlite) |
+| WonderSwan | [RetroBoxDB-WonderSwan](https://github.com/rshi0212/RetroBoxDB-WonderSwan) · [RetroBoxDB.WonderSwan.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-WonderSwan/releases/latest/download/RetroBoxDB.WonderSwan.Catalog.sqlite) |
+| WonderSwan Color | [RetroBoxDB-WonderSwanColor](https://github.com/rshi0212/RetroBoxDB-WonderSwanColor) · [RetroBoxDB.WonderSwanColor.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-WonderSwanColor/releases/latest/download/RetroBoxDB.WonderSwanColor.Catalog.sqlite) |
+| NeoGeo Pocket | [RetroBoxDB-NGP](https://github.com/rshi0212/RetroBoxDB-NGP) · [RetroBoxDB.NGP.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGP/releases/latest/download/RetroBoxDB.NGP.Catalog.sqlite) |
+| NeoGeo Pocket Color | [RetroBoxDB-NGPC](https://github.com/rshi0212/RetroBoxDB-NGPC) · [RetroBoxDB.NGPC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGPC/releases/latest/download/RetroBoxDB.NGPC.Catalog.sqlite) |
+| Pokémon Mini | [RetroBoxDB-PokemonMini](https://github.com/rshi0212/RetroBoxDB-PokemonMini) · [RetroBoxDB.PokemonMini.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PokemonMini/releases/latest/download/RetroBoxDB.PokemonMini.Catalog.sqlite) |
 
 ## Storage: migrated from v3 to v4
 
@@ -72,11 +79,11 @@ The **3,703 translated rows share 1,875 unique Chinese names** in `game_chinese_
 
 Removing parentheses now generates search candidates and concise display names; it does not establish identity across different games. Matching tries complete titles, equivalent parsed qualifiers, then compatible identifying fields. Every confirmed source row resolves to exactly one `game_id`. Parsed evidence retains regions, languages, versions and identity tags. Unknown tags remain identifying evidence, including volumes, publishers and cartridge IDs. The known publisher aliases `Bulletproof`/`Bullet-Proof` are normalized and qualifier order is ignored. Regions and Beta/Proto stages can disambiguate independent games. Unresolved candidates are excluded from standard-name and inheritance evidence.
 
-NHK sixth-grade `(Jou)`/`(Ge)` now receive only the upper/lower translation respectively. The independent `Baseball (USA) (Intellivision)` no longer receives the Nintendo Baseball translation from another game. This correction removes **488 previous cross-game source links**; some other version-level matches become explicitly inherited names. Original CSV rows, deduplicated Chinese names and game groups remain intact. `game_name_match_decisions` records parsed evidence and decisions. [game-names-match-review.csv](reports/game-names-match-review.csv) lists unresolved sources, and [game-names-matching-changes.json](reports/game-names-matching-changes.json) records changed name associations.
+NHK sixth-grade `(Jou)`/`(Ge)` now receive only the upper/lower translation respectively. The independent `Baseball (USA) (Intellivision)` no longer receives the Nintendo Baseball translation from another game. This correction removes **488 previous cross-game source links**; some other version-level matches become explicitly inherited names. Original CSV rows, deduplicated Chinese names and game groups remain intact. `game_name_match_decisions` records parsed evidence and decisions. [nes-game-names-match-review.csv](reports/nes-game-names-match-review.csv) lists unresolved sources, and [nes-game-names-matching-changes.json](reports/nes-game-names-matching-changes.json) records changed name associations.
 
 Parent/clone releases share Chinese names through their existing `game_id`. **1,556 groups** have exactly one confirmed translation, used as their automatic standard name. **14 parents and 375 clones** inherit names. Effective coverage reaches **4,087 releases and 8,100 local ROM records**. At the release level, parent Chinese coverage is **49.50%** (1,721/3,477), and clone coverage is **60.54%** (2,366/3,908). These percentages measure Chinese coverage, not direct English-title matching. The previous 4,112-release figure included associations without sufficient identity evidence and is superseded.
 
-The **167 groups with multiple confirmed translations** remain `needs_review` with no selected standard; their confirmed aliases remain available. **1,754 groups** have no confirmed Chinese name. [game-names-review.csv](reports/game-names-review.csv) lists standard-name candidates and their source titles, separately from the 22 sources with unresolved game identity. SQLite views derive standards and inheritance dynamically, without duplicating Chinese strings or claiming inherited names as direct CSV matches. Adding a conflicting translation automatically stops inheritance for that group. `v_game_chinese_name_evidence` traces each group alias to its source release and CSV record.
+The **167 groups with multiple confirmed translations** remain `needs_review` with no selected standard; their confirmed aliases remain available. **1,754 groups** have no confirmed Chinese name. [nes-game-names-review.csv](reports/nes-game-names-review.csv) lists standard-name candidates and their source titles, separately from the 22 sources with unresolved game identity. SQLite views derive standards and inheritance dynamically, without duplicating Chinese strings or claiming inherited names as direct CSV matches. Adding a conflicting translation automatically stops inheritance for that group. `v_game_chinese_name_evidence` traces each group alias to its source release and CSV record.
 
 All **11 unmatched rows** remain available for review. Two have Chinese names: `EarthBound Beginnings` (地球冒险) and `Baoxiao Sanguo` (爆笑三国). Blank Chinese names remain null. Existing titles, ROM data, checksums and frontend fields are unchanged. GitHub Releases distribute the payload-free Catalog; the populated database remains local. Storage sizes elsewhere describe the earlier v3 migration.
 
@@ -98,7 +105,7 @@ SELECT content FROM resources WHERE name = 'game-names/group-report';
 Repeated imports preserve source/row identities by platform and CSV SHA256 and refresh all stored sources against the current catalog and rules, preventing older imports from retaining invalid cross-game matches. Each database is updated in a transaction; `--dry-run` rolls back all changes, including extension upgrades. The importer and schema are also embedded as `import_game_names.py` and `game_names_schema.sql`; extract both into one directory to run independently.
 
 ```bash
-python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertainment System.csv" RetroBoxDB.sqlite RetroBoxDB.NES.Catalog.sqlite
+python3 -B tools/import_game_names.py "$HOME/下载/Nintendo - Nintendo Entertainment System.csv" RetroBoxDB.NES.sqlite RetroBoxDB.NES.Catalog.sqlite
 python3 -B -m unittest discover -s tests -v
 ```
 
@@ -125,13 +132,13 @@ SELECT category, COUNT(*) FROM ni_anomalies GROUP BY category;
 
 Each NES ROM has an RA hash (MD5 of the body without the 16-byte header, as rcheevos does) and imported an RA public-API snapshot for console 7. Of 1,123 RA games with achievements, 1,110 have a matching local ROM (3,385 ROMs), 0 are DAT-only, 0 match only a DB Export file and 13 have no No-Intro counterpart (9 hacks). Per-game list: [reports/ra-nes-games.csv](reports/ra-nes-games.csv).
 
-The RetroAchievements-curated NES ROM folder (1,969 ZIPs) is imported with deduplication: 1,256 files that are in a DAT only gain a source link; 691 files found only in the RA set (mostly hacks, translations and homebrew) are stored block-deduplicated in the family of the original they share the most blocks with; 22 files whose hash is not in the latest RA snapshot are listed in [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv). `v_ra_collection` gives each file's RA game, DAT entries and release. Famicom Disk System images in that folder belong to another platform and are in [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS), not here.
+The RetroAchievements-curated NES ROM folder (1,973 ZIPs) is imported with deduplication: 1,256 files that are in a DAT only gain a source link; 691 files found only in the RA set (mostly hacks, translations and homebrew) are stored block-deduplicated in the family of the original they share the most blocks with; 26 files whose hash is not in the latest RA snapshot are listed in [reports/ra-nes-collection-unknown.csv](reports/ra-nes-collection-unknown.csv). `v_ra_collection` gives each file's RA game, DAT entries and release. Famicom Disk System images in that folder belong to another platform and are in [RetroBoxDB-FDS](https://github.com/rshi0212/RetroBoxDB-FDS), not here.
 
 ## Batocera / ScreenScraper
 
-All 7,385 frontend releases have virtual placeholders for 17 game-information fields, 8 local-state fields and 15 media roles. Unknown descriptions, dates, ratings, provider IDs, URLs and checksums remain NULL. No live scraping, media download or credential storage has occurred. Media roles include screenshots, boxes, logos, video, fan art, title screens, manuals, magazines, maps, bezels, cartridges, alternate boxes, box backs, wheels and composites.
+All 7,385 frontend releases have virtual placeholders for 17 game-information fields, 8 local-state fields and 15 media roles. Media roles include screenshots, boxes, logos, video, fan art, title screens, manuals, magazines, maps, bezels, cartridges, alternate boxes, box backs, wheels and composites.
 
-`frontend_game_values` supports locales; `scraper_game_links` records confirmed provider identities; `frontend_media_slots` links complete future assets through the existing media/files/objects model. This supplies schemas and mappings, not a live scraping client or Batocera `gamelist.xml` exporter. References: [Batocera fields](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp), [ScreenScraper API](https://www.screenscraper.fr/webapi2.php), [Batocera adapter](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp).
+Provider-information tables are filled only in the local database; the public Catalog has the same tables without rows. `frontend_game_values` holds local overrides; `frontend_media_slots` links complete future assets through the existing media/files/objects model. No media files are downloaded and there is no Batocera `gamelist.xml` exporter yet. References: [Batocera fields](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/MetaData.cpp), [ScreenScraper API](https://www.screenscraper.fr/webapi2.php), [Batocera adapter](https://github.com/batocera-linux/batocera-emulationstation/blob/master/es-app/src/scrapers/ScreenScraper.cpp).
 
 ```sql
 SELECT * FROM v_screenscraper_games WHERE release_id = 1;
@@ -143,9 +150,9 @@ SELECT * FROM v_batocera_media_slots WHERE release_id = 1;
 
 ```bash
 # Export by DAT (headered / headerless), 1G1R, RA achievements, TorrentZip or plain ROMs
-python3 -B tools/export_set.py RetroBoxDB.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
+python3 -B tools/export_set.py RetroBoxDB.NES.sqlite OUT --dat-mode headered --set 1g1r --ra achievements --container torrentzip
 # Add new DATs, DB Export / Dump Log snapshots, ROMs and RA snapshots (NES uses its headered/headerless import path and NES DB importer)
-python3 -B tools/update_db.py RetroBoxDB.sqlite --discover --ra
+python3 -B tools/update_db.py RetroBoxDB.NES.sqlite --discover --ra
 # Query-only audit with the Catalog's embedded engine (also: stats, checksums FILE_ID, help)
 python3 -B -c 'import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); s=c.execute("SELECT content FROM resources WHERE name=?",("engine.py",)).fetchone()[0]; c.close(); exec(compile(s,"RetroBoxDB:engine.py","exec"))' ./RetroBoxDB.NES.Catalog.sqlite audit
 ```

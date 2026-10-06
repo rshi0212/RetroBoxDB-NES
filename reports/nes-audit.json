@@ -1,4 +1,7 @@
 {
+ "db": "NES",
+ "ok": true,
+ "seconds": 585,
  "integrity_check": [
   "ok"
  ],
@@ -7,7 +10,5 @@
  "archive_plans_checked": 25368,
  "compression_groups_checked": 9,
  "historical_zip_objects": 25368,
- "errors": [],
- "ok": true,
- "seconds": 723
+ "errors": []
 }

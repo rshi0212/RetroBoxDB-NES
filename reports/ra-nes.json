@@ -58,9 +58,12 @@
       "in_nointro_dat": 1256,
       "ra_hash_unknown": 22,
       "ra_only": 691
+    },
+    "RA - Nintendo Famicom Disk System": {
+      "ra_hash_unknown": 4
     }
   },
-  "collection_files_with_unknown_ra_hash": 22,
+  "collection_files_with_unknown_ra_hash": 26,
   "missing_by_category": {
     "Hack": 9,
     "Official": 3,
