@@ -7,7 +7,7 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | 项目 | 数值 |
 | --- | --- |
 | 原始大小 | 源 ZIP 23,765 个，4.35 GiB（No-Intro 有头、无头目录及各自的 Aftermarket／Private 21,792 个，RetroAchievements 集合 1,973 个）；解压后 ROM 23,766 个，11.18 GiB |
-| 入库后大小 | 完整库 `RetroBoxDB.NES.sqlite` 529.9 MiB；公开 Catalog 145.4 MiB（不含 ROM 数据） |
+| 入库后大小 | 完整库 `RetroBoxDB.NES.sqlite` 530.1 MiB；公开 Catalog 145.5 MiB（不含 ROM 数据） |
 | 比例 | 完整库为原 ZIP 的 11.9%，为解压后 ROM 总量的 4.6% |
 | 使用的技术 | 存储 v4：16 字节头部与正文分开存储，有头、无头版本共用正文；正文按头部／PRG／CHR 边界切成 8 KiB 块，按 SHA256 去重，按 No-Intro 游戏族顺序装入最大 256 MiB 的 LZMA2 实体组（字典 256 MiB）；逐块、逐对象完整校验；源 ZIP 由 TorrentZip 配方逐字节重建 |
 | 导出性能 | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz，空闲负载，Python 3.14.4，含全部校验。按最新 DAT 整套导出（`export_set.py`，7,090 个文件，逐个按 DAT 哈希校验）：71.7 MiB/s，平均 5 毫秒／个；单个文件冷缓存（每次清空缓存，需解压所在组的前段）：ROM 平均 2.325 秒，TorrentZip 平均 1.983 秒 |
@@ -39,6 +39,14 @@ NES（Famicom）的单文件 SQLite 保存库：ROM 数据、DAT 原始内容、
 | NeoGeo Pocket | [RetroBoxDB-NGP](https://github.com/rshi0212/RetroBoxDB-NGP) · [RetroBoxDB.NGP.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGP/releases/latest/download/RetroBoxDB.NGP.Catalog.sqlite) |
 | NeoGeo Pocket Color | [RetroBoxDB-NGPC](https://github.com/rshi0212/RetroBoxDB-NGPC) · [RetroBoxDB.NGPC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGPC/releases/latest/download/RetroBoxDB.NGPC.Catalog.sqlite) |
 | Pokémon Mini | [RetroBoxDB-PokemonMini](https://github.com/rshi0212/RetroBoxDB-PokemonMini) · [RetroBoxDB.PokemonMini.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PokemonMini/releases/latest/download/RetroBoxDB.PokemonMini.Catalog.sqlite) |
+| Game Gear | [RetroBoxDB-GameGear](https://github.com/rshi0212/RetroBoxDB-GameGear) · [RetroBoxDB.GameGear.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GameGear/releases/latest/download/RetroBoxDB.GameGear.Catalog.sqlite) |
+| PC Engine | [RetroBoxDB-PCEngine](https://github.com/rshi0212/RetroBoxDB-PCEngine) · [RetroBoxDB.PCEngine.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PCEngine/releases/latest/download/RetroBoxDB.PCEngine.Catalog.sqlite) |
+| SuperGrafx | [RetroBoxDB-SuperGrafx](https://github.com/rshi0212/RetroBoxDB-SuperGrafx) · [RetroBoxDB.SuperGrafx.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SuperGrafx/releases/latest/download/RetroBoxDB.SuperGrafx.Catalog.sqlite) |
+| MSX | [RetroBoxDB-MSX](https://github.com/rshi0212/RetroBoxDB-MSX) · [RetroBoxDB.MSX.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MSX/releases/latest/download/RetroBoxDB.MSX.Catalog.sqlite) |
+| MSX2 | [RetroBoxDB-MSX2](https://github.com/rshi0212/RetroBoxDB-MSX2) · [RetroBoxDB.MSX2.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MSX2/releases/latest/download/RetroBoxDB.MSX2.Catalog.sqlite) |
+| Virtual Boy | [RetroBoxDB-VirtualBoy](https://github.com/rshi0212/RetroBoxDB-VirtualBoy) · [RetroBoxDB.VirtualBoy.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-VirtualBoy/releases/latest/download/RetroBoxDB.VirtualBoy.Catalog.sqlite) |
+| Game & Watch | [RetroBoxDB-GameAndWatch](https://github.com/rshi0212/RetroBoxDB-GameAndWatch) · [RetroBoxDB.GameAndWatch.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GameAndWatch/releases/latest/download/RetroBoxDB.GameAndWatch.Catalog.sqlite) |
+| Super A'Can | [RetroBoxDB-SuperACan](https://github.com/rshi0212/RetroBoxDB-SuperACan) · [RetroBoxDB.SuperACan.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SuperACan/releases/latest/download/RetroBoxDB.SuperACan.Catalog.sqlite) |
 
 ## 存储：从 v3 迁移到 v4
 

@@ -7,7 +7,7 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | Item | Value |
 | --- | --- |
 | Original size | 23,765 source ZIPs, 4.35 GiB (21,792 from the No-Intro Headered and Headerless folders with their Aftermarket/Private folders, 1,973 from the RetroAchievements set); 23,766 ROM files, 11.18 GiB uncompressed |
-| Stored size | populated `RetroBoxDB.NES.sqlite` 529.9 MiB; public Catalog 145.4 MiB (no ROM data) |
+| Stored size | populated `RetroBoxDB.NES.sqlite` 530.1 MiB; public Catalog 145.5 MiB (no ROM data) |
 | Ratio | 11.9% of the source ZIPs, 4.6% of the uncompressed ROM files |
 | Technology | storage v4: 16-byte headers stored apart from bodies, headered and headerless dumps share one body; bodies cut at header/PRG/CHR boundaries into 8 KiB blocks, deduplicated by SHA256 and packed in No-Intro family order into LZMA2 solid groups of up to 256 MiB (256 MiB dictionary); full per-block and per-object verification; source ZIPs reproduced byte-for-byte from TorrentZip plans |
 | Export performance | Intel(R) Core(TM) i7-8650U CPU @ 1.90GHz, idle, Python 3.14.4, all checks included. whole newest-DAT set with `export_set.py` (7,090 files, each checked against the DAT hashes): 71.7 MiB/s, 5 ms per file on average; single file with a cold cache (the group is decoded up to the file): ROM 2.325 s, TorrentZip 1.983 s on average |
@@ -39,6 +39,14 @@ Single-file SQLite preservation database for NES / Famicom: ROM data, original D
 | NeoGeo Pocket | [RetroBoxDB-NGP](https://github.com/rshi0212/RetroBoxDB-NGP) · [RetroBoxDB.NGP.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGP/releases/latest/download/RetroBoxDB.NGP.Catalog.sqlite) |
 | NeoGeo Pocket Color | [RetroBoxDB-NGPC](https://github.com/rshi0212/RetroBoxDB-NGPC) · [RetroBoxDB.NGPC.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-NGPC/releases/latest/download/RetroBoxDB.NGPC.Catalog.sqlite) |
 | Pokémon Mini | [RetroBoxDB-PokemonMini](https://github.com/rshi0212/RetroBoxDB-PokemonMini) · [RetroBoxDB.PokemonMini.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PokemonMini/releases/latest/download/RetroBoxDB.PokemonMini.Catalog.sqlite) |
+| Game Gear | [RetroBoxDB-GameGear](https://github.com/rshi0212/RetroBoxDB-GameGear) · [RetroBoxDB.GameGear.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GameGear/releases/latest/download/RetroBoxDB.GameGear.Catalog.sqlite) |
+| PC Engine | [RetroBoxDB-PCEngine](https://github.com/rshi0212/RetroBoxDB-PCEngine) · [RetroBoxDB.PCEngine.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-PCEngine/releases/latest/download/RetroBoxDB.PCEngine.Catalog.sqlite) |
+| SuperGrafx | [RetroBoxDB-SuperGrafx](https://github.com/rshi0212/RetroBoxDB-SuperGrafx) · [RetroBoxDB.SuperGrafx.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SuperGrafx/releases/latest/download/RetroBoxDB.SuperGrafx.Catalog.sqlite) |
+| MSX | [RetroBoxDB-MSX](https://github.com/rshi0212/RetroBoxDB-MSX) · [RetroBoxDB.MSX.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MSX/releases/latest/download/RetroBoxDB.MSX.Catalog.sqlite) |
+| MSX2 | [RetroBoxDB-MSX2](https://github.com/rshi0212/RetroBoxDB-MSX2) · [RetroBoxDB.MSX2.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-MSX2/releases/latest/download/RetroBoxDB.MSX2.Catalog.sqlite) |
+| Virtual Boy | [RetroBoxDB-VirtualBoy](https://github.com/rshi0212/RetroBoxDB-VirtualBoy) · [RetroBoxDB.VirtualBoy.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-VirtualBoy/releases/latest/download/RetroBoxDB.VirtualBoy.Catalog.sqlite) |
+| Game & Watch | [RetroBoxDB-GameAndWatch](https://github.com/rshi0212/RetroBoxDB-GameAndWatch) · [RetroBoxDB.GameAndWatch.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-GameAndWatch/releases/latest/download/RetroBoxDB.GameAndWatch.Catalog.sqlite) |
+| Super A'Can | [RetroBoxDB-SuperACan](https://github.com/rshi0212/RetroBoxDB-SuperACan) · [RetroBoxDB.SuperACan.Catalog.sqlite](https://github.com/rshi0212/RetroBoxDB-SuperACan/releases/latest/download/RetroBoxDB.SuperACan.Catalog.sqlite) |
 
 ## Storage: migrated from v3 to v4
 
